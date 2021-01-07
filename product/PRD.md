@@ -22,6 +22,16 @@
 - 所有产品创建dev分支
 - backup
 
+### 方法抽象
+
+* createdev
+* copy(source, des)
+* delete(filepath | folderpath)
+* backup
+* format(filepath)
+* modify(filepath, cmdstring)
+
+
 
 ### 自动化构建readme文档（中文）
 首先建立一个通用的readme模板，差异化地方用变量名称替换。
