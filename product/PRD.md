@@ -24,6 +24,8 @@
 
 ### 方法抽象
 
+#### 处理项目本体
+
 * createdev
 * copy(source, des)
 * delete(filepath | folderpath)
@@ -31,6 +33,9 @@
 * format(filepath)
 * modify(filepath, cmdstring)
 
+#### 处理 Github repository 元数据
+
+设置权限，更新密码，增加用户
 
 
 ### 自动化构建readme文档（中文）
