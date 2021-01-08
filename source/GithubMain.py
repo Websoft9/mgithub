@@ -29,14 +29,25 @@ class GithubMain():
 
     print(sys.argv)
 
-    org_code="template"  # role||template
+    # copy：复制模板文件（或文件夹）到github项目 delete: 删除github项目某个路径下所有文件或者目录 modify:对github的文件进行cmd操作，例如字符串替换等
+    # format：根据模板文件的format重新生成到github项目 branch:对github的项目进行分支操作，如建新分支dev，main，删除master分支，并设置main为default
+    # backup:备份项目 other:目前没有明确的需求，待追加
+    product_content="copy"
 
-    # 0：自动化构建readme文档（中文） 1:自动化构建readme文档（英文） 2:自动化构建issue标准模板 3:workflows（目前已有文档自动化构建程序）
-    # 4：自动化替换标题栏图标  5:自动化构建产品文件夹 6:创建dev分支main分支，并删除master分支 7:backup
-    product_code="4"
+    # role||template
+    org_code="template"  
+
+    # local path
+    sourcepath=""
+
+    # github path
+    despath=""
+
+    # 执行命令
+    cmd=""
 
     mauto=GithubFlow()
 
-    mauto.auto_make(org_code,product_code)
+    mauto.auto_make(org_code, product_content, sourcepath, despath, cmd)
     
 

@@ -23,7 +23,7 @@ class GithubTools():
     
     #执行CLI命令，无返回值
     def execute_Command(cmd_str):
-        print(cmd_str)
+        #print(cmd_str)
         
         out_str=subprocess.getstatusoutput(cmd_str)
         if out_str[0]==0:
@@ -36,8 +36,7 @@ class GithubTools():
         
     #执行CLI命令，有返回值
     def execute_CommandReturn(cmd_str):
-        print(cmd_str)
-        
+        #print(cmd_str)
         out_str=subprocess.getstatusoutput(cmd_str)
         if out_str[0]==0:
            #去掉\n和"
@@ -46,10 +45,11 @@ class GithubTools():
            temp_str=temp_str.strip('\n')
            temp_str=temp_str.strip('"')
            print(temp_str)
-           return temp_str
+           return out_str[0]
         else:
            print ('\n此次任务执行失败，请根据下面错误原因排查：')
            print(out_str)
+           return out_str[0]
            
     #执行CLI命令，结果写入到文件
     def execute_CommandWriteFile(cmd_str, directory_str):
