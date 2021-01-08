@@ -71,7 +71,7 @@ class GithubProduct():
             pass
 
         return
-        
+
     # 主体构建工作完成后的 后处理，删除列表中该工程
     def complete_work(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
@@ -91,7 +91,7 @@ class GithubProduct():
 
         ## 追加日志
         nowtime=time.strftime("%H:%M:%S")
-        logline=nowtime+":"projectname+"excute "+productkind+" sourcepath("+sourcepath+") despath("+despath+") cmd("+cmd+")"
+        logline=nowtime+":"+projectname+"excute "+productkind+" sourcepath("+sourcepath+") despath("+despath+") cmd("+cmd+")"
         GithubTools.execute_Command("echo '"+logline+ "' >>"+FILE_PATH)
 
 
