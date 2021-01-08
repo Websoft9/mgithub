@@ -213,7 +213,7 @@ class GithubFlow():
                 # github工程备份
                 product.product_backup(project_name, organization)
     
-   def automake_cache(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
+    def automake_cache(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
         print('\n\t>>>自动化任务开始，根据已有缓存列表开始构建')
         # 下载最新的template模板
