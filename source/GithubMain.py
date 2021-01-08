@@ -38,10 +38,10 @@ class GithubMain():
     org_code="template"  
 
     # local path
-    sourcepath=""
+    sourcepath=".github/ISSUE_TEMPLATE"
 
     # github path
-    despath=""
+    despath=".github/ISSUE_TEMPLATE"
 
     # 执行命令
     cmd=""
