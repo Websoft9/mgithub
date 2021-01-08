@@ -113,15 +113,20 @@ class GithubFlow():
     
     def automake_new(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
-        print('\n\t>>>自动化任务开始，将从github下载最新的项目列表后开始构建')
-        # 下载最新的template模板
-        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git template/ansible-template/')
-        # 正确执行--template还不存在
-        if downloadflag==0:
-            pass
+        print('自动化任务开始，将从github下载最新的项目列表后开始构建')
+
+        # 如果工程已经存在，就更新；否则从github上克隆最新的代码
+        cmd="cd template/ansible-template;git pull"
+        FILE_PATH="template/ansible-template"
+        if os.path.isdir(FILE_PATH): 
+            pass    
         else:
-            # 将template更新到最新
-            GithubTools.execute_CommandReturn('git pull')
+            # 当前任务工程不存在 github克隆最新的
+            if organization == "template" :
+                cmd="git clone --depth=1 git@github.com:Websoft9/"+projectname+".git data/"+projectname
+            elif organization == "role" :
+                cmd="git clone --depth=1 git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
+        GithubTools.execute_CommandReturn(cmd)
 
         # 生成文件列表
         self.create_repository(organization)
@@ -134,46 +139,24 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-
-            if productkind == "0" :
-                # 生成中文文档
-                product.product_readme_cn(project_name, organization)
-
-            elif productkind == "1" :
-                # 生成英文文档
-                product.product_readme_en(project_name, organization)
-
-            elif productkind == "2" :
-                # issue标准模板
-                product.product_issue_template(project_name, organization)
-
-            elif productkind == "3" :
-                # workflows
-                product.product_workflows(project_name, organization)
-
-            elif productkind == "4" :
-                # 产品文件夹（含其中文档）
-                product.product_prdfiles(project_name, organization)
-
-            elif productkind == "5" :
-                # 创建main分支 dev分支，并删除master分支
-                product.product_resetbranches(project_name, organization)
-
-            elif productkind == "6" :
-                # github工程备份
-                product.product_backup(project_name, organization)
+            product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
 
     def automake_list(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
         print('\n\t>>>自动化任务开始，根据已有清单列表开始构建')
-        # 下载最新的template模板
-        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git template/ansible-template/')
-        # 正确执行--template还不存在
-        if downloadflag==0:
+
+        # 如果工程已经存在，就更新；否则从github上克隆最新的代码
+        cmd="cd template/ansible-template;git pull"
+        FILE_PATH="template/ansible-template"
+        if os.path.isdir(FILE_PATH): 
             pass
         else:
-            # 将template更新到最新
-            GithubTools.execute_CommandReturn('git pull')
+            # 当前任务工程不存在 github克隆最新的
+            if organization == "template" :
+                cmd="git clone --depth=1 git@github.com:Websoft9/"+projectname+".git data/"+projectname
+            elif organization == "role" :
+                cmd="git clone --depth=1 git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
+        GithubTools.execute_CommandReturn(cmd)
 
         # 复制文件到缓存
         self.create_cache(organization)
@@ -184,46 +167,24 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-
-            if productkind == "0" :
-                # 生成中文文档
-                product.product_readme_cn(project_name, organization)
-
-            elif productkind == "1" :
-                # 生成英文文档
-                product.product_readme_en(project_name, organization)
-
-            elif productkind == "2" :
-                # issue标准模板
-                product.product_issue_template(project_name, organization)
-
-            elif productkind == "3" :
-                # workflows
-                product.product_workflows(project_name, organization)
-
-            elif productkind == "4" :
-                # 产品文件夹（含其中文档）
-                product.product_prdfiles(project_name, organization)
-
-            elif productkind == "5" :
-                # 创建main分支 dev分支，并删除master分支
-                product.product_resetbranches(project_name, organization)
-
-            elif productkind == "6" :
-                # github工程备份
-                product.product_backup(project_name, organization)
+            product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
     
     def automake_cache(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
         print('\n\t>>>自动化任务开始，根据已有缓存列表开始构建')
-        # 下载最新的template模板
-        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git template/ansible-template/')
-        # 正确执行--template还不存在
-        if downloadflag==0:
+
+        # 如果工程已经存在，就更新；否则从github上克隆最新的代码
+        cmd="cd template/ansible-template;git pull"
+        FILE_PATH="template/ansible-template"
+        if os.path.isdir(FILE_PATH): 
             pass
         else:
-            # 将template更新到最新
-            GithubTools.execute_CommandReturn('git pull')
+            # 当前任务工程不存在 github克隆最新的
+            if organization == "template" :
+                cmd="git clone --depth=1 git@github.com:Websoft9/"+projectname+".git data/"+projectname
+            elif organization == "role" :
+                cmd="git clone --depth=1 git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
+        GithubTools.execute_CommandReturn(cmd)
 
         file_object=open(repository_cache_str)
         #project_list=file_object.readlines()
@@ -231,34 +192,8 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-
-            if productkind == "0" :
-                # 生成中文文档
-                product.product_readme_cn(project_name, organization)
-
-            elif productkind == "1" :
-                # 生成英文文档
-                product.product_readme_en(project_name, organization)
-
-            elif productkind == "2" :
-                # issue标准模板
-                product.product_issue_template(project_name, organization)
-
-            elif productkind == "3" :
-                # workflows
-                product.product_workflows(project_name, organization)
-
-            elif productkind == "4" :
-                # 产品文件夹（含其中文档）
-                product.product_prdfiles(project_name, organization)
-
-            elif productkind == "5" :
-                # 创建main分支 dev分支，并删除master分支
-                product.product_resetbranches(project_name, organization)
-
-            elif productkind == "6" :
-                # github工程备份
-                product.product_backup(project_name, organization)
+            product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
+        
 
     #选择继续操作
     #格式：选择是否在上次任务上继续：  \n\t 0. 继续 \n\t 1. 终止退出  \n\n\t选择:
@@ -293,15 +228,13 @@ class GithubFlow():
     # 根据organization生成最新的repository文件列表
     def create_repository(self, organization):
 
-        print("====create_cache from repositories====")
-
         # get the project list from organization
         repository_cache_str = 'data/repositories_cache.txt'
 
         if organization == "template" :
             print(('\n开始更新Websoft9 Github仓库列表\n'))
             # GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^ansible-*"','data/repositories.txt')
-            GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9test/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^ansible-lcmp*"','data/repositories.txt')
+            GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9test/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^ansible-*"','data/repositories.txt')
         elif organization == "role" :
             print(('\n开始更新Websoft9dev Github仓库列表\n'))
             # GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9dev/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^role_*"','data/dev_repositories.txt')
@@ -310,7 +243,7 @@ class GithubFlow():
     # 复制文件到缓存
     def create_cache(self, organization):
 
-        print("====create_cache from repositories====")
+        print("====将清单项目复制到缓存文件====")
 
         print(('\n开始更新缓存文件\n'))
         if organization == "template" :

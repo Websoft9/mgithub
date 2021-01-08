@@ -37,9 +37,9 @@ class GithubProduct():
         if productkind == "copy" :
 
             # 如果工程已经存在，就更新；否则从github上克隆最新的代码
-            cmd="cd template/" + projectname + ";git pull"
+            cmd="cd data/" + projectname + ";git pull"
 
-            FILE_PATH="template/" + projectname
+            FILE_PATH="data/" + projectname
             if os.path.isdir(FILE_PATH): 
                 pass
             else:
@@ -50,11 +50,11 @@ class GithubProduct():
                     cmd="git clone --depth=1 git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
             GithubTools.execute_CommandReturn(cmd)
 
-            GithubTools.execute_CommandReturn("echo y |cp -Rr data/ansible-template/"+sourcepath + " template/" + projectname+"/"+despath)
+            GithubTools.execute_CommandReturn("echo y |cp -Rr data/ansible-template/"+sourcepath + " data/" + projectname+"/"+despath)
 
             # 将模板复制产品文档文件夹所有内容推送到github
             rcontent=self.github_push(projectname, "add prodoct files")
-            if rcontent == 0 :
+            if rcontent == 1 :
                 self.complete_work(projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
             else:
                 print(projectname +"执行失败")
