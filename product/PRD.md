@@ -22,6 +22,21 @@
 - 所有产品创建dev分支
 - backup
 
+### 方法抽象
+
+#### 处理项目本体
+
+* createdev
+* copy(source, des)
+* delete(filepath | folderpath)
+* backup
+* format(filepath)
+* modify(filepath, cmdstring)
+
+#### 处理 Github repository 元数据
+
+设置权限，更新密码，增加用户
+
 
 ### 自动化构建readme文档（中文）
 首先建立一个通用的readme模板，差异化地方用变量名称替换。
