@@ -48,6 +48,8 @@ class GithubFlow():
 
         # 判断缓存文件是否存在
         cathe_path=repository_cache_str
+        print(cathe_path)
+        print(os.path.isdir(cathe_path))
         if os.path.isdir(cathe_path):  
             ## 缓存文件存在，需要继续判断文件内容是否为空
             # 判断缓存是否为空 ，如果不为空， 说明上次任务未完成，提示用户执行
@@ -139,7 +141,7 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-            product.product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
+            product.product_excute(project_name, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
 
     def automake_list(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
@@ -167,7 +169,7 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-            product.product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
+            product.product_excute(project_name, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
     
     def automake_cache(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
@@ -192,7 +194,7 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-            product.product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
+            product.product_excute(project_name, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
         
 
     #选择继续操作
@@ -228,17 +230,14 @@ class GithubFlow():
     # 根据organization生成最新的repository文件列表
     def create_repository(self, organization):
 
-        # get the project list from organization
-        repository_cache_str = 'data/repositories_cache.txt'
-
         if organization == "template" :
             print(('\n开始更新Websoft9 Github仓库列表\n'))
             # GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^ansible-*"','data/repositories.txt')
-            GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9test/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^ansible-*"','data/repositories.txt')
+            GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^ansible-*"','data/repositories.txt')
         elif organization == "role" :
             print(('\n开始更新Websoft9dev Github仓库列表\n'))
             # GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9dev/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^role_*"','data/dev_repositories.txt')
-            GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9test/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^role_-*"','data/dev_repositories.txt')       
+            GithubTools.execute_CommandWriteFile('curl -s  https://api.github.com/orgs/websoft9dev/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'| grep -E "^role_-*"','data/dev_repositories.txt')       
 
     # 复制文件到缓存
     def create_cache(self, organization):
