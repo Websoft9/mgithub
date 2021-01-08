@@ -139,7 +139,7 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-            product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
+            product.product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
 
     def automake_list(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
@@ -167,7 +167,7 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-            product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
+            product.product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
     
     def automake_cache(self, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
@@ -192,7 +192,7 @@ class GithubFlow():
 
         product=GithubProduct()
         for project_name in project_list:
-            product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
+            product.product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str)
         
 
     #选择继续操作
@@ -244,8 +244,6 @@ class GithubFlow():
     def create_cache(self, organization):
 
         print("====将清单项目复制到缓存文件====")
-
-        print(('\n开始更新缓存文件\n'))
         if organization == "template" :
             GithubTools.execute_Command('cat data/repositories.txt > data/repositories_cache.txt')
         elif organization == "role" :
