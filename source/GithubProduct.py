@@ -98,7 +98,8 @@ class GithubProduct():
     def github_push(self, projectname, product):
 
         print(projectname+"将本地工程提交到github") 
-        content=GithubTools.execute_CommandReturn("cd "+ "data/" + projectname + ';git add -A;git commit -m "'+product+'";git push')
+        #content=GithubTools.execute_CommandReturn("cd "+ "data/" + projectname + ';git add -A;git commit -m "'+product+'";git push')
+        content=0
         return content
         # GithubTools.execute_CommandReturn("git add -A")
         # GithubTools.execute_CommandReturn('git commit -m "'+product+'"')
