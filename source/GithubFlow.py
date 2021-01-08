@@ -115,7 +115,7 @@ class GithubFlow():
 
         print('\n\t>>>自动化任务开始，将从github下载最新的项目列表后开始构建')
         # 下载最新的template模板
-        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git data/ansible-template/')
+        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git template/ansible-template/')
         # 正确执行--template还不存在
         if downloadflag==0:
             pass
@@ -167,7 +167,7 @@ class GithubFlow():
 
         print('\n\t>>>自动化任务开始，根据已有清单列表开始构建')
         # 下载最新的template模板
-        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git data/ansible-template/')
+        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git template/ansible-template/')
         # 正确执行--template还不存在
         if downloadflag==0:
             pass
@@ -217,7 +217,7 @@ class GithubFlow():
 
         print('\n\t>>>自动化任务开始，根据已有缓存列表开始构建')
         # 下载最新的template模板
-        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git data/ansible-template/')
+        downloadflag=GithubTools.execute_CommandReturn('git clone --depth=1 git@github.com:Websoft9test/ansible-template.git template/ansible-template/')
         # 正确执行--template还不存在
         if downloadflag==0:
             pass
