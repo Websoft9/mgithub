@@ -60,16 +60,18 @@ class GithubProduct():
                 print(projectname +"执行失败")
 
         elif productkind == "delete" :
-
+            pass
         elif productkind == "modify" :
-
+            pass
         elif productkind == "format" :
-
+            pass
         elif productkind == "branch" :
-
+            pass
         elif productkind == "backup" :
+            pass
 
-    
+        return
+        
     # 主体构建工作完成后的 后处理，删除列表中该工程
     def complete_work(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):
 
