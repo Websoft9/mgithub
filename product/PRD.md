@@ -22,6 +22,7 @@
 - 所有产品创建dev分支
 - workflows 文档构建中  master>>main
 - backup
+- 将requirements.yml 移动到 roles/requirements.yml 以适应 
 
 ### 方法抽象
 
