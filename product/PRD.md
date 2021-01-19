@@ -23,6 +23,7 @@
 - workflows 文档构建中  master>>main
 - backup
 - 将requirements.yml 移动到 roles/requirements.yml 以适应 
+- docs\.vuepress\config.js 文件中 docsBranch: 'master' 替换为 docsBranch: 'main',
 
 ### 方法抽象
 
