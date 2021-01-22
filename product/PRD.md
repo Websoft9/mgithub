@@ -25,6 +25,7 @@
 - 将requirements.yml 移动到 roles/requirements.yml 以适应 
 - docs\.vuepress\config.js 文件中 docsBranch: 'master' 替换为 docsBranch: 'main'
 - 一键安装脚本url前加上【https://ghproxy.com/】
+- docs/readme.md 捐赠我们的链接
 
 ### 方法抽象
 
