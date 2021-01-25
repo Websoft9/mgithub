@@ -1,0 +1,17 @@
+````
+- 网页favicon
+- docs\.vuepress\config.js 文件中 docsBranch: 'master' 替换为 docsBranch: 'main'
+- 将 requirements.yml 移动到 roles/requirements.yml 等
+- 自动化构建readme文档（中文）
+- 自动化构建readme文档（英文）
+- 自动化构建issue标准模板
+- workflows（目前已有文档自动化构建程序）
+- 自动化替换标题栏图标
+- 自动化构建产品文件夹
+- role项目用main替换master分支
+- 所有产品创建dev分支
+- workflows 文档构建中  master>>main
+- backup
+- 
+- 一键安装脚本url前加上【https://ghproxy.com/】
+- docs/readme.md 捐赠我们的链接
