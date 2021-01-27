@@ -1,8 +1,0 @@
-GithubCLI.py
-setup.py
-migithub.egg-info/PKG-INFO
-migithub.egg-info/SOURCES.txt
-migithub.egg-info/dependency_links.txt
-migithub.egg-info/entry_points.txt
-migithub.egg-info/requires.txt
-migithub.egg-info/top_level.txt
