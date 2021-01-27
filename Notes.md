@@ -62,3 +62,28 @@ def sync():
     click.echo('Syncing')
 ```
 
+#### 使用pass_context在父子命令之间传参
+每当命令被调用时，click 会创建新的上下文，并链接到父上下文。通常，我们是看不到上下文信息的。但我们可以通过 pass_context 装饰器来显式让 click 传递上下文，此变量会作为第一个参数进行传递。
+```buildoutcfg
+@click.group()
+@click.option('--debug/--no-debug', default=False)
+@click.pass_context
+def cli(ctx, debug):
+    # 确保 ctx.obj 存在并且是个 dict。 (以防 `cli()` 指定 obj 为其他类型
+    ctx.ensure_object(dict)
+
+    ctx.obj['DEBUG'] = debug
+
+@cli.command()
+@click.pass_context
+def sync(ctx):
+    click.echo('Debug is %s' % (ctx.obj['DEBUG'] and 'on' or 'off'))
+
+if __name__ == '__main__':
+    cli(obj={})
+```
+
+#### 让mgithub主command脱离子command进行工作
+```buildoutcfg
+@click.group(invoke_without_command=True)
+```
