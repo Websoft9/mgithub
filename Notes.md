@@ -87,3 +87,18 @@ if __name__ == '__main__':
 ```buildoutcfg
 @click.group(invoke_without_command=True)
 ```
+
+#### 在只键入mgithub的情况下依然显示help信息
+因为mgithub可脱离子命令单独执行，所以正常情况mgithub将会被视为合法命令。
+使用以下python语句，在mgithub后无参数无子命令时，执行命令行"mgithub -h"从而达到显示help信息的功能
+```buildoutcfg
+if ctx.invoked_subcommand is None:
+     os.system("mgithub -h")
+```
+
+#### command 读入多个argument
+使用以下命令读入多个参数，参数将会存放在一个名为line的python tuple内
+```buildoutcfg
+@click.argument('line', nargs=-1, required=True)
+```
+
