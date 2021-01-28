@@ -102,3 +102,15 @@ if ctx.invoked_subcommand is None:
 @click.argument('line', nargs=-1, required=True)
 ```
 
+#### CLI文件打包并使用
+如使用虚拟环境需启动虚拟环境
+```buildoutcfg
+cd mgithub/backup
+pip3 install --editable .
+```
+之后就可以直接使用mgithub命令，pip3命令需在GithubCLI.py， setup.py同目录下执行
+
+#### 需要的package (推荐使用虚拟环境)
+1. click 安装：pip3 install click
+2. setuptools 安装：pip3 install setuptools
+
