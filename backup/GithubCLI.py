@@ -6,7 +6,6 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 command = GithubCommand()
 
-
 @click.group(context_settings=CONTEXT_SETTINGS, invoke_without_command=True)
 @click.option('-v', '--version', help='show the version.', is_flag=True)
 @click.option('-l', '--logs', help='show the logs.', is_flag=True)

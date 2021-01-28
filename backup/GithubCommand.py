@@ -26,7 +26,7 @@ class GithubCommand:
 
     # 功能：copy files or folder from source to destination
     def copy(self, ctx, src_path, des_path):
-        print("[[backup]] function is running")
+        print("[[copy]] function is running")
         print('src_path: %s' % src_path)
         print('des_path: %s' % des_path)
         GithubCommand.debug(ctx)
@@ -124,7 +124,7 @@ class GithubCommand:
         # TODO:
         # ...
         # print_log()
-        
+
     @staticmethod
     def debug(ctx):
         print("########## debug flag check ##########")
