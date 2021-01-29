@@ -25,7 +25,8 @@ from GithubTools import GithubTools
 # *******************************************************************
 
 class GithubProduct():
-
+    
+    
 
     # 执行自动化内容
     def product_excute(self, projectname, organization, productkind, sourcepath, despath, cmd, repository_cache_str, repository_str):

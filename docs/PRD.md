@@ -51,6 +51,7 @@ Options:
   -h, --help                show this help message and exit
   -v, --version             show the version
   -l, --logs                show the logs
+  -url                      set your git URL, the default value is https://github.com/websoft9
   --skip-get-repositories   skip get repositories
   --skip-broken             skip command error and continue next repository
   -f, --force               do not prompt before overwriting
