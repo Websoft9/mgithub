@@ -2,3 +2,4 @@ __pycache__/
 .idea/
 .DS_Store
 /mgithub.egg-info
+/data/mgithubTestOrg/
