@@ -32,7 +32,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
         click.echo("Showing logs ....")
 
 
-@mgithub.command()
+@mgithub.command(short_help="Input organization URL for initiation.")
 @click.pass_context
 @click.option('-url', nargs=1, prompt="input URL",
               help="Set your git URL, the default value is https://github.com/websoft9.")
@@ -41,20 +41,20 @@ def configure(ctx, url):
     command.configure(ctx)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Generate the repositories cache.")
 @click.pass_context
 def repocache(ctx):
     command.repocache(ctx)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Backup all repositories to path.")
 @click.pass_context
 @click.argument('path', nargs=1, required=True)
 def backup(ctx, path):
     command.backup(ctx, path)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Copy files or folder from source path to destination path.")
 @click.pass_context
 @click.argument('source_path', nargs=1, required=True)
 @click.argument('destination_path', nargs=1, required=True)
@@ -62,7 +62,8 @@ def copy(ctx, source_path, destination_path):
     command.copy(ctx, source_path, destination_path)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Move files or folder from source path to destination path, \
+                            source and destination path must be in the same repository.")
 @click.pass_context
 @click.argument('source_path', nargs=1, required=True)
 @click.argument('destination_path', nargs=1, required=True)
@@ -70,14 +71,14 @@ def move(ctx, source_path, destination_path):
     command.move(ctx, source_path, destination_path)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Delete files or folder of repository.")
 @click.pass_context
 @click.argument('path', nargs=1, required=True)
 def delete(ctx, path):
     command.delete(ctx, path)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Rename the file or folder.")
 @click.pass_context
 @click.argument('path', nargs=1, required=True)
 @click.argument('new_name', nargs=1, required=True)
@@ -85,7 +86,8 @@ def rename(ctx, path, new_name):
     command.rename(ctx, path, new_name)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Replace single file's content according to the specific command, \
+                            if no new_content provided, old_content will be deleted from file.")
 @click.pass_context
 @click.argument('file_path', nargs=1, required=True)
 @click.argument('old_content', nargs=1, required=True)
@@ -94,7 +96,7 @@ def replace(ctx, file_path, old_content, new_content):
     command.replace(ctx, file_path, old_content, new_content)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Insert content under certain line (or multiple lines) of file accoring to the specific command.")
 @click.pass_context
 @click.argument('file_path', nargs=1, required=True)
 @click.argument('line', nargs=-1, required=True)
@@ -103,7 +105,7 @@ def lineinsert(ctx, file_path, line, content):
     command.lineinsert(ctx, file_path, line, content)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Instantiate template base on jinja2.")
 @click.pass_context
 @click.argument('template', nargs=1, required=True)
 @click.argument('variable', nargs=1, required=True)
@@ -111,7 +113,7 @@ def format(ctx, template, variable):
     command.format(ctx, template, variable)
 
 
-@mgithub.command()
+@mgithub.command(short_help="Execute official Github's CLI command.")
 @click.pass_context
 @click.argument('clistring', nargs=1, required=True)
 def githubcli(ctx, clistring):
