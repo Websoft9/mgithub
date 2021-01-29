@@ -1,0 +1,9 @@
+GithubCLI.py
+README.md
+setup.py
+mgithub.egg-info/PKG-INFO
+mgithub.egg-info/SOURCES.txt
+mgithub.egg-info/dependency_links.txt
+mgithub.egg-info/entry_points.txt
+mgithub.egg-info/requires.txt
+mgithub.egg-info/top_level.txt

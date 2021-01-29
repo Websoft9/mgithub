@@ -1,6 +1,6 @@
 import click
 import os
-from backup.GithubCommand import GithubCommand
+from GithubCommand import GithubCommand
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 

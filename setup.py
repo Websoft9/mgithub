@@ -8,7 +8,7 @@ setup(
         'Click',
     ],
     entry_points='''
-        [console_scripts]
+        [consolgite_scripts]
         mgithub=GithubCLI:mgithub
     ''',
 )
