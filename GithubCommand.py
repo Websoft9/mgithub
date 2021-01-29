@@ -1,3 +1,6 @@
+from GithubFlow import GithubFlow
+
+
 class GithubCommand:
 
     # 功能：提示用户输入初始化所需的 组织URL 等信息
@@ -29,7 +32,10 @@ class GithubCommand:
         print("[[copy]] function is running")
         print('src_path: %s' % src_path)
         print('des_path: %s' % des_path)
-        GithubCommand.debug(ctx)
+        mauto = GithubFlow()
+        mauto.auto_make("mgithubTestOrg", "copy", "projAAA/", "projBBB/", "")
+
+        # GithubCommand.debug(ctx)
         # TODO:
         # git_clone()
         # ...
