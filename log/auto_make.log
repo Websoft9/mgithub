@@ -1,0 +1,2 @@
+[[Start]]  19:56:01: projAAA execute COPY src(projAAA/b.txt) des(projBBB/)
+[[Finish]] 19:56:07: projAAA execute COPY src(projAAA/b.txt) des(projBBB/)

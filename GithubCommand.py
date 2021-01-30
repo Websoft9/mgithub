@@ -33,7 +33,7 @@ class GithubCommand:
         print('src_path: %s' % src_path)
         print('des_path: %s' % des_path)
         mauto = GithubFlow()
-        mauto.auto_make("mgithubTestOrg", "copy", "projAAA/", "projBBB/", "")
+        mauto.auto_make("mgithubTestOrg", "copy", src_path, des_path)
 
         # GithubCommand.debug(ctx)
         # TODO:
