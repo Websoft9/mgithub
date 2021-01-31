@@ -1,2 +1,12 @@
-[[Start]]  19:56:01: projAAA execute COPY src(projAAA/b.txt) des(projBBB/)
-[[Finish]] 19:56:07: projAAA execute COPY src(projAAA/b.txt) des(projBBB/)
+14:58:29 |OK| projAAA execute |COPY| src: |b.txt| des: |test/|
+14:58:36 |OK| projBBB execute |COPY| src: |b.txt| des: |test/|
+14:58:43 |OK| projCCC execute |COPY| src: |b.txt| des: |test/|
+15:01:23 |OK| projAAA execute |COPY| src: |b.txt| des: |test/|
+15:01:27 |OK| projBBB execute |COPY| src: |b.txt| des: |test/|
+15:01:30 |OK| projCCC execute |COPY| src: |b.txt| des: |test/|
+15:01:47 |OK| projAAA execute |COPY| src: |b.txt| des: |test/|
+15:01:51 |OK| projBBB execute |COPY| src: |b.txt| des: |test/|
+15:01:54 |OK| projCCC execute |COPY| src: |b.txt| des: |test/|
+15:03:07 |OK| projAAA execute |COPY| src: |b.txt| des: |test/|
+15:03:10 |OK| projBBB execute |COPY| src: |b.txt| des: |test/|
+15:03:14 |OK| projCCC execute |COPY| src: |b.txt| des: |test/|

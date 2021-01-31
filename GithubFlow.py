@@ -23,31 +23,20 @@ class GithubFlow():
         self.automake_new(organization, product_kind, src_path, des_path, repo_str)
 
     def automake_new(self, organization, product_kind, src_path, des_path, repo_str):
-
-        print('自动化任务开始，将从github下载最新的项目列表后开始构建')
-
-        src_repo = organization + "/" + src_path.split("/")[0]
-        des_repo = organization + "/" + des_path.split("/")[0]
-
-        print("repository_str: " + repo_str)
-        print("src_repo: " + src_repo)
-        print("des_repo: " + des_repo)
-
-        # Clone源和目标仓库到本地
-        src_cmd = "git clone --depth=1 https://github.com/" + src_repo + ".git data/" + src_repo
-        des_cmd = "git clone --depth=1 https://github.com/" + des_repo + ".git data/" + des_repo
-        GithubTools.execute_CommandReturn(src_cmd)
-        GithubTools.execute_CommandReturn(des_cmd)
-
-        # 将组织内的所用repo记录到本地，并生成array记录所有到repo name
         self.create_repository(organization, repo_str)
         project_list = open(repo_str).read().splitlines()
-        product = GithubProduct()
 
-        # 如果是copy操作，则只需要对copy的src仓库进行操作
-        if product_kind == "copy":
-            product.product_execute(project_list[0], organization, product_kind, src_path, des_path,
-                                    repo_str, project_list)
+        for proj in project_list:
+            FILE_PATH = "data/organization/" + proj
+            if os.path.isdir(FILE_PATH):
+                pass
+            else:
+                cmd="git clone --depth=1 https://github.com/"  + organization + "/" + proj + ".git data/" + organization + "/" + proj
+                GithubTools.execute_CommandReturn(cmd)
+
+        product = GithubProduct()
+        for proj in project_list:
+            product.product_execute(proj, organization, product_kind, src_path, des_path, repo_str)
 
     # 根据organization生成最新的repository文件列表
     def create_repository(self, organization, repository_str):
