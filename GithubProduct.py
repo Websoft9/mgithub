@@ -2,6 +2,7 @@ import os
 
 from backup.GithubTools import GithubTools
 import time
+from GithubException import CustomException
 
 
 class GithubProduct():
@@ -19,7 +20,10 @@ class GithubProduct():
         FILE_PATH = "data/" + organization + "/" + project
         if os.path.isdir(FILE_PATH):
             cmd = "cd " + FILE_PATH + "; git pull"
-            GithubTools.execute_CommandReturn(cmd)
+            try:
+                GithubTools.execute_CommandReturn(cmd)
+            except CustomException as e:
+                raise e
         else:
             cmd = "git clone --depth=1 https://github.com/" + organization + "/" + project + ".git data/" + organization + "/" + project
             GithubTools.execute_CommandReturn(cmd)

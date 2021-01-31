@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import os, io, sys, platform, shutil, urllib3, subprocess
-
+from GithubException import CustomException
 
 class GithubTools():
     """统一的云CLI命令执行，所有CLI命令必须精准可用"""
@@ -50,11 +50,13 @@ class GithubTools():
             temp_str = out_str[1]
             temp_str = temp_str.strip('\n')
             temp_str = temp_str.strip('"')
+            print("abcabcabc")
             print(temp_str)
             return 1
         else:
             print('\n此次任务执行失败，请根据下面错误原因排查：')
             print(out_str)
+            # raise CustomException(out_str)
             return 0
 
     # 执行CLI命令，结果写入到文件
