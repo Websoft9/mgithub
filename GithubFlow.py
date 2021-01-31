@@ -1,6 +1,7 @@
 import os
 from backup.GithubTools import GithubTools
 from GithubProduct import GithubProduct
+from GithubException import CustomException
 
 
 class GithubFlow():
@@ -29,8 +30,17 @@ class GithubFlow():
 
     def automake_new(self, organization, product_kind, src_path, des_path, repo_str):
         self.create_repository(organization, repo_str)
-        # GithubTools.execute_Command("echo 'projDDD' >> data/mgithubTestOrg_repositories.txt")
+        GithubTools.execute_Command("echo 'projAAA' >> data/mgithubTestOrg_repositories.txt")
         project_list = open(repo_str).read().splitlines()
+
+
+
+        try:
+            if len(project_list) == 0:
+                raise CustomException("您的仓库列表为空,请检查您的网络连接或组织名称")
+        except CustomException as e:
+            print(e.msg)
+            return
 
         if self.skip_get_repo:
             print("\n已跳过clone仓库步骤, 本地已有的仓库将会在执行过程中更新")
@@ -43,10 +53,15 @@ class GithubFlow():
                 else:
                     cmd="git clone --depth=1 https://github.com/"  + organization + "/" + proj + ".git data/" + organization + "/" + proj
                     GithubTools.execute_CommandReturn(cmd)
+                    # print(GithubTools.execute_CommandIgnoreReturn(cmd))
 
         product = GithubProduct(self.skip_get_repo, self.skip_broken, self.force)
         for proj in project_list:
-            product.product_execute(proj, organization, product_kind, src_path, des_path, repo_str)
+            try:
+                product.product_execute(proj, organization, product_kind, src_path, des_path, repo_str)
+            except CustomException as e:
+                print(e.msg)
+                return
 
     # 根据organization生成最新的repository文件列表
     def create_repository(self, organization, repository_str):
