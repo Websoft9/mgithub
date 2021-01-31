@@ -30,16 +30,17 @@ class GithubFlow():
 
     def automake_new(self, organization, product_kind, src_path, des_path, repo_str):
         self.create_repository(organization, repo_str)
-        GithubTools.execute_Command("echo 'projAAA' >> data/mgithubTestOrg_repositories.txt")
+        # GithubTools.execute_Command("echo 'proj' >> data/mgithubTestOrg_repositories.txt")
         project_list = open(repo_str).read().splitlines()
-
-
+        product = GithubProduct(self.skip_get_repo, self.skip_broken, self.force)
 
         try:
             if len(project_list) == 0:
                 raise CustomException("您的仓库列表为空,请检查您的网络连接或组织名称")
         except CustomException as e:
             print(e.msg)
+            # product.complete_work(0, organization, "NaN", product_kind, repo_str, src_path, des_path)
+            print("============================ [[Empty]]: 任务列表为空\n")
             return
 
         if self.skip_get_repo:
@@ -51,20 +52,23 @@ class GithubFlow():
                 if os.path.isdir(FILE_PATH):
                     print(FILE_PATH + "已存在, 可以使用option: --skip-get-repositories 跳过本步骤")
                 else:
+                    print("git clone from " + proj + "....")
                     cmd="git clone --depth=1 https://github.com/"  + organization + "/" + proj + ".git data/" + organization + "/" + proj
                     # GithubTools.execute_CommandReturn(cmd)
                     try:
                         GithubTools.execute_CommandIgnoreReturn(cmd)
                     except CustomException as e:
                         print(e.msg)
+                        product.complete_work(0, organization, proj, product_kind, repo_str, src_path, des_path)
                         return
 
-        product = GithubProduct(self.skip_get_repo, self.skip_broken, self.force)
+
         for proj in project_list:
             try:
                 product.product_execute(proj, organization, product_kind, src_path, des_path, repo_str)
             except CustomException as e:
                 print(e.msg)
+                product.complete_work(0, organization, proj, product_kind, repo_str, src_path, des_path)
                 return
 
     # 根据organization生成最新的repository文件列表

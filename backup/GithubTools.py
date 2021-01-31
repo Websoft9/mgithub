@@ -33,19 +33,38 @@ class GithubTools():
 
         print(out_str)
 
-    # 执行CLI命令，有返回值
+    # 执行git clone等命令
     def execute_CommandIgnoreReturn(cmd_str):
         # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
-        print(out_str)
-        if(out_str[0] == "128"):
-            raise CustomException(out_str)
+        # print(out_str)
+        if(out_str[0] == 128):
+            raise CustomException(out_str[1])
         return out_str
+
+    # 执行copy等系统命令
+    def execute_CmdCommand(cmd_str):
+        out_str = subprocess.getstatusoutput(cmd_str)
+        if out_str[0] == 0:
+            if(str(out_str[1]).split(":")[0] == "cp"):
+                raise CustomException(out_str[1])
+            # 去掉\n和"
+            # 返回值是元组，不能修改，需要赋值给变量
+            temp_str = out_str[1]
+            temp_str = temp_str.strip('\n')
+            temp_str = temp_str.strip('"')
+            print(temp_str)
+            return 1
+        else:
+            print('\n此次任务执行失败，请根据下面错误原因排查：')
+            # print(out_str)
+            raise CustomException(out_str[1])
+            return 0
 
 
     # 执行CLI命令，有返回值
     def execute_CommandReturn(cmd_str):
-        # print(cmd_str)
+        print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 0:
             # 去掉\n和"
@@ -53,8 +72,7 @@ class GithubTools():
             temp_str = out_str[1]
             temp_str = temp_str.strip('\n')
             temp_str = temp_str.strip('"')
-            print("abcabcabc")
-            print(temp_str)
+            # print(temp_str)
             return 1
         else:
             print('\n此次任务执行失败，请根据下面错误原因排查：')
