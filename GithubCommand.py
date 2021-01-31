@@ -32,7 +32,7 @@ class GithubCommand:
         print("[[copy]] function is running")
         print('src_path: %s' % src_path)
         print('des_path: %s' % des_path)
-        mauto = GithubFlow()
+        mauto = GithubFlow(ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'])
         mauto.auto_make("mgithubTestOrg", "copy", src_path, des_path)
 
         # GithubCommand.debug(ctx)

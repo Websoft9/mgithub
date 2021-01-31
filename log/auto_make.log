@@ -1,12 +1,39 @@
-14:58:29 |OK| projAAA execute |COPY| src: |b.txt| des: |test/|
-14:58:36 |OK| projBBB execute |COPY| src: |b.txt| des: |test/|
-14:58:43 |OK| projCCC execute |COPY| src: |b.txt| des: |test/|
-15:01:23 |OK| projAAA execute |COPY| src: |b.txt| des: |test/|
-15:01:27 |OK| projBBB execute |COPY| src: |b.txt| des: |test/|
-15:01:30 |OK| projCCC execute |COPY| src: |b.txt| des: |test/|
-15:01:47 |OK| projAAA execute |COPY| src: |b.txt| des: |test/|
-15:01:51 |OK| projBBB execute |COPY| src: |b.txt| des: |test/|
-15:01:54 |OK| projCCC execute |COPY| src: |b.txt| des: |test/|
-15:03:07 |OK| projAAA execute |COPY| src: |b.txt| des: |test/|
-15:03:10 |OK| projBBB execute |COPY| src: |b.txt| des: |test/|
-15:03:14 |OK| projCCC execute |COPY| src: |b.txt| des: |test/|
+16:04:25 |FAILED| projAAA execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:04:26 |FAILED| projBBB execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:04:27 |FAILED| projCCC execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:06:36 |FAILED| projAAA execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:06:37 |FAILED| projBBB execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:06:38 |FAILED| projCCC execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:10:13 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:10:17 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:10:20 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:10:57 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:11:05 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:11:11 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:14:01 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:14:05 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:14:09 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:17:55 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:17:59 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:18:02 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:33:30 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:33:33 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:33:37 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:43:38 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:43:42 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:43:45 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:44:50 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:44:54 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:44:57 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:49:43 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:49:47 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:49:50 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |True|
+16:50:02 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:50:05 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |False|
+16:50:09 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |False|
+17:26:33 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |False|
+17:26:36 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |False|
+17:26:40 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |False|
+17:27:00 |OK| projAAA execute |COPY| src: |b.txt| des: |test/| force: |False|
+17:27:03 |OK| projBBB execute |COPY| src: |b.txt| des: |test/| force: |False|
+17:27:07 |OK| projCCC execute |COPY| src: |b.txt| des: |test/| force: |False|
