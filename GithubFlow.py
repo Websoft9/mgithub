@@ -53,7 +53,11 @@ class GithubFlow():
                 else:
                     cmd="git clone --depth=1 https://github.com/"  + organization + "/" + proj + ".git data/" + organization + "/" + proj
                     # GithubTools.execute_CommandReturn(cmd)
-                    print(GithubTools.execute_CommandIgnoreReturn(cmd))
+                    try:
+                        GithubTools.execute_CommandIgnoreReturn(cmd)
+                    except CustomException as e:
+                        print(e.msg)
+                        return
 
         product = GithubProduct(self.skip_get_repo, self.skip_broken, self.force)
         for proj in project_list:

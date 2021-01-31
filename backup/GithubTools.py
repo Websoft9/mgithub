@@ -37,6 +37,8 @@ class GithubTools():
     def execute_CommandIgnoreReturn(cmd_str):
         # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
+        if(out_str[0] == "128"):
+            raise CustomException(out_str)
         return out_str
 
 
