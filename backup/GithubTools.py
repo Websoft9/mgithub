@@ -42,7 +42,7 @@ class GithubTools():
 
     # 执行CLI命令，有返回值
     def execute_CommandReturn(cmd_str):
-        print(cmd_str)
+        # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 0:
             # 去掉\n和"

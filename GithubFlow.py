@@ -52,8 +52,8 @@ class GithubFlow():
                     print(FILE_PATH + "已存在, 可以使用option: --skip-get-repositories 跳过本步骤")
                 else:
                     cmd="git clone --depth=1 https://github.com/"  + organization + "/" + proj + ".git data/" + organization + "/" + proj
-                    GithubTools.execute_CommandReturn(cmd)
-                    # print(GithubTools.execute_CommandIgnoreReturn(cmd))
+                    # GithubTools.execute_CommandReturn(cmd)
+                    print(GithubTools.execute_CommandIgnoreReturn(cmd))
 
         product = GithubProduct(self.skip_get_repo, self.skip_broken, self.force)
         for proj in project_list:
