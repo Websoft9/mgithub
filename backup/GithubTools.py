@@ -23,7 +23,6 @@ class GithubTools():
 
     # 执行CLI命令，无返回值
     def execute_Command(cmd_str):
-        print(cmd_str)
 
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 0:

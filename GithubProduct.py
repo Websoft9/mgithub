@@ -1,8 +1,9 @@
 import os
+import time
 
 from backup.GithubTools import GithubTools
-import time
 from GithubException import CustomException
+from GithubSystem import GithubSystem
 
 
 class GithubProduct():
@@ -32,14 +33,16 @@ class GithubProduct():
             # 存在：使用git pull对本地仓库进行更新
             cmd = "cd " + FILE_PATH + "; git pull"
             try:
-                GithubTools.execute_CommandIgnoreReturn(cmd)
+                # GithubTools.execute_CommandIgnoreReturn(cmd)
+                GithubSystem.execute_GitCommand(cmd)
             except CustomException as e:
                 raise e
         else:
             # 不存在：使用git clone从新获取本地仓库
             cmd = "git clone --depth=1 " + self.url + "/" + project + ".git data/" + self.organization + "/" + project
             try:
-                GithubTools.execute_CommandIgnoreReturn(cmd)
+                # GithubTools.execute_CommandIgnoreReturn(cmd)
+                GithubSystem.execute_GitCommand(cmd)
             except CustomException as e:
                 raise e
 
@@ -56,7 +59,8 @@ class GithubProduct():
                     "data/" + self.organization + "/" + project + "/" + self.des_path,)
             # 执行相应的COPY命令
             try:
-                GithubTools.execute_CmdCommand(cmd)
+                # GithubTools.execute_CmdCommand(cmd)
+                GithubSystem.execute_CmdCommand(cmd)
             except CustomException as e:
                 raise e
 
@@ -87,7 +91,8 @@ class GithubProduct():
         print(project + ": 将本地工程提交到github")
         cmd = 'cd data/%s/%s;\ngit add -A;\ngit commit -m "%s";\ngit push' % (self.organization, project, self.product_kind)
         try:
-            GithubTools.execute_CommandIgnoreReturn(cmd)
+            # GithubTools.execute_CommandIgnoreReturn(cmd)
+            GithubSystem.execute_GitCommand(cmd)
         except CustomException as e:
             raise e
 
@@ -100,7 +105,8 @@ class GithubProduct():
             print("\n" + project + ": 自动化任务完成,从缓存列表删除该工程,并追加日志")
             # 删除列表中对应的项目
             cmd = "sed -i '""' '/^$/d;/" + project + "/d' " + self.repo_str
-            GithubTools.execute_CommandIgnoreReturn(cmd)
+            # GithubTools.execute_CommandIgnoreReturn(cmd)
+            GithubSystem.execute_GitCommand(cmd)
             # 生成log
             self.log_maker(project, flag)
             print("============================ [[" + project + "]]: 本项目任务成功\n")
@@ -130,7 +136,8 @@ class GithubProduct():
                    "| force: |" + str(self.force) + "| skip-get-repositories: |"\
                     + str(self.skip_get_repo) + "| skip-broken: |" + str(self.skip_broken)\
                     + "| url: |" + self.url + "|"
-        GithubTools.execute_CommandIgnoreReturn("echo '" + logline + "' >>" + FILE_PATH)
+        # GithubTools.execute_CommandIgnoreReturn("echo '" + logline + "' >>" + FILE_PATH)
+        GithubSystem.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)
         print("log: " + logline)
 
     # def repo_remove(self, organization, project):

@@ -5,6 +5,7 @@ import sys
 from backup.GithubTools import GithubTools
 from GithubProduct import GithubProduct
 from GithubException import CustomException
+from GithubSystem import GithubSystem
 
 
 class GithubFlow():
@@ -56,9 +57,11 @@ class GithubFlow():
                 # 内容不为空，让用户决定是否继续上次的任务
                 print("清单里有未完成的任务列表, 请确认列表内容")
                 print("未完成清单内容如下：")
-                GithubTools.execute_CmdCommand("cat " + self.repo_str)
+                # GithubTools.execute_CmdCommand("cat " + self.repo_str)
+                GithubSystem.execute_CmdCommand("cat " + self.repo_str)
                 print("最新10条任务日志如下：")
-                GithubTools.execute_CmdCommand("tail -n 10 log/auto_make.log")
+                # GithubTools.execute_CmdCommand("tail -n 10 log/auto_make.log")
+                GithubSystem.execute_CmdCommand("tail -n 10 log/auto_make.log")
                 # 用户输入
                 continue_id = self.continue_select()
                 # 根据不同的用户输入决定操作
@@ -69,11 +72,13 @@ class GithubFlow():
                 else:
                     # 放弃上次的任务并删除项目列表
                     print("已经清空所有未完成任务，请重新输入命令再次执行")
-                    GithubTools.execute_CmdCommand(": > data/" + self.organization + "_repositories.txt")
+                    # GithubTools.execute_CmdCommand(": > data/" + self.organization + "_repositories.txt")
+                    GithubSystem.execute_CmdCommand(": > data/" + self.organization + "_repositories.txt")
                     return
         else:
             # 缓存文件不存在，创建空的缓存文件
-            GithubTools.execute_CommandReturn('touch ' + self.repo_str)
+            # GithubTools.execute_CommandReturn('touch ' + self.repo_str)
+            GithubSystem.execute_CommandReturn('touch ' + self.repo_str)
             # 执行正常操作
             self.automake_new()
 
@@ -150,9 +155,13 @@ class GithubFlow():
     # 根据组织寻找组织下所有的项目
     def create_repository(self, organization, repository_str):
         print('开始更新%s Github仓库列表...' % organization)
-        GithubTools.execute_CommandWriteFile(
+        # GithubTools.execute_CommandWriteFile(
+        #     'curl -s  https://api.github.com/orgs/mgithubTestOrg/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
+        #     repository_str)
+        GithubSystem.execute_CommandWriteFile(
             'curl -s  https://api.github.com/orgs/mgithubTestOrg/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
-            repository_str)
+            repository_str
+        )
 
     # 根据项目列表，将每个项目的远程仓库clone到本地
     def clone_repo_list(self, project_list, product):
@@ -173,7 +182,8 @@ class GithubFlow():
                     print("git clone from " + proj + "....")
                     cmd = "git clone --depth=1 " + self.url + "/" + proj + ".git data/" + self.organization + "/" + proj
                     try:
-                        GithubTools.execute_CommandIgnoreReturn(cmd)
+                        # GithubTools.execute_CommandIgnoreReturn(cmd)
+                        GithubSystem.execute_GitCommand(cmd)
                     except CustomException as e:
                         # 仓库clone未成功，结束本次任务
                         print(e.msg)
@@ -198,7 +208,8 @@ class GithubFlow():
                 print("============================ [[" + proj + "]]: 项目正在回滚")
                 cmd = "cd data/" + self.organization + "/" + proj + ";git fetch --all;git reset --hard origin/master;git clean -f -d;"
                 try:
-                    GithubTools.execute_CommandIgnoreReturn(cmd)
+                    # GithubTools.execute_CommandIgnoreReturn(cmd)
+                    GithubSystem.execute_GitCommand(cmd)
                 except CustomException as e:
                     # 项目回滚中出现异常，回滚失败
                     print(e.msg)
@@ -221,7 +232,7 @@ class GithubFlow():
             input_str = input_str + str(i) + "." + x + " \n\t "
             i = i + 1
         input_str = input_str + "\n\t选择: "
-        
+
         continue_id = input(input_str)
         while continue_id not in ['0', '1']:
             print('\n\t输入错误，请重新选择')
