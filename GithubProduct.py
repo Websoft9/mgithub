@@ -7,17 +7,23 @@ from GithubException import CustomException
 
 class GithubProduct():
 
-    def __init__(self, skip_get_repo, skip_broken, force):
+    def __init__(self, url, skip_get_repo, skip_broken, force, product_kind, src_path, des_path, repo_str):
+        self.url = url
         self.skip_get_repo = skip_get_repo
         self.skip_broken = skip_broken
         self.force = force
+        self.product_kind = product_kind
+        self.src_path = src_path
+        self.des_path = des_path
+        self.organization = url.split("/")[len(url.split("/")) - 1]
+        self.repo_str = repo_str
 
     # 执行自动化命令
-    def product_execute(self, project, organization, product_kind, src_path, des_path, repo_str):
+    def product_execute(self, project):
         print("\n============================ [[" + project + "]]: 开始执行自动化构建")
 
         print("更新本地仓库: " + project)
-        FILE_PATH = "data/" + organization + "/" + project
+        FILE_PATH = "data/" + self.organization + "/" + project
         if os.path.isdir(FILE_PATH):
             # 更新本地的仓库列表
             cmd = "cd " + FILE_PATH + "; git pull"
@@ -27,22 +33,22 @@ class GithubProduct():
                 raise e
         else:
             # clone仓库列表
-            cmd = "git clone --depth=1 https://github.com/" + organization + "/" + project + ".git data/" + organization + "/" + project
+            cmd = "git clone --depth=1 " + self.url + "/" + project + ".git data/" + self.organization + "/" + project
             try:
                 GithubTools.execute_CommandIgnoreReturn(cmd)
             except CustomException as e:
                 raise e
 
-        if product_kind == "copy":
+        if self.product_kind == "copy":
             if self.force:
                 # mgithub --force
                 print("\n执行强制覆盖的copy动作...")
-                cmd = "cp -rf data/" + organization + "/" + project + "/" + src_path + " data/" + organization + "/" + project + "/" + des_path
+                cmd = "cp -rf data/" + self.organization + "/" + project + "/" + self.src_path + " data/" + self.organization + "/" + project + "/" + self.des_path
             else:
                 print("\n执行不覆盖的copy动作...")
                 cmd = "awk \'BEGIN { cmd=\"cp -ri %s %s\"; print \"n\" |cmd; }\'" % (
-                    "data/" + organization + "/" + project + "/" + src_path,
-                    "data/" + organization + "/" + project + "/" + des_path,)
+                    "data/" + self.organization + "/" + project + "/" + self.src_path,
+                    "data/" + self.organization + "/" + project + "/" + self.des_path,)
             try:
                 GithubTools.execute_CmdCommand(cmd)
             except CustomException as e:
@@ -50,51 +56,54 @@ class GithubProduct():
 
             print("\n正在将本地改动push到远程仓库...")
             try:
-                self.github_push(organization, project, product_kind)
+                self.github_push(project)
             except CustomException as e:
                 raise e
 
-            self.complete_work(1, organization, project, product_kind, repo_str, src_path, des_path)
+            self.complete_work(1, project)
 
     # 将本地工程提交到github（push to remote）
-    def github_push(self, organization, project, product):
+    def github_push(self, project):
 
         print(project + ": 将本地工程提交到github")
-        cmd = 'cd data/%s/%s;\ngit add -A;\ngit commit -m "%s";\ngit push' % (organization, project, product)
+        cmd = 'cd data/%s/%s;\ngit add -A;\ngit commit -m "%s";\ngit push' % (self.organization, project, self.product_kind)
         try:
             GithubTools.execute_CommandIgnoreReturn(cmd)
         except CustomException as e:
             raise e
 
     # 主体构建工作完成后的处理，删除表中该工程
-    def complete_work(self, flag, organization, project, product_kind, repository_str, src_path, des_path):
+    def complete_work(self, flag, project):
         if flag == 1:
             print("\n" + project + ": 自动化任务完成,从缓存列表删除该工程,并追加日志")
-            cmd = "sed -i '""' '/^$/d;/" + project + "/d' " + repository_str
+            cmd = "sed -i '""' '/^$/d;/" + project + "/d' " + self.repo_str
             GithubTools.execute_CommandIgnoreReturn(cmd)
-            self.log_maker(organization, project, product_kind, src_path, des_path, flag)
+            self.log_maker(project, flag)
             print("============================ [[" + project + "]]: 本项目任务成功\n")
         else:
             print("\n" + project + ": 自动化任务未完成,在缓存列表保留此工程,并追加日志")
-            self.log_maker(organization, project, product_kind, src_path, des_path, flag)
+            self.log_maker(project, flag)
             print("============================ [[" + project + "]]: 本项目任务失败\n")
 
-    def log_maker(self, organization, project, product, src_path, des_path, flag):
+    def log_maker(self, project, flag):
         FILE_PATH = "log/auto_make.log"
         nowtime = time.strftime("%H:%M:%S")
         logline = nowtime
         if (flag == 1):
             logline += " |OK"
-        else:
+        elif (flag == 0):
             logline += " |FAILED"
-        logline += "| organization: |" + organization + "| project: |" \
-                   + project + "| execute " + "|" + product.upper() \
-                   + "|" + " src: |" + src_path + "| des: |" + des_path +\
+        elif (flag == 2):
+            logline += " |ABORT"
+        logline += "| organization: |" + self.organization + "| project: |" \
+                   + project + "| execute " + "|" + self.product_kind.upper() \
+                   + "|" + " src: |" + self.src_path + "| des: |" + self.des_path +\
                    "| force: |" + str(self.force) + "| skip-get-repositories: |"\
-                    + str(self.skip_get_repo) + "| skip-broken: |" + str(self.skip_broken) + "|"
+                    + str(self.skip_get_repo) + "| skip-broken: |" + str(self.skip_broken)\
+                    + "| url: |" + self.url + "|"
         GithubTools.execute_CommandIgnoreReturn("echo '" + logline + "' >>" + FILE_PATH)
         print("log: " + logline)
 
-    def repo_remove(self, organization, project):
-        cmd = "rm -rf data/" + organization + "/" + project
-        GithubTools.execute_Command(cmd)
+    # def repo_remove(self, organization, project):
+    #     cmd = "rm -rf data/" + organization + "/" + project
+    #     GithubTools.execute_Command(cmd)

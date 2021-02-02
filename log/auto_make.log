@@ -1,0 +1,5 @@
+17:05:23 |ABORT| organization: |mgithubTestOrg| project: |projAAA| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
+17:05:34 |OK| organization: |mgithubTestOrg| project: |projAAA| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
+17:05:34 |ABORT| organization: |mgithubTestOrg| project: |projBBB| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
+17:05:44 |FAILED| organization: |mgithubTestOrg| project: |projBBB| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
+17:05:49 |OK| organization: |mgithubTestOrg| project: |projCCC| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|

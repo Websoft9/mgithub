@@ -1,6 +1,7 @@
 import click
 import os
 from GithubCommand import GithubCommand
+from GithubSystem import GithubSystem
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -20,7 +21,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
     ctx.ensure_object(dict)
     ctx.obj['version'] = version
     ctx.obj['logs'] = logs
-    ctx.obj['url'] = "https://github.com/websoft9"
+    ctx.obj['url'] = GithubSystem().get_prop("url")
     ctx.obj['skip_get_repositories'] = skip_get_repositories
     ctx.obj['skip_broken'] = skip_broken
     ctx.obj['force'] = force
