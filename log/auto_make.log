@@ -1,5 +1,5 @@
-17:05:23 |ABORT| organization: |mgithubTestOrg| project: |projAAA| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
-17:05:34 |OK| organization: |mgithubTestOrg| project: |projAAA| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
-17:05:34 |ABORT| organization: |mgithubTestOrg| project: |projBBB| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
-17:05:44 |FAILED| organization: |mgithubTestOrg| project: |projBBB| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
-17:05:49 |OK| organization: |mgithubTestOrg| project: |projCCC| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
+18:49:55 |OK| organization: |mgithubTestOrg| project: |projAAA| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |False| url: |https://github.com/mgithubTestOrg|
+18:49:57 |FAILED| organization: |mgithubTestOrg| project: |projBBB| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |False| url: |https://github.com/mgithubTestOrg|
+18:50:14 |ABORT| organization: |mgithubTestOrg| project: |projBBB| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
+18:50:29 |FAILED| organization: |mgithubTestOrg| project: |projBBB| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
+18:50:36 |OK| organization: |mgithubTestOrg| project: |projCCC| execute |COPY| src: |b.txt| des: |test/| force: |False| skip-get-repositories: |False| skip-broken: |True| url: |https://github.com/mgithubTestOrg|
