@@ -90,3 +90,36 @@ class GithubSystem:
         else:
             print('\n此次任务执行失败，请根据下面错误原因排查：')
             print(out_str)
+
+    # 输出日志
+    def show_logs(self, num):
+        log_list = open("log/auto_make.log").read().splitlines()
+        if (len(log_list) - num - 1) < 0:
+            i = 0
+        else:
+            i = len(log_list) - num
+        while i < len(log_list):
+            time = log_list[i].split("|")[0]
+            result = log_list[i].split("|")[1]
+            organization = log_list[i].split("|")[3]
+            url = log_list[i].split("|")[19]
+            product_kind = log_list[i].split("|")[7].lower()
+            src_path = log_list[i].split("|")[9]
+            des_path = log_list[i].split("|")[11]
+            skip_get_repo = log_list[i].split("|")[15]
+            skip_broken = log_list[i].split("|")[17]
+            force = log_list[i].split("|")[13]
+            project = log_list[i].split("|")[5]
+
+            command = "mgithub "
+            if skip_get_repo == "True":
+                command += "--skip-get-repositories "
+            if skip_broken == "True":
+                command += "--skip-broken "
+            if force == "True":
+                command += "--force "
+            command += product_kind + " " + src_path + " " + des_path
+
+            print("#" + str(i+1) + " " + time + " " + url + "->" + project + " [" + result + "]: " + command)
+
+            i += 1

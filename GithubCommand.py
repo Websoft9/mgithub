@@ -5,7 +5,7 @@ class GithubCommand:
 
     # 功能：提示用户输入初始化所需的 组织URL 等信息
     def configure(self, ctx):
-        print("[[configure]] function is running")
+        print("Set new URL successfully")
         # print(ctx.obj['url'])
         GithubSystem().set_prop("url", ctx.obj['url'])
         # print(GithubSystem().get_prop("url"))
@@ -35,11 +35,13 @@ class GithubCommand:
         print("[[copy]] function is running")
         print('src_path: %s' % src_path)
         print('des_path: %s' % des_path)
+        print('url: %s' % ctx.obj['url'])
+        GithubCommand.debug(ctx)
         mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
                            "copy", src_path, des_path)
         mauto.auto_make()
 
-        # GithubCommand.debug(ctx)
+
         # TODO:
         # git_clone()
         # ...

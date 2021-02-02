@@ -8,29 +8,36 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 command = GithubCommand()
 
 @click.group(context_settings=CONTEXT_SETTINGS, invoke_without_command=True)
-@click.option('-v', '--version', help='show the version.', is_flag=True)
-@click.option('-l', '--logs', help='show the logs.', is_flag=True)
-@click.option('--skip-get-repositories', help='skip get repositories.', is_flag=True)
-@click.option('--skip-broken', help='skip command error and continue next repository.', is_flag=True)
-@click.option('-f', '--force', help='do not prompt before overwriting.', is_flag=True)
+@click.option('-v', '--version', help='Show the version.', is_flag=True)
+@click.option('-l', '--logs', help='Show the logs.', is_flag=True)
+@click.option('--skip-get-repositories', help='Skip get repositories.', is_flag=True)
+@click.option('--skip-broken', help='Skip command error and continue next repository.', is_flag=True)
+@click.option('-f', '--force', help='Do not prompt before overwriting.', is_flag=True)
+@click.option('-url', help='Set a temporary url for this task.', is_flag=True)
 @click.pass_context
-def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
-    if ctx.invoked_subcommand is None:
+def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url):
+
+    if ctx.invoked_subcommand is None and not url and not version and not logs:
         os.system("mgithub -h")
 
     ctx.ensure_object(dict)
     ctx.obj['version'] = version
     ctx.obj['logs'] = logs
-    ctx.obj['url'] = GithubSystem().get_prop("url")
     ctx.obj['skip_get_repositories'] = skip_get_repositories
     ctx.obj['skip_broken'] = skip_broken
     ctx.obj['force'] = force
+
+    if url:
+        ctx.obj['url'] = click.prompt('Set a temporary URL for this task', type=str)
+    else:
+        ctx.obj['url'] = GithubSystem().get_prop("url")
 
     if version:
         click.echo("mgithub version 1.0.1")
 
     if logs:
-        click.echo("Showing logs ....")
+        # click.echo("Showing logs ....")
+        GithubSystem().show_logs(5)
 
 
 @mgithub.command(short_help="Input organization URL for initiation.")

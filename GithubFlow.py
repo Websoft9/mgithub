@@ -61,7 +61,8 @@ class GithubFlow():
                 GithubSystem.execute_CmdCommand("cat " + self.repo_str)
                 print("最新10条任务日志如下：")
                 # GithubTools.execute_CmdCommand("tail -n 10 log/auto_make.log")
-                GithubSystem.execute_CmdCommand("tail -n 10 log/auto_make.log")
+                # GithubSystem.execute_CmdCommand("tail -n 10 log/auto_make.log")
+                GithubSystem().show_logs(10)
                 # 用户输入
                 continue_id = self.continue_select()
                 # 根据不同的用户输入决定操作
@@ -159,7 +160,7 @@ class GithubFlow():
         #     'curl -s  https://api.github.com/orgs/mgithubTestOrg/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
         #     repository_str)
         GithubSystem.execute_CommandWriteFile(
-            'curl -s  https://api.github.com/orgs/mgithubTestOrg/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
+            'curl -s  https://api.github.com/orgs/' + organization + '/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
             repository_str
         )
 
@@ -217,10 +218,12 @@ class GithubFlow():
                 else:
                     print(proj + ": 项目已回滚")
                 # 如果用户使用 mgithub --skip-broken
-                if self.skip_broken:
+                # 注：在断点任务继续执行时, 默认 --skip-broken, 不然可能会出现任务阻塞情况
+
+                if str(self.skip_broken) == "True":
                     continue
                 else:
-                    return
+                    break
 
     # 选择继续操作
     # 格式：选择是否在上次任务上继续：  \n\t 0. 继续 \n\t 1. 终止退出  \n\n\t选择:
