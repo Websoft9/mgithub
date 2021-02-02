@@ -34,6 +34,7 @@ class GithubFlow():
             else:
                 # 如果已经开始执行项目，则当前项目执行失败
                 product.complete_work(2, self.current_proj)
+                self.rollback_proj(self.current_proj)
         print("用户主动中断任务")
         sys.exit(0)
 
@@ -206,17 +207,7 @@ class GithubFlow():
                 # 已 FAILED 记录本次任务
                 product.complete_work(0, proj)
                 # 对项目进行回滚
-                print("============================ [[" + proj + "]]: 项目正在回滚")
-                cmd = "cd data/" + self.organization + "/" + proj + ";git fetch --all;git reset --hard origin/master;git clean -f -d;"
-                try:
-                    # GithubTools.execute_CommandIgnoreReturn(cmd)
-                    GithubSystem.execute_GitCommand(cmd)
-                except CustomException as e:
-                    # 项目回滚中出现异常，回滚失败
-                    print(e.msg)
-                    print(proj + ": 项目回滚失败, 请检查您的网络连接状况和组织名称")
-                else:
-                    print(proj + ": 项目已回滚")
+                self.rollback_proj(proj)
                 # 如果用户使用 mgithub --skip-broken
                 # 注：在断点任务继续执行时, 默认 --skip-broken, 不然可能会出现任务阻塞情况
 
@@ -224,6 +215,20 @@ class GithubFlow():
                     continue
                 else:
                     break
+
+    def rollback_proj(self, project):
+        # 对项目进行回滚
+        print("============================ [[" + project + "]]: 项目正在回滚")
+        cmd = "cd data/" + self.organization + "/" + project + ";git fetch --all;git reset --hard origin/master;git clean -f -d;"
+        try:
+            # GithubTools.execute_CommandIgnoreReturn(cmd)
+            GithubSystem.execute_GitCommand(cmd)
+        except CustomException as e:
+            # 项目回滚中出现异常，回滚失败
+            print(e.msg)
+            print(project + ": 项目回滚失败, 请检查您的网络连接状况和组织名称")
+        else:
+            print(project + ": 项目已回滚")
 
     # 选择继续操作
     # 格式：选择是否在上次任务上继续：  \n\t 0. 继续 \n\t 1. 终止退出  \n\n\t选择:
