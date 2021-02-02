@@ -209,8 +209,6 @@ class GithubFlow():
                 # 对项目进行回滚
                 self.rollback_proj(proj)
                 # 如果用户使用 mgithub --skip-broken
-                # 注：在断点任务继续执行时, 默认 --skip-broken, 不然可能会出现任务阻塞情况
-
                 if str(self.skip_broken) == "True":
                     continue
                 else:
