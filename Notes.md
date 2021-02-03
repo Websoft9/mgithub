@@ -142,3 +142,28 @@ pip3 install --editable .
 下次对断点任务进行续执行，本任务将会由于B项目的异常永远阻塞（因为续执行任务的命令与上次中断时
 保持一致），CD两个项目永远无法执行到。
 
+## mgithub-githubCLI-secret
+
+#### 创建新的secret
+官方CLI创建新的secret的命令：gh secret set -R"repo_name" secret_name -b"secret_value"
+```buildoutcfg
+gh secret set -R"mgithubTestOrg/projAAA" SECRET_1 -b"abcdefg666"
+```
+在代码中，将不需要用户手动输入—R来确定仓库名，用户只需要输入：
+```buildoutcfg
+mgithub githubcli gh secret set SECRET_1 -b"abcdefg666"
+```
+则会为组织下的所有仓库批量创建一个名为SECRET_1值为abcdefg666的secret。
+如果用户使用-f option，则会强行覆盖已经存在的同名secret，反之则不会。
+
+#### 删除已经存在的secret
+官方CLI删除secret的命令：gh secret remove -R"repo_name" secret_name
+```buildoutcfg
+gh secret remove -R"mgithubTestOrg/projAAA" SECRET_1
+```
+在代码中，将不需要用户手动输入—R来确定仓库名，用户只需要输入：
+```buildoutcfg
+mgithub githubcli gh secret remove SECRET_1
+```
+则会将组织下所有仓库内名为SECRET_1的secret进行批量删除，如果未找到，则抛出异常。
+可通过--skip-broken进行强制续执行
