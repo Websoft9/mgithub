@@ -8,7 +8,7 @@ from GithubSystem import GithubSystem
 
 class GithubProduct():
 
-    def __init__(self, url, skip_get_repo, skip_broken, force, product_kind, src_path, des_path, repo_str):
+    def __init__(self, url, skip_get_repo, skip_broken, force, product_kind, src_path, des_path, repo_str, clistring):
         self.url = url
         self.skip_get_repo = skip_get_repo
         self.skip_broken = skip_broken
@@ -18,6 +18,7 @@ class GithubProduct():
         self.des_path = des_path
         self.organization = url.split("/")[len(url.split("/")) - 1]
         self.repo_str = repo_str
+        self.clistring = clistring
 
 
     # 执行自动化命令
@@ -63,16 +64,50 @@ class GithubProduct():
                 GithubSystem.execute_CmdCommand(cmd)
             except CustomException as e:
                 raise e
+        # GITHUBCLI
+        elif self.product_kind == "githubcli":
+            if len(self.clistring) >= 3:
+                # clistring: gh secret set ...
+                if self.clistring.split(" ")[1] == "secret" and self.clistring.split(" ")[2] == "set":
+                    # 转移到本地的相对应仓库目录下
+                    cd_cmd = "cd data/" + self.organization + "/" + project + ";"
+                    # 获取用户从命令输入的secret key
+                    clistr = self.clistring.split(" ")
+                    secret_key = clistr[3]
+                    # 如果用户使用mgithub -f githubcli
+                    if self.force:
+                        # 覆盖
+                        print("\n正在执行强制覆盖的New Secret设置")
+                        GithubSystem.execute_CmdCommand(cd_cmd + self.clistring)
+                    else:
+                        # 不覆盖
+                        print("\n正在执行不强制覆盖的New Secret设置")
+                        # 判断当前项目中是否存在相同key的secret
+                        cmd = "gh secret list -R " + self.organization + "/" + project\
+                                + "| grep -c ^" + secret_key
+                        rcontent = GithubSystem.execute_GitCommand(cmd)[1]
+                        # 不存在则正常创建一个新的secret
+                        if rcontent == "0":
+                            GithubSystem.execute_CmdCommand(cd_cmd + self.clistring)
 
-        elif self.productkind == "delete" :
+                # clistring: gh secret remove ...
+                elif self.clistring.split(" ")[1] == "secret" and self.clistring.split(" ")[2] == "remove":
+                    # 转移到本地的相对应仓库目录下
+                    cd_cmd = "cd data/" + self.organization + "/" + project + ";"
+                    print("\n正在执行批量删除Secret设置")
+                    GithubSystem.execute_CmdCommand(cd_cmd + self.clistring)
+                else:
+                    print("\nmgithub githubcli目前不支持此命令")
+
+        elif self.product_kind == "delete" :
             pass
-        elif self.productkind == "modify" :
+        elif self.product_kind == "modify" :
             pass
-        elif self.productkind == "format" :
+        elif self.product_kind == "format" :
             pass
-        elif self.productkind == "branch" :
+        elif self.product_kind == "branch" :
             pass
-        elif self.productkind == "backup" :
+        elif self.product_kind == "backup" :
             pass
 
         # 将本地改动PUSH到远程仓库
@@ -130,12 +165,12 @@ class GithubProduct():
             logline += " |FAILED"
         elif flag == 2:
             logline += " |ABORT"
-        logline += "| organization: |" + self.organization + "| project: |" \
-                   + project + "| execute " + "|" + self.product_kind.upper() \
-                   + "|" + " src: |" + self.src_path + "| des: |" + self.des_path +\
+        logline += "| organization: |" + str(self.organization) + "| project: |" \
+                   + str(project) + "| execute " + "|" + str(self.product_kind.upper()) \
+                   + "|" + " src: |" + str(self.src_path) + "| des: |" + str(self.des_path) +\
                    "| force: |" + str(self.force) + "| skip-get-repositories: |"\
                     + str(self.skip_get_repo) + "| skip-broken: |" + str(self.skip_broken)\
-                    + "| url: |" + self.url + "|"
+                    + "| url: |" + str(self.url) + "| clistring: |" + str(self.clistring) + "|"
         # GithubTools.execute_CommandIgnoreReturn("echo '" + logline + "' >>" + FILE_PATH)
         GithubSystem.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)
         print("log: " + logline)

@@ -110,6 +110,7 @@ class GithubSystem:
             skip_broken = log_list[i].split("|")[17]
             force = log_list[i].split("|")[13]
             project = log_list[i].split("|")[5]
+            clistring = log_list[i].split("|")[21]
 
             command = "mgithub "
             if skip_get_repo == "True":
@@ -118,7 +119,14 @@ class GithubSystem:
                 command += "--skip-broken "
             if force == "True":
                 command += "--force "
-            command += product_kind + " " + src_path + " " + des_path
+            # command += product_kind + " "+ src_path + " " + des_path
+            command += product_kind + " "
+            if str(src_path) != "None":
+                command += src_path + " "
+            if str(des_path) != "None":
+                command += des_path + " "
+            if str(clistring) != "None":
+                command += clistring
 
             print("#" + str(i+1) + " " + time + " " + url + "->" + project + " [" + result + "]: " + command)
 

@@ -10,7 +10,7 @@ from GithubSystem import GithubSystem
 
 class GithubFlow():
 
-    def __init__(self, url, skip_get_repo, skip_broken, force, product_kind, src_path, des_path):
+    def __init__(self, url, skip_get_repo, skip_broken, force, product_kind, src_path, des_path, clistring):
         self.url = url
         self.skip_get_repo = skip_get_repo
         self.skip_broken = skip_broken
@@ -21,14 +21,15 @@ class GithubFlow():
         self.organization = url.split("/")[len(url.split("/")) - 1]
         self.repo_str = None
         self.current_proj = None
+        self.clistring = clistring
 
     # 添加对Ctrl-C的监听器
     def signal_handler(self, signal, frame):
         if os.path.isfile(self.repo_str):
             product = GithubProduct(self.url, self.skip_get_repo, self.skip_broken, self.force, self.product_kind,
                                     self.src_path,
-                                    self.des_path, self.repo_str)
-            if self.current_proj == None:
+                                    self.des_path, self.repo_str, self.clistring)
+            if self.current_proj is None:
                 # 如果当前还没有开始执行项目，则任务项目列表中的第一个项目执行失败
                 product.complete_work(2, open(self.repo_str).read().splitlines()[0])
             else:
@@ -90,7 +91,7 @@ class GithubFlow():
         # 创建一个新的GitHubProduct对象并传入全局参数与command参数
         product = GithubProduct(self.url, self.skip_get_repo, self.skip_broken, self.force, self.product_kind,
                                 self.src_path,
-                                self.des_path, self.repo_str)
+                                self.des_path, self.repo_str, self.clistring)
 
         # 获取组织下的所有项目并写入项目列表
         self.create_repository(self.organization, self.repo_str)
@@ -140,7 +141,7 @@ class GithubFlow():
                 # 生成一个新的GitHubProduct对象
                 product = GithubProduct(self.url, self.skip_get_repo, self.skip_broken, self.force, self.product_kind,
                                         self.src_path,
-                                        self.des_path, self.repo_str)
+                                        self.des_path, self.repo_str, self.clistring)
 
                 # 根据项目列表，将每个项目的远程仓库clone到本地
                 self.clone_repo_list(project_list, product)

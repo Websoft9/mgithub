@@ -37,7 +37,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url):
 
     if logs:
         # click.echo("Showing logs ....")
-        GithubSystem().show_logs(5)
+        GithubSystem().show_logs(10)
 
 
 @mgithub.command(short_help="Input organization URL for initiation.")

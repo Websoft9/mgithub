@@ -36,9 +36,9 @@ class GithubCommand:
         print('src_path: %s' % src_path)
         print('des_path: %s' % des_path)
         print('url: %s' % ctx.obj['url'])
-        GithubCommand.debug(ctx)
+        # GithubCommand.debug(ctx)
         mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
-                           "copy", src_path, des_path)
+                           "copy", src_path, des_path, None)
         mauto.auto_make()
 
 
@@ -131,8 +131,10 @@ class GithubCommand:
     def githubcli(self, ctx, clistring):
         print("[[githubcli]] function is running")
         print("clistring is: %s" % clistring)
-        print("printing log ....")
-        GithubCommand.debug(ctx)
+        mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
+                           "githubcli", None, None, clistring)
+        mauto.auto_make()
+        # GithubCommand.debug(ctx)
         # TODO:
         # ...
         # print_log()
