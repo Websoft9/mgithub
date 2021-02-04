@@ -172,26 +172,30 @@ class GithubFlow():
         # GithubTools.execute_CommandWriteFile(
         #     'curl -s  https://api.github.com/orgs/mgithubTestOrg/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
         #     repository_str)
-        repogrep = GithubSystem().get_prop("repogrep").split(",")
-        if len(repogrep) == 0:
-            raise CustomException("请在config文件中配置repogrep文件")
-        for repo in repogrep:
-            # if org:
-            #     GithubSystem.execute_CommandWriteFile(
-            #         'curl -s  https://api.github.com/orgs/' + organization + '/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
-            #         repository_str
-            #     )
-            # else:
-            #     GithubSystem.execute_CommandWriteFile(
-            #         'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
-            #         repository_str
-            #     )
-
-            # print("user")
+        if GithubSystem().get_prop("repogrep")is "":
             GithubSystem.execute_CommandWriteFile_uncover(
-                'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"' + repo + '.*"\'|awk -F \'"\' \'{print $4}\'',
+                'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
                 repository_str
             )
+        else:
+            repogrep = GithubSystem().get_prop("repogrep").split(",")
+            for repo in repogrep:
+                # if org:
+                #     GithubSystem.execute_CommandWriteFile(
+                #         'curl -s  https://api.github.com/orgs/' + organization + '/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
+                #         repository_str
+                #     )
+                # else:
+                #     GithubSystem.execute_CommandWriteFile(
+                #         'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
+                #         repository_str
+                #     )
+
+                # print("user")
+                GithubSystem.execute_CommandWriteFile_uncover(
+                    'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"' + repo + '.*"\'|awk -F \'"\' \'{print $4}\'',
+                    repository_str
+                )
 
     # 根据项目列表，将每个项目的远程仓库clone到本地
     def clone_repo_list(self, project_list, product):
