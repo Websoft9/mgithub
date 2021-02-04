@@ -252,7 +252,7 @@ class GithubFlow():
     def rollback_proj(self, project):
         # 对项目进行回滚
         print("============================ [[" + project + "]]: 项目正在回滚")
-        cmd = "cd data/" + self.organization + "/" + project + ";git fetch --all;git reset --hard origin/master;git clean -f -d;"
+        cmd = "cd data/" + self.organization + "/" + project + ";git fetch --all;git reset --hard origin/master;git clean -f -d data/" + self.organization + "/" + project + ";"
         try:
             # GithubTools.execute_CommandIgnoreReturn(cmd)
             GithubSystem.execute_GitCommand(cmd)

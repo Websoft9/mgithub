@@ -52,11 +52,11 @@ class GithubProduct():
             # 判断是否需要强制覆盖文件
             if self.force:
                 print("\n执行强制覆盖的copy动作...")
-                cmd = "cp -rf data/" + self.organization + "/" + project + "/" + self.src_path + " data/" + self.organization + "/" + project + "/" + self.des_path
+                cmd = "cp -rf copysrc/" + self.src_path + " data/" + self.organization + "/" + project + "/" + self.des_path
             else:
                 print("\n执行不覆盖的copy动作...")
                 cmd = "awk \'BEGIN { cmd=\"cp -ri %s %s\"; print \"n\" |cmd; }\'" % (
-                    "data/" + self.organization + "/" + project + "/" + self.src_path,
+                    "copysrc/" + self.src_path,
                     "data/" + self.organization + "/" + project + "/" + self.des_path,)
             # 执行相应的COPY命令
             try:
