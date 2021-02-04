@@ -7,6 +7,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 command = GithubCommand()
 
+
 @click.group(context_settings=CONTEXT_SETTINGS, invoke_without_command=True)
 @click.option('-v', '--version', help='Show the version.', is_flag=True)
 @click.option('-l', '--logs', help='Show the logs.', is_flag=True)
@@ -14,9 +15,9 @@ command = GithubCommand()
 @click.option('--skip-broken', help='Skip command error and continue next repository.', is_flag=True)
 @click.option('-f', '--force', help='Do not prompt before overwriting.', is_flag=True)
 @click.option('-url', help='Set a temporary url for this task.', is_flag=True)
+@click.option('-o', '--organization', help='Do task with organization repositories', is_flag=True)
 @click.pass_context
-def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url):
-
+def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url, organization):
     if ctx.invoked_subcommand is None and not url and not version and not logs:
         os.system("mgithub -h")
 
@@ -26,6 +27,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url):
     ctx.obj['skip_get_repositories'] = skip_get_repositories
     ctx.obj['skip_broken'] = skip_broken
     ctx.obj['force'] = force
+    ctx.obj['organization'] = organization
 
     if url:
         ctx.obj['url'] = click.prompt('Set a temporary URL for this task', type=str)
@@ -104,7 +106,8 @@ def replace(ctx, file_path, old_content, new_content):
     command.replace(ctx, file_path, old_content, new_content)
 
 
-@mgithub.command(short_help="Insert content under certain line (or multiple lines) of file accoring to the specific command.")
+@mgithub.command(
+    short_help="Insert content under certain line (or multiple lines) of file accoring to the specific command.")
 @click.pass_context
 @click.argument('file_path', nargs=1, required=True)
 @click.argument('line', nargs=-1, required=True)

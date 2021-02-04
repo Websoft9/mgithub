@@ -81,7 +81,7 @@ class GithubTools():
 
     # 执行CLI命令，结果写入到文件
     def execute_CommandWriteFile(cmd_str, directory_str):
-        # print(cmd_str)
+        print(cmd_str)
 
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 0:

@@ -40,7 +40,7 @@ class GithubSystem:
     # return: void
     def execute_GitCommand(cmd_str):
         out_str = subprocess.getstatusoutput(cmd_str)
-        if (out_str[0] == 128):
+        if out_str[0] == 128 or out_str[0] == 129:
             raise CustomException(out_str[1])
         return out_str
 
@@ -79,6 +79,7 @@ class GithubSystem:
     # 如果命令执行成功，打印返回信息
     # return: void
     def execute_CommandWriteFile(cmd_str, directory_str):
+        # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 0:
             temp_str = out_str[1]
@@ -87,6 +88,24 @@ class GithubSystem:
             print(temp_str)
             with open(directory_str, 'w') as file_object:
                 file_object.write(temp_str)
+        else:
+            print('\n此次任务执行失败，请根据下面错误原因排查：')
+            print(out_str)
+
+    # command: 执行需要写入文件的命令
+    # 如果返回值不为(0, null), 则命令执行失败，打印错误信息，不抛出异常
+    # 如果命令执行成功，打印返回信息
+    # return: void
+    def execute_CommandWriteFile_uncover(cmd_str, directory_str):
+        out_str = subprocess.getstatusoutput(cmd_str)
+        if out_str[0] == 0:
+            temp_str = out_str[1]
+            temp_str = temp_str.strip('\n')
+            temp_str = temp_str.strip('"')
+            print(temp_str)
+            if len(temp_str) > 0:
+                with open(directory_str, 'a') as file_object:
+                    file_object.write(temp_str + "\n")
         else:
             print('\n此次任务执行失败，请根据下面错误原因排查：')
             print(out_str)
