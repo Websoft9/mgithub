@@ -39,6 +39,7 @@ class GithubSystem:
     # 如返回值为(128, xxxxxx), 则命令执行失败，并将错误信息以异常的方式向上抛出
     # return: void
     def execute_GitCommand(cmd_str):
+        # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 128 or out_str[0] == 129:
             raise CustomException(out_str[1])
@@ -97,6 +98,7 @@ class GithubSystem:
     # 如果命令执行成功，打印返回信息
     # return: void
     def execute_CommandWriteFile_uncover(cmd_str, directory_str):
+        # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 0:
             temp_str = out_str[1]

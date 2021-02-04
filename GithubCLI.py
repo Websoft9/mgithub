@@ -15,9 +15,8 @@ command = GithubCommand()
 @click.option('--skip-broken', help='Skip command error and continue next repository.', is_flag=True)
 @click.option('-f', '--force', help='Do not prompt before overwriting.', is_flag=True)
 @click.option('-url', help='Set a temporary url for this task.', is_flag=True)
-@click.option('-o', '--organization', help='Do task with organization repositories', is_flag=True)
 @click.pass_context
-def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url, organization):
+def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url):
     if ctx.invoked_subcommand is None and not url and not version and not logs:
         os.system("mgithub -h")
 
@@ -27,7 +26,6 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url, 
     ctx.obj['skip_get_repositories'] = skip_get_repositories
     ctx.obj['skip_broken'] = skip_broken
     ctx.obj['force'] = force
-    ctx.obj['organization'] = organization
 
     if url:
         ctx.obj['url'] = click.prompt('Set a temporary URL for this task', type=str)

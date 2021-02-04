@@ -37,7 +37,7 @@ class GithubCommand:
         print('des_path: %s' % des_path)
         print('url: %s' % ctx.obj['url'])
         # GithubCommand.debug(ctx)
-        mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'], ctx.obj['organization'],
+        mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
                            "copy", src_path, des_path, None)
         mauto.auto_make()
         # print(GithubSystem().get_prop("repogrep").split(","))

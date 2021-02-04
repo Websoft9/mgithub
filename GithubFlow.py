@@ -10,12 +10,11 @@ from GithubSystem import GithubSystem
 
 class GithubFlow():
 
-    def __init__(self, url, skip_get_repo, skip_broken, force, org, product_kind, src_path, des_path, clistring):
+    def __init__(self, url, skip_get_repo, skip_broken, force, product_kind, src_path, des_path, clistring):
         self.url = url
         self.skip_get_repo = skip_get_repo
         self.skip_broken = skip_broken
         self.force = force
-        self.org = org
         self.product_kind = product_kind
         self.src_path = src_path
         self.des_path = des_path
@@ -95,7 +94,7 @@ class GithubFlow():
                                 self.des_path, self.repo_str, self.clistring)
 
         # 获取组织下的所有项目并写入项目列表
-        self.create_repository(self.organization, self.repo_str, self.org)
+        self.create_repository(self.organization, self.repo_str)
         project_list = open(self.repo_str).read().splitlines()
 
         # 如果项目列表为空，可能由于网络原因无法获取或者组织名错误
@@ -112,7 +111,8 @@ class GithubFlow():
             self.clone_repo_list(project_list, product)
         except CustomException as e:
             print(e.msg)
-            return
+            if str(self.skip_broken) != "True":
+                return
 
         # 根据项目列表，对每个项目进行循环command操作
         self.loop_proj_work(project_list, product)
@@ -153,7 +153,9 @@ class GithubFlow():
                     self.clone_repo_list(project_list, product)
                 except CustomException as e:
                     print(e.msg)
-                    return
+                    if str(self.skip_broken) != "True":
+                        return
+                # self.clone_repo_list(project_list, product)
 
                 # 根据项目列表，对每个项目进行循环command操作
                 self.loop_proj_work(project_list, product)
@@ -165,7 +167,7 @@ class GithubFlow():
             log_index -= 1
 
     # 根据组织寻找组织下所有的项目
-    def create_repository(self, organization, repository_str, org):
+    def create_repository(self, organization, repository_str):
         print('开始更新%s Github仓库列表...' % organization)
         # GithubTools.execute_CommandWriteFile(
         #     'curl -s  https://api.github.com/orgs/mgithubTestOrg/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
@@ -184,16 +186,12 @@ class GithubFlow():
             #         'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
             #         repository_str
             #     )
-            if org:
-                GithubSystem.execute_CommandWriteFile_uncover(
-                    'curl -s  https://api.github.com/orgs/' + organization + '/repos?per_page=999999 | grep \'"' + repo + '.*"\'|awk -F \'"\' \'{print $4}\'',
-                    repository_str
-                )
-            else:
-                GithubSystem.execute_CommandWriteFile_uncover(
-                    'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"' + repo + '.*"\'|awk -F \'"\' \'{print $4}\'',
-                    repository_str
-                )
+
+            # print("user")
+            GithubSystem.execute_CommandWriteFile_uncover(
+                'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"' + repo + '.*"\'|awk -F \'"\' \'{print $4}\'',
+                repository_str
+            )
 
     # 根据项目列表，将每个项目的远程仓库clone到本地
     def clone_repo_list(self, project_list, product):
@@ -220,7 +218,7 @@ class GithubFlow():
                         # 仓库clone未成功，结束本次任务
                         # print(e.msg)
                         if str(self.skip_broken) == "True":
-                            continue
+                            print(proj + ": 本仓库clone失败")
                         else:
                             print("仓库clone未成功，结束本次任务")
                             raise e
