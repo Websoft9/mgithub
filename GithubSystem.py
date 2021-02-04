@@ -43,6 +43,7 @@ class GithubSystem:
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 128 or out_str[0] == 129:
             raise CustomException(out_str[1])
+        # print(out_str)
         return out_str
 
     # command: 执行command的命令，e.g. mgithub copy

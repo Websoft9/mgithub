@@ -49,12 +49,6 @@ def configure(ctx, url):
     command.configure(ctx)
 
 
-@mgithub.command(short_help="Generate the repositories cache.")
-@click.pass_context
-def repocache(ctx):
-    command.repocache(ctx)
-
-
 @mgithub.command(short_help="Backup all repositories to path.")
 @click.pass_context
 @click.argument('path', nargs=1, required=True)
@@ -68,6 +62,12 @@ def backup(ctx, path):
 @click.argument('destination_path', nargs=1, required=True)
 def copy(ctx, source_path, destination_path):
     command.copy(ctx, source_path, destination_path)
+
+
+@mgithub.command(short_help="List all user/organization's projects into ORGNAME/USERNAME_repositories.txt")
+@click.pass_context
+def repocache(ctx):
+    command.repocache(ctx)
 
 
 @mgithub.command(short_help="Move files or folder from source path to destination path, \

@@ -1,3 +1,5 @@
+import os
+
 from GithubFlow import GithubFlow
 from GithubSystem import GithubSystem
 
@@ -15,11 +17,15 @@ class GithubCommand:
 
     # 功能：Generate the repositories cache
     def repocache(self, ctx):
-        print("[[repocache]] function is running")
-        GithubCommand.debug(ctx)
-        # TODO:
-        # get_list()
-        # write to data/organization_repositories.txt
+        organization = ctx.obj["url"].split("/")[len(ctx.obj["url"].split("/")) - 1]
+        print('开始更新%s Github仓库列表...' % organization)
+        GithubSystem.execute_CommandWriteFile(
+            'curl -s  https://api.github.com/users/' + organization + '/repos?per_page=999999 | grep \'"name"\'|awk -F \'"\' \'{print $4}\'',
+            "data/" + organization + "_repositories.txt"
+        )
+        if not os.path.getsize("data/" + organization + "_repositories.txt"):
+            print("仓库列表为空，请检查您的组织/用户名或网络设置")
+            GithubSystem.execute_CommandReturn("rm data/" + organization + "_repositories.txt")
 
     # 功能：backup all repositiries to Path
     def backup(self, ctx, path):
