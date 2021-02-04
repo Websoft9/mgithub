@@ -1,4 +1,0 @@
-projAAA
-projBBB
-projCCC
-test repo for mgithub proj
