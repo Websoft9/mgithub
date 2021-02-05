@@ -139,7 +139,7 @@ class GithubProduct():
             # 操作成功
             print("\n" + project + ": 自动化任务完成,从cache列表删除该工程,并追加日志")
             # 删除列表中对应的项目
-            cmd = "sed -i '""' '/^$/d;/" + project + "/d' " + self.repo_str
+            cmd = "sed -i '/^$/d;/" + project + "/d' " + self.repo_str
             # GithubTools.execute_CommandIgnoreReturn(cmd)
             GithubSystem.execute_GitCommand(cmd)
             # 生成log
