@@ -58,12 +58,9 @@ class GithubProduct():
                 cmd = "cp -rf " + self.src_path + " data/" + self.organization + "/" + project  + self.des_path
             else:
                 print("\n执行不覆盖的copy动作...")
-                cmd = "awk \'BEGIN { cmd=\"cp -ri %s %s\"; print \"n\" |cmd; }\'" % (
-                    self.src_path,
-                    "data/" + self.organization + "/" + project + self.des_path)
+                cmd = "cp -nr " + self.src_path + " data/" + self.organization + "/" + project  + self.des_path
             # 执行相应的COPY命令
             try:
-                # GithubTools.execute_CmdCommand(cmd)
                 GithubSystem.execute_CmdCommand(cmd)
             except CustomException as e:
                 raise e

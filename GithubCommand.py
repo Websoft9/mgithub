@@ -58,6 +58,9 @@ class GithubCommand:
         print('src_path: %s' % src_path)
         print('des_path: %s' % des_path)
         print('url: %s' % ctx.obj['url'])
+        if src_path[0] != "/":
+            print("src_path必须以/开头，来表示仓库根目录。")
+            return
         # GithubCommand.debug(ctx)
         mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
                            "copy", src_path, des_path, None)

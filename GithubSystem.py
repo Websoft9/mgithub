@@ -52,8 +52,10 @@ class GithubSystem:
     # 如返回值为 cp: file not existed... 则命令执行失败，并将错误信息以异常的方式向上抛出
     # return: 1-success, 0-fail
     def execute_CmdCommand(cmd_str):
+        # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
-        if out_str[0] == 0:
+        # print(out_str)
+        if out_str[0] == 0 or out_str[1] == '':
             if (str(out_str[1]).split(":")[0] == "cp"):
                 raise CustomException(out_str[1])
             temp_str = out_str[1]
