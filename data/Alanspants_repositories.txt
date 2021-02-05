@@ -2,7 +2,6 @@
 BlueTrace
 capstone-project-dota_3900
 helloflask
-MIT License
 JavaEE
 JavaWebPrac
 Leetcode

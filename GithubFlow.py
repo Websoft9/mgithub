@@ -111,15 +111,6 @@ class GithubFlow():
         # 获取cache列表内容
         cache_list = open("data/cache.txt").read().splitlines()
 
-        # # 如果项目列表为空，可能由于网络原因无法获取或者组织名错误
-        # try:
-        #     if len(project_list) == 0:
-        #         raise CustomException("您的仓库列表为空,请检查您的网络连接或组织名称")
-        # except CustomException as e:
-        #     print(e.msg)
-        #     print("============================ [[Empty]]: 任务列表为空\n")
-        #     return
-
         # 根据项目列表，将每个项目的远程仓库clone到本地
         try:
             self.clone_repo_list(cache_list, product)

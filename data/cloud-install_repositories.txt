@@ -1,6 +1,3 @@
 ansible-awx
-Other
 ansible-lcmp
-Other
 testproject
-Apache License 2.0
