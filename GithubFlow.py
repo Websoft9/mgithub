@@ -57,41 +57,13 @@ class GithubFlow():
             else:
                 print("当前项目列表内容：")
                 GithubSystem.execute_CmdCommand("cat " + self.repo_str)
-                # print("\n")
+                if self.continue_select() == "0":
+                    self.automake_new()
+                else:
+                    return
         else:
             print("未找到项目列表，请执行mgithub [option] repocache来获取本组织/用户的项目列表")
             return
-
-        self.cache = "data/cache.txt"
-        # 判断cache文件是否存在
-        if os.path.isfile(self.cache):
-            # 项目列表存在，判断内容是否为空
-            project_list = open(self.cache).read().splitlines()
-            if (len(project_list) == 0):
-                # 内容为空，直接执行正常操作
-                self.automake_new()
-            else:
-                # 内容不为空，让用户决定是否继续上次的任务
-                print("\n上次程序退出时任务未完成")
-                print("未完成的项目内容如下：")
-                GithubSystem.execute_CmdCommand("cat " + self.cache)
-                # 用户输入
-                continue_id = self.continue_select()
-                # 根据不同的用户输入决定操作
-                if continue_id == "0":
-                    # 继续上次中断的任务
-                    self.automake_cache()
-                    return
-                else:
-                    # 放弃上次的任务并删除项目列表
-                    print("已经清空所有未完成任务，请重新输入命令再次执行")
-                    GithubSystem.execute_CmdCommand(": > data/cache.txt")
-                    return
-        else:
-            # 缓存文件不存在，创建空的缓存文件
-            GithubSystem.execute_CommandReturn("touch data/cache.txt")
-            # 执行正常操作
-            self.automake_new()
 
     # 无任务中断，正常操作
     def automake_new(self):
@@ -102,74 +74,18 @@ class GithubFlow():
                                 self.des_path, self.repo_str, self.clistring)
 
         # 获取项目列表内容
-        # project_list = open(self.repo_str).read().splitlines()
-
-        # 将列表内容复制到cache
-        cmd = "cat data/" + self.organization + "_repositories.txt > data/cache.txt"
-        GithubSystem.execute_Command(cmd)
-
-        # 获取cache列表内容
-        cache_list = open("data/cache.txt").read().splitlines()
+        project_list = open(self.repo_str).read().splitlines()
 
         # 根据项目列表，将每个项目的远程仓库clone到本地
         try:
-            self.clone_repo_list(cache_list, product)
+            self.clone_repo_list(project_list, product)
         except CustomException as e:
             print(e.msg)
             if str(self.skip_broken) != "True":
                 return
 
         # 根据项目列表，对每个项目进行循环command操作
-        self.loop_proj_work(cache_list, product)
-
-    # 执行上次中断的任务
-    def automake_cache(self):
-
-        # 获得上次遗留的项目列表
-        cache_list = open("data/cache.txt").read().splitlines()
-
-        # 获得log日志列表
-        log_list = open("log/auto_make.log").read().splitlines()
-
-        # 根据遗留项目列表的第一项，寻找log日志列表中相对应的 FAILED 或 ABORT 项目（自下而上）
-        log_index = len(log_list) - 1
-        while (log_index >= 0):
-
-            if (log_list[log_index].split("|")[5] == cache_list[0] and
-                    (log_list[log_index].split("|")[1] == "FAILED" or
-                     log_list[log_index].split("|")[1] == "ABORT")):
-                # 根据日志记录的option内容，对本次任务的option进行覆盖
-                self.product_kind = log_list[log_index].split("|")[7].lower()
-                self.organization = log_list[log_index].split("|")[3]
-                self.src_path = log_list[log_index].split("|")[9]
-                self.des_path = log_list[log_index].split("|")[11]
-                self.url = log_list[log_index].split("|")[19]
-                self.skip_get_repo = log_list[log_index].split("|")[15]
-                self.skip_broken = log_list[log_index].split("|")[17]
-                self.force = log_list[log_index].split("|")[13]
-
-                # 生成一个新的GitHubProduct对象
-                product = GithubProduct(self.url, self.skip_get_repo, self.skip_broken, self.force, self.product_kind,
-                                        self.src_path,
-                                        self.des_path, self.repo_str, self.clistring)
-
-                # 根据项目列表，将每个项目的远程仓库clone到本地
-                try:
-                    self.clone_repo_list(cache_list, product)
-                except CustomException as e:
-                    print(e.msg)
-                    if str(self.skip_broken) != "True":
-                        return
-
-                # 根据项目列表，对每个项目进行循环command操作
-                self.loop_proj_work(cache_list, product)
-
-                # 中断循环
-                break
-
-            # 从下而上检索log日志条例
-            log_index -= 1
-
+        self.loop_proj_work(project_list, product)
 
     # 根据项目列表，将每个项目的远程仓库clone到本地
     def clone_repo_list(self, project_list, product):
@@ -199,8 +115,8 @@ class GithubFlow():
                             raise e
 
     # 根据项目列表，对每个项目进行循环command操作
-    def loop_proj_work(self, cache_list, product):
-        for proj in cache_list:
+    def loop_proj_work(self, project_list, product):
+        for proj in project_list:
             # 记录本次正在执行command的项目，方便与监听器记录
             self.current_proj = proj
             # 执行相应的command
@@ -236,13 +152,13 @@ class GithubFlow():
     # 选择继续操作
     # 格式：选择是否在上次任务上继续：  \n\t 0. 继续 \n\t 1. 终止退出  \n\n\t选择:
     def continue_select(self):
-        input_str = "\n\t缓存任务尚未完成，是否继续上次任务：  \n\n\t "
+        input_str = "\n确认任务清单：  \n "
         i = 0
 
-        for x in ['继续进行当前执行的自动化操作', '终止退出']:
-            input_str = input_str + str(i) + "." + x + " \n\t "
+        for x in ['确认执行', '终止退出']:
+            input_str = input_str + str(i) + "." + x + " \n "
             i = i + 1
-        input_str = input_str + "\n\t选择: "
+        input_str = input_str + "\n选择: "
 
         continue_id = input(input_str)
         while continue_id not in ['0', '1']:

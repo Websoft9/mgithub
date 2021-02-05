@@ -1,2 +1,0 @@
-ansible-awx
-ansible-lcmp
