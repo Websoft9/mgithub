@@ -121,6 +121,9 @@ class GithubCommand:
         if (new_content == None):
             print("Since not new_content is provided, old_content will be deleted from file_path")
         GithubCommand.debug(ctx)
+        mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
+                       "replace", file_path, old_content, new_content)
+        mauto.auto_make()
         # TODO:
         # git_clone()
         # ...
