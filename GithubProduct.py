@@ -42,7 +42,7 @@ class GithubProduct():
         else:
             print("本地仓库不存在：正在从远程仓库clone")
             # 不存在：使用git clone从新获取本地仓库
-            cmd = "git clone --depth=1 " + self.url + "/" + project + ".git data/" + self.organization + "/" + project
+            cmd = "git clone  " + self.url + "/" + project + ".git data/" + self.organization + "/" + project
             try:
                 # GithubTools.execute_CommandIgnoreReturn(cmd)
                 GithubSystem.execute_GitCommand(cmd)

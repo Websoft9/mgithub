@@ -47,9 +47,9 @@ class GithubProduct():
             else:
                 # 当前任务工程不存在 github克隆最新的
                 if organization == "template" :
-                    cmd="git clone --depth=1 git@github.com:Websoft9/"+projectname+".git data/"+projectname
+                    cmd="git clone  git@github.com:Websoft9/"+projectname+".git data/"+projectname
                 elif organization == "role" :
-                    cmd="git clone --depth=1 git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
+                    cmd="git clone  git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
             GithubTools.execute_CommandReturn(cmd)
 
             GithubTools.execute_CommandReturn("echo y |cp -Rr data/ansible-template/"+sourcepath + " data/" + projectname+"/"+despath)

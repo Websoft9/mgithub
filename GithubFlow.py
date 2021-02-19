@@ -105,7 +105,7 @@ class GithubFlow():
                 else:
                     # 不存在，从远程仓库clone
                     print("git clone from " + proj + "....")
-                    cmd = "git clone --depth=1 " + self.url + "/" + proj + ".git data/" + self.organization + "/" + proj
+                    cmd = "git clone  " + self.url + "/" + proj + ".git data/" + self.organization + "/" + proj
                     try:
                         GithubSystem.execute_GitCommand(cmd)
                     except CustomException as e:

@@ -125,9 +125,9 @@ class GithubFlow():
         else:
             # 当前任务工程不存在 github克隆最新的
             if organization == "template" :
-                cmd="git clone --depth=1 git@github.com:Websoft9/"+projectname+".git data/"+projectname
+                cmd="git clone  git@github.com:Websoft9/"+projectname+".git data/"+projectname
             elif organization == "role" :
-                cmd="git clone --depth=1 git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
+                cmd="git clone  git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
         GithubTools.execute_CommandReturn(cmd)
 
         # 生成文件列表
@@ -155,9 +155,9 @@ class GithubFlow():
         else:
             # 当前任务工程不存在 github克隆最新的
             if organization == "template" :
-                cmd="git clone --depth=1 git@github.com:Websoft9/"+projectname+".git data/"+projectname
+                cmd="git clone  git@github.com:Websoft9/"+projectname+".git data/"+projectname
             elif organization == "role" :
-                cmd="git clone --depth=1 git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
+                cmd="git clone  git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
         GithubTools.execute_CommandReturn(cmd)
 
         # 复制文件到缓存
@@ -183,9 +183,9 @@ class GithubFlow():
         else:
             # 当前任务工程不存在 github克隆最新的
             if organization == "template" :
-                cmd="git clone --depth=1 git@github.com:Websoft9/"+projectname+".git data/"+projectname
+                cmd="git clone  git@github.com:Websoft9/"+projectname+".git data/"+projectname
             elif organization == "role" :
-                cmd="git clone --depth=1 git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
+                cmd="git clone  git@github.com:Websoft9dev/"+projectname+".git data/"+projectname
         GithubTools.execute_CommandReturn(cmd)
 
         file_object=open(repository_cache_str)
