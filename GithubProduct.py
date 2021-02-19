@@ -104,7 +104,7 @@ class GithubProduct():
             pass
         elif self.product_kind == "replace":
             replacefile =  "data/" + self.organization + "/" + project  + self.src_path
-            cmd = "sed -i 's/" + self.des_path + "/" + self.clistring + "/g'" + replacefile
+            cmd = "sed -i 's/" + self.des_path + "/" + self.clistring + "/g' " + replacefile
             print(cmd)
             # 执行相应的COPY命令
             try:
