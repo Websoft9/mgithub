@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# coding=utf-8
+import json
+import os
+
 from GithubFlow import GithubFlow
 from GithubSystem import GithubSystem
 
@@ -15,11 +20,28 @@ class GithubCommand:
 
     # 功能：Generate the repositories cache
     def repocache(self, ctx):
-        print("[[repocache]] function is running")
-        GithubCommand.debug(ctx)
-        # TODO:
-        # get_list()
-        # write to data/organization_repositories.txt
+        # 通过url得到organization name
+        organization = ctx.obj["url"].split("/")[len(ctx.obj["url"].split("/")) - 1]
+        print('开始更新%s Github仓库列表...' % organization)
+        # 清除本地已存在的项目列表
+        GithubSystem.execute_CmdCommand(": > data/" + organization + "_repositories.txt")
+        # 从github official api获取用户/个人的所用项目信息并存为json
+        GithubSystem.execute_Command(
+            'curl -s  https://api.github.com/users/' + organization + "/repos > data/repoapi.json"
+        )
+        # json -> python data
+        with open('data/repoapi.json', 'r') as f:
+            dict = json.load(f)
+        # 对json中的每一个仓库信息进行遍历，找到仓库名并写入项目列表
+        for repo in dict:
+            GithubSystem.execute_Command(
+                "echo " + repo['name'] + " >> data/" + organization + "_repositories.txt"
+            )
+            print(repo['name'])
+        # 如果仓库列表为空
+        if not os.path.getsize("data/" + organization + "_repositories.txt"):
+            print("仓库列表为空，请检查您的组织/用户名或网络设置")
+            GithubSystem.execute_CommandReturn("rm data/" + organization + "_repositories.txt")
 
     # 功能：backup all repositiries to Path
     def backup(self, ctx, path):
@@ -36,10 +58,15 @@ class GithubCommand:
         print('src_path: %s' % src_path)
         print('des_path: %s' % des_path)
         print('url: %s' % ctx.obj['url'])
+        # print(des_path[0])
+        if des_path[0] != '/':
+            print("src_path必须以/开头，来表示仓库根目录。")
+            return
         # GithubCommand.debug(ctx)
         mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
                            "copy", src_path, des_path, None)
         mauto.auto_make()
+        # print(GithubSystem().get_prop("repogrep").split(","))
 
 
         # TODO:
@@ -94,6 +121,9 @@ class GithubCommand:
         if (new_content == None):
             print("Since not new_content is provided, old_content will be deleted from file_path")
         GithubCommand.debug(ctx)
+        mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
+                       "replace", file_path, old_content, new_content)
+        mauto.auto_make()
         # TODO:
         # git_clone()
         # ...

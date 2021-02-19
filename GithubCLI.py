@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# coding=utf-8
 import click
 import os
 from GithubCommand import GithubCommand
@@ -6,6 +8,7 @@ from GithubSystem import GithubSystem
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 command = GithubCommand()
+
 
 @click.group(context_settings=CONTEXT_SETTINGS, invoke_without_command=True)
 @click.option('-v', '--version', help='Show the version.', is_flag=True)
@@ -16,7 +19,6 @@ command = GithubCommand()
 @click.option('-url', help='Set a temporary url for this task.', is_flag=True)
 @click.pass_context
 def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url):
-
     if ctx.invoked_subcommand is None and not url and not version and not logs:
         os.system("mgithub -h")
 
@@ -49,12 +51,6 @@ def configure(ctx, url):
     command.configure(ctx)
 
 
-@mgithub.command(short_help="Generate the repositories cache.")
-@click.pass_context
-def repocache(ctx):
-    command.repocache(ctx)
-
-
 @mgithub.command(short_help="Backup all repositories to path.")
 @click.pass_context
 @click.argument('path', nargs=1, required=True)
@@ -68,6 +64,12 @@ def backup(ctx, path):
 @click.argument('destination_path', nargs=1, required=True)
 def copy(ctx, source_path, destination_path):
     command.copy(ctx, source_path, destination_path)
+
+
+@mgithub.command(short_help="List all user/organization's projects into ORGNAME/USERNAME_repositories.txt")
+@click.pass_context
+def repocache(ctx):
+    command.repocache(ctx)
 
 
 @mgithub.command(short_help="Move files or folder from source path to destination path, \
@@ -104,7 +106,8 @@ def replace(ctx, file_path, old_content, new_content):
     command.replace(ctx, file_path, old_content, new_content)
 
 
-@mgithub.command(short_help="Insert content under certain line (or multiple lines) of file accoring to the specific command.")
+@mgithub.command(
+    short_help="Insert content under certain line (or multiple lines) of file accoring to the specific command.")
 @click.pass_context
 @click.argument('file_path', nargs=1, required=True)
 @click.argument('line', nargs=-1, required=True)
