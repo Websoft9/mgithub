@@ -102,8 +102,14 @@ class GithubProduct():
 
         elif self.product_kind == "delete":
             pass
-        elif self.product_kind == "modify":
-            pass
+        elif self.product_kind == "replace":
+            replacefile =  "data/" + self.organization + "/" + project  + self.src_path
+            cmd = "sed -i 's/" + self.des_path + "/" + self.clistring + "/'" + replacefile
+            # 执行相应的COPY命令
+            try:
+                GithubSystem.execute_CmdCommand(cmd)
+            except CustomException as e:
+                raise e
         elif self.product_kind == "format":
             pass
         elif self.product_kind == "branch":
