@@ -4,7 +4,6 @@ import os
 import signal
 import sys
 
-from backup.GithubTools import GithubTools
 from GithubProduct import GithubProduct
 from GithubProductRefactor import GithubProductRefactor
 from GithubException import CustomException

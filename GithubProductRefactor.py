@@ -20,29 +20,6 @@ class GithubProductRefactor():
 
         print("\n============================ [[" + project + "]]: 开始执行自动化构建")
 
-        # 对本地仓库进行更新
-        print(project + ": 更新本地仓库")
-        FILE_PATH = "data/" + self.organization + "/" + project
-        # 判断本地仓库是否已经存在
-        if os.path.isdir(FILE_PATH):
-            print("本地仓库已存在：正在更新")
-            # 存在：使用git pull对本地仓库进行更新
-            cmd = "cd " + FILE_PATH + "; git pull"
-            try:
-                GithubSystem.execute_GitCommand(cmd)
-            except CustomException as e:
-                raise e
-        else:
-            print("本地仓库不存在：正在从远程仓库clone")
-            # 不存在：使用git clone从新获取本地仓库
-            cmd = "git clone  " + self.url + "/" + project + ".git data/" + self.organization + "/" + project
-            try:
-                # GithubTools.execute_CommandIgnoreReturn(cmd)
-                GithubSystem.execute_GitCommand(cmd)
-            except CustomException as e:
-                raise e
-        print(project + ": 本地仓库更新完成")
-
         # COPY
         if self.product_kind == "copy":
             # 判断是否需要强制覆盖文件

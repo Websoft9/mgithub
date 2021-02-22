@@ -6,6 +6,7 @@ import os
 from GithubFlow import GithubFlow
 from GithubSystem import GithubSystem
 from GithubFlowRefactor import GithubFlowRefactor
+from GithubWorkRefactor import GithubWorkRefactor
 
 class GithubCommand:
 
@@ -70,7 +71,7 @@ class GithubCommand:
         ctx.obj['src_path'] = src_path
         ctx.obj['des_path'] = des_path
         ctx.obj['product_kind'] = 'copy'
-        mauto = GithubFlowRefactor(ctx)
+        mauto = GithubWorkRefactor(ctx)
         mauto.auto_make()
 
 
