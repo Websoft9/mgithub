@@ -5,6 +5,7 @@ import os
 
 from GithubFlow import GithubFlow
 from GithubSystem import GithubSystem
+from GithubFlowRefactor import GithubFlowRefactor
 
 class GithubCommand:
 
@@ -60,20 +61,18 @@ class GithubCommand:
         print('url: %s' % ctx.obj['url'])
         # print(des_path[0])
         if des_path[0] != '/':
-            print("src_path必须以/开头，来表示仓库根目录。")
+            print("des_path必须以/开头，来表示仓库根目录。")
             return
-        # GithubCommand.debug(ctx)
-        mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
-                           "copy", src_path, des_path, None)
+
+        # mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
+        #                    "copy", src_path, des_path, None)
+        # mauto.auto_make()
+        ctx.obj['src_path'] = src_path
+        ctx.obj['des_path'] = des_path
+        ctx.obj['product_kind'] = 'copy'
+        mauto = GithubFlowRefactor(ctx)
         mauto.auto_make()
-        # print(GithubSystem().get_prop("repogrep").split(","))
 
-
-        # TODO:
-        # git_clone()
-        # ...
-        # push_repo()
-        # print_log()
 
     # 功能：Move files or folder from source to destination
     #      Source and destination must be in the sane repository
@@ -161,13 +160,14 @@ class GithubCommand:
     def githubcli(self, ctx, clistring):
         print("[[githubcli]] function is running")
         print("clistring is: %s" % clistring)
-        mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
-                           "githubcli", None, None, clistring)
+        # mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
+        #                    "githubcli", None, None, clistring)
+        # mauto.auto_make()
+        ctx.obj['product_kind'] = "githubcli"
+        ctx.obj['clistring'] = clistring
+        mauto = GithubFlowRefactor(ctx)
         mauto.auto_make()
-        # GithubCommand.debug(ctx)
-        # TODO:
-        # ...
-        # print_log()
+
 
     @staticmethod
     def debug(ctx):

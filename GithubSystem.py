@@ -119,24 +119,25 @@ class GithubSystem:
 
     # 输出日志
     def show_logs(self, num):
+
         log_list = open("log/auto_make.log").read().splitlines()
+
         if (len(log_list) - num - 1) < 0:
             i = 0
         else:
             i = len(log_list) - num
+
         while i < len(log_list):
             time = log_list[i].split("|")[0]
             result = log_list[i].split("|")[1]
-            organization = log_list[i].split("|")[3]
-            url = log_list[i].split("|")[19]
-            product_kind = log_list[i].split("|")[7].lower()
-            src_path = log_list[i].split("|")[9]
-            des_path = log_list[i].split("|")[11]
-            skip_get_repo = log_list[i].split("|")[15]
-            skip_broken = log_list[i].split("|")[17]
-            force = log_list[i].split("|")[13]
             project = log_list[i].split("|")[5]
-            clistring = log_list[i].split("|")[21]
+            product_kind = log_list[i].split("|")[7].lower()
+
+            force = log_list[i].split("|")[9]
+            skip_get_repo = log_list[i].split("|")[11]
+            skip_broken = log_list[i].split("|")[13]
+
+            url = log_list[i].split("|")[15]
 
             command = "mgithub "
             if skip_get_repo == "True":
@@ -145,15 +146,17 @@ class GithubSystem:
                 command += "--skip-broken "
             if force == "True":
                 command += "--force "
-            # command += product_kind + " "+ src_path + " " + des_path
             command += product_kind + " "
-            if str(src_path) != "None":
+
+            if product_kind == "copy":
+                src_path = log_list[i].split("|")[17]
+                des_path = log_list[i].split("|")[19]
                 command += src_path + " "
-            if str(des_path) != "None":
                 command += des_path + " "
-            if str(clistring) != "None":
+            elif product_kind == "githubcli":
+                clistring = log_list[i].split("|")[17]
                 command += clistring
 
-            print("#" + str(i+1) + " " + time + " " + url + "->" + project + " [" + result + "]: " + command)
+            print("#" + str(i + 1) + " " + time + " " + url + "->" + project + " [" + result + "]: " + command)
 
             i += 1

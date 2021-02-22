@@ -34,6 +34,8 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force, url):
     else:
         ctx.obj['url'] = GithubSystem().get_prop("url")
 
+    ctx.obj['organization'] = ctx.obj['url'].split("/")[len(ctx.obj['url'].split("/")) - 1]
+
     if version:
         click.echo("mgithub version 1.0.1")
 
