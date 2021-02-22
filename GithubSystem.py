@@ -157,6 +157,16 @@ class GithubSystem:
             elif product_kind == "githubcli":
                 clistring = log_list[i].split("|")[17]
                 command += clistring
+            elif product_kind == 'delete':
+                pass
+            elif product_kind == 'replace':
+                pass
+            elif product_kind == 'format':
+                pass
+            elif product_kind == 'branch':
+                pass
+            elif product_kind == 'backup':
+                pass
 
             print("#" + str(i + 1) + " " + time + " " + url + "->" + project + " [" + result + "]: " + command)
 
@@ -302,6 +312,16 @@ class GithubSystem:
             logline += "| src: |" + str(ctx.obj['src_path']) + "| des: |" + str(ctx.obj['des_path'])
         elif ctx.obj['product_kind'] == 'githubcli':
             logline += "| clistring: |" + str(ctx.obj['clistring'])
+        elif ctx.obj['product_kind'] == 'delete':
+            pass
+        elif ctx.obj['product_kind'] == 'replace':
+            pass
+        elif ctx.obj['product_kind'] == 'format':
+            pass
+        elif ctx.obj['product_kind'] == 'branch':
+            pass
+        elif ctx.obj['product_kind'] == 'backup':
+            pass
 
         # 写入操作
         GithubSystem.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)

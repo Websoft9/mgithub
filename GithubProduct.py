@@ -59,3 +59,18 @@ class GithubProduct:
                 GithubSystem.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])
             else:
                 print("\nmgithub githubcli目前不支持此命令")
+
+    def delete(self, project):
+        pass
+
+    def replace(self, project):
+        pass
+
+    def format(self, project):
+        pass
+
+    def branch(self, project):
+        pass
+
+    def backup(self, project):
+        pass

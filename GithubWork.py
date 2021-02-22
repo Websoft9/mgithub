@@ -117,15 +117,15 @@ class GithubWork():
             elif self.product_kind == "githubcli":
                 product.githubcli(project)
             elif self.product_kind == "delete":
-                pass
+                product.delete(project)
             elif self.product_kind == "replace":
-                pass
+                product.replace(project)
             elif self.product_kind == "format":
-                pass
+                product.format(project)
             elif self.product_kind == "branch":
-                pass
+                product.branch(project)
             elif self.product_kind == "backup":
-                pass
+                product.backup(project)
 
             # 将本地改动PUSH到远程仓库
             print("\n正在将本地改动push到远程仓库...")
