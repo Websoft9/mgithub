@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import os
-import time
-
-from backup.GithubTools import GithubTools
 from GithubException import CustomException
 from GithubSystem import GithubSystem
 
