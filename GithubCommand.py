@@ -3,10 +3,8 @@
 import json
 import os
 
-from GithubFlow import GithubFlow
 from GithubSystem import GithubSystem
-from GithubFlowRefactor import GithubFlowRefactor
-from GithubWorkRefactor import GithubWorkRefactor
+from GithubWork import GithubWork
 
 class GithubCommand:
 
@@ -71,7 +69,7 @@ class GithubCommand:
         ctx.obj['src_path'] = src_path
         ctx.obj['des_path'] = des_path
         ctx.obj['product_kind'] = 'copy'
-        mauto = GithubWorkRefactor(ctx)
+        mauto = GithubWork(ctx)
         mauto.auto_make()
 
 
@@ -120,10 +118,10 @@ class GithubCommand:
         print("new_content is: %s" % new_content)
         if (new_content == None):
             print("Since not new_content is provided, old_content will be deleted from file_path")
-        GithubCommand.debug(ctx)
-        mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
-                       "replace", file_path, old_content, new_content)
-        mauto.auto_make()
+        # GithubCommand.debug(ctx)
+        # mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
+        #                "replace", file_path, old_content, new_content)
+        # mauto.auto_make()
         # TODO:
         # git_clone()
         # ...
@@ -166,7 +164,7 @@ class GithubCommand:
         # mauto.auto_make()
         ctx.obj['product_kind'] = "githubcli"
         ctx.obj['clistring'] = clistring
-        mauto = GithubFlowRefactor(ctx)
+        mauto = GithubWork(ctx)
         mauto.auto_make()
 
 

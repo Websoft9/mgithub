@@ -17,10 +17,12 @@ class GithubProduct:
         # 判断是否需要强制覆盖文件
         if self.ctx.obj['force']:
             print("\n执行强制覆盖的copy动作...")
-            cmd = "cp -rf " + self.ctx.obj['src_path'] + " data/" + self.ctx.obj['organization'] + "/" + project + self.ctx.obj['des_path']
+            cmd = "cp -rf " + self.ctx.obj['src_path'] + " data/" + self.ctx.obj['organization'] + "/" + project + \
+                  self.ctx.obj['des_path']
         else:
             print("\n执行不覆盖的copy动作...")
-            cmd = "cp -nr " + self.ctx.obj['src_path'] + " data/" + self.ctx.obj['organization'] + "/" + project + self.ctx.obj['des_path']
+            cmd = "cp -nr " + self.ctx.obj['src_path'] + " data/" + self.ctx.obj['organization'] + "/" + project + \
+                  self.ctx.obj['des_path']
         # 执行相应的COPY命令
         try:
             GithubSystem.execute_CmdCommand(cmd)
@@ -53,7 +55,8 @@ class GithubProduct:
                         GithubSystem.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])
 
             # clistring: gh secret remove ...
-            elif self.ctx.obj['clistring'].split(" ")[1] == "secret" and self.ctx.obj['clistring'].split(" ")[2] == "remove":
+            elif self.ctx.obj['clistring'].split(" ")[1] == "secret" and self.ctx.obj['clistring'].split(" ")[
+                2] == "remove":
                 # 转移到本地的相对应仓库目录下
                 cd_cmd = "cd data/" + self.ctx.obj['organization'] + "/" + project + ";"
                 print("\n正在执行批量删除Secret设置")

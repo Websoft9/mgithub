@@ -3,7 +3,6 @@
 import os
 import time
 
-from backup.GithubTools import GithubTools
 from GithubException import CustomException
 from GithubSystem import GithubSystem
 

@@ -5,12 +5,11 @@ import signal
 import sys
 
 from GithubProduct import GithubProduct
-from GithubProductRefactor import GithubProductRefactor
 from GithubException import CustomException
 from GithubSystem import GithubSystem
 
 
-class GithubWorkRefactor():
+class GithubWork():
 
     def __init__(self, ctx):
         self.ctx = ctx
@@ -22,14 +21,12 @@ class GithubWorkRefactor():
         self.url = ctx.obj['url']
         self.product_kind = ctx.obj['product_kind']
 
-
     # 添加对Ctrl-C的监听器
     def signal_handler(self, signal, frame):
         if os.path.isfile(self.repo_str):
-            product = GithubProductRefactor(self.ctx)
             if self.current_proj is None:
                 # 如果当前还没有开始执行项目，则任务项目列表中的第一个项目执行失败
-                product.complete_work(2, open(self.repo_str).read().splitlines()[0])
+                GithubSystem().complete_work(2, open(self.repo_str).read().splitlines()[0], self.ctx)
             else:
                 # 如果已经开始执行项目，则当前项目执行失败
                 GithubSystem().complete_work(2, self.current_proj, self.ctx)
@@ -138,6 +135,3 @@ class GithubWorkRefactor():
 
         # 本次任务完成
         GithubSystem().complete_work(1, project, self.ctx)
-
-
-
