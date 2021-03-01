@@ -1,3 +1,5 @@
+ansible-awx
+ansible-lcmp
 projAAA
 projBBB
 projCCC
