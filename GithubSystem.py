@@ -9,7 +9,7 @@ from GithubException import CustomException
 
 class GithubSystem:
 
-    ###################################### config helper func ######################################
+###################################### config helper func ######################################
 
     # 从config文件获取指定的属性
     def get_prop(self, key):
@@ -29,11 +29,12 @@ class GithubSystem:
         with open("meta/mgithub.config", "w") as fw:
             config.write(fw)
 
-    ###################################### System command helper func ######################################
+###################################### System command helper func ######################################
 
     # command: 无反馈的命令
     # 如果有反馈，则命令执行过程中出现错误，并打印错误信息
     # return: void
+    @staticmethod
     def execute_Command(cmd_str):
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 0:
@@ -45,6 +46,7 @@ class GithubSystem:
     # command: 执行git操作的命令，e.g. git push
     # 如返回值为(128, xxxxxx), 则命令执行失败，并将错误信息以异常的方式向上抛出
     # return: void
+    @staticmethod
     def execute_GitCommand(cmd_str):
         # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
@@ -56,12 +58,13 @@ class GithubSystem:
     # command: 执行command的命令，e.g. mgithub copy
     # 如返回值为 cp: file not existed... 则命令执行失败，并将错误信息以异常的方式向上抛出
     # return: 1-success, 0-fail
+    @staticmethod
     def execute_CmdCommand(cmd_str):
         # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
         # print(out_str)
         if out_str[0] == 0 or out_str[1] == '':
-            if (str(out_str[1]).split(":")[0] == "cp"):
+            if str(out_str[1]).split(":")[0] == "cp":
                 raise CustomException(out_str[1])
             temp_str = out_str[1]
             temp_str = temp_str.strip('\n')
@@ -76,6 +79,7 @@ class GithubSystem:
     # command: 执行系统script命令
     # 如返回值不为(0, null), 则命令执行失败，打印错误信息，但不抛出异常
     # return: 1-success, 0-fail
+    @staticmethod
     def execute_CommandReturn(cmd_str):
         out_str = subprocess.getstatusoutput(cmd_str)
         if out_str[0] == 0:
@@ -89,6 +93,7 @@ class GithubSystem:
     # 如果返回值不为(0, null), 则命令执行失败，打印错误信息，不抛出异常
     # 如果命令执行成功，打印返回信息
     # return: void
+    @staticmethod
     def execute_CommandWriteFile(cmd_str, directory_str):
         # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
@@ -107,6 +112,7 @@ class GithubSystem:
     # 如果返回值不为(0, null), 则命令执行失败，打印错误信息，不抛出异常
     # 如果命令执行成功，打印返回信息
     # return: void
+    @staticmethod
     def execute_CommandWriteFile_uncover(cmd_str, directory_str):
         # print(cmd_str)
         out_str = subprocess.getstatusoutput(cmd_str)
@@ -122,7 +128,7 @@ class GithubSystem:
             print('\n此次任务执行失败，请根据下面错误原因排查：')
             print(out_str)
 
-    ###################################### Log helper func ######################################
+###################################### Log helper func ######################################
 
     # 输出日志
     def show_logs(self, num):
@@ -135,99 +141,33 @@ class GithubSystem:
             i = len(log_list) - num
 
         while i < len(log_list):
-            time = log_list[i].split("|")[0]
-            result = log_list[i].split("|")[1]
-            project = log_list[i].split("|")[5]
-            product_kind = log_list[i].split("|")[7].lower()
-
-            force = log_list[i].split("|")[9]
-            skip_get_repo = log_list[i].split("|")[11]
-            skip_broken = log_list[i].split("|")[13]
-
-            url = log_list[i].split("|")[15]
-
-            command = "mgithub "
-            if skip_get_repo == "True":
-                command += "--skip-get-repositories "
-            if skip_broken == "True":
-                command += "--skip-broken "
-            if force == "True":
-                command += "--force "
-            command += product_kind + " "
-
-            if product_kind == "copy":
-                src_path = log_list[i].split("|")[17]
-                des_path = log_list[i].split("|")[19]
-                command += src_path + " "
-                command += des_path + " "
-            elif product_kind == "githubcli":
-                clistring = log_list[i].split("|")[17]
-                command += clistring
-            elif product_kind == 'delete':
-                pass
-            elif product_kind == 'replace':
-                pass
-            elif product_kind == 'format':
-                pass
-            elif product_kind == 'branch':
-                pass
-            elif product_kind == 'backup':
-                pass
-
-            print("#" + str(i + 1) + " " + time + " " + url + "->" + project + " [" + result + "]: " + command)
-
+            print("#" + str(i + 1) + " " + log_list[i])
             i += 1
 
-    # 生成log
     def log_maker(self, project, flag, ctx):
-
         FILE_PATH = "log/auto_make.log"
         nowtime = time.strftime("%Y%m%d %H:%M:%S")
         logline = nowtime
+        logline += " " + ctx.obj["url"] + "->" + project
 
         # 对任务结束类型进行判断
         if flag == 1:
-            logline += " |OK"
+            logline += " [OK]: "
         elif flag == 0:
-            logline += " |FAILED"
+            logline += " [FAILED]: "
         elif flag == 2:
-            logline += " |ABORT"
+            logline += " [ABORT]: "
 
-        # 将全局参数写入log
-        logline += "| organization: |" + str(ctx.obj['organization']) + "| project: |" + str(
-            project) + "| execute " + "|" + str(ctx.obj['product_kind'].upper())
-        logline += "| force: |" + str(ctx.obj['force']) + "| skip-get-repositories: |" \
-                   + str(ctx.obj['skip_get_repositories']) + "| skip-broken: |" + str(ctx.obj['skip_broken']) \
-                   + "| url: |" + str(ctx.obj['url'])
+        logline += ctx.obj["command"]
 
-        # 根据不同的命令写入不同的参数
-        if ctx.obj['product_kind'] == 'copy':
-            logline += "| src: |" + str(ctx.obj['src_path']) + "| des: |" + str(ctx.obj['des_path'])
-        elif ctx.obj['product_kind'] == 'githubcli':
-            logline += "| clistring: |" + str(ctx.obj['clistring'])
-        elif ctx.obj['product_kind'] == 'delete':
-            pass
-        elif ctx.obj['product_kind'] == 'replace':
-            pass
-        elif ctx.obj['product_kind'] == 'format':
-            pass
-        elif ctx.obj['product_kind'] == 'branch':
-            pass
-        elif ctx.obj['product_kind'] == 'backup':
-            pass
-
-        # 写入操作
         GithubSystem.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)
 
-        # 输出本次写入的log日志条例
-        GithubSystem().show_logs(1)
-
-    ###################################### Repo operation helper func ######################################
+###################################### Repo operation helper func ######################################
 
     # 根据项目列表，将每个项目的远程仓库clone到本地
     def clone_repo_list(self, project_list, skip_get_repo, skip_broken, organization, url):
         # 如果用户执行时使用 mgithub --skip-get-repositories
-        if str(skip_get_repo) is "True":
+        if str(skip_get_repo) == "True":
             print("\n已跳过clone仓库步骤, 本地已有的仓库将会在执行过程中更新")
         else:
             print("\n正在将本组织下的仓库clone到本地...")
@@ -250,6 +190,7 @@ class GithubSystem:
                         else:
                             print("仓库clone未成功，结束本次任务")
                             raise e
+
 
     # 更新已经存在的本地仓库 或 获取未存在的本地仓库
     def update_repo(self, organization, url, project):
@@ -276,6 +217,7 @@ class GithubSystem:
                 raise e
         print(project + ": 本地仓库更新完成")
 
+
     # 将本地工程提交到github（push to remote）
     def push_repo(self, project, organization, product_kind):
         print(project + ": 将本地工程提交到github")
@@ -286,7 +228,8 @@ class GithubSystem:
         except CustomException as e:
             raise e
 
-    ###################################### Work helper func ######################################
+
+###################################### Work helper func ######################################
 
     # 对项目进行回滚
     def rollback_proj(self, project, organization):
@@ -301,6 +244,7 @@ class GithubSystem:
             print(project + ": 项目回滚失败, 请检查您的网络连接状况和组织名称")
         else:
             print(project + ": 项目已回滚")
+
 
     # 主体构建工作完成后的处理
     def complete_work(self, flag, project, ctx):
@@ -322,6 +266,7 @@ class GithubSystem:
             self.log_maker(project, flag, ctx)
             print("============================ [[" + project + "]]: 本项目任务失败\n")
 
+
     # 选择继续操作
     # 格式：选择是否在上次任务上继续：  \n\t 0. 继续 \n\t 1. 终止退出  \n\n\t选择:
     def continue_select(self):
@@ -338,6 +283,3 @@ class GithubSystem:
             print('\n\t输入错误，请重新选择')
             continue_id = input(input_str)
         return continue_id
-
-
-

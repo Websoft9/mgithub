@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import json
-import click
 import os
+import click
+import sys
 
 from GithubCommand import GithubCommand
 from GithubSystem import GithubSystem
@@ -30,6 +30,12 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
     ctx.obj['force'] = force
     ctx.obj['url'] = GithubSystem().get_prop("url")
     ctx.obj['organization'] = ctx.obj['url'].split("/")[len(ctx.obj['url'].split("/")) - 1]
+    # 通过sys.argv记录用户输入的命令
+    ctx.obj['command'] = "mgithub"
+    i = 1
+    while i < len(sys.argv):
+        ctx.obj['command'] += " " + sys.argv[i]
+        i += 1
 
     if version:
         click.echo("mgithub version 1.0.1")
