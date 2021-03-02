@@ -27,10 +27,10 @@ is learn about it and then write the documentation yourself !
 Sources of this manual are available at [Mgithub](https://github.com/Websoft9/mgithub). Fork the repository, update them
 and send a pull request.
 
-#Quickstart
-###Pre-request
+# Quickstart
+### Pre-request
 You need to have python3 and pip3 installed on your own device.
-###Install
+### Install
 1. Fork/Download the repository from [Mgithub](https://github.com/Websoft9/mgithub).
 2. Install mgithub command through pip3.
 ```
@@ -40,26 +40,26 @@ You need to have python3 and pip3 installed on your own device.
 ```
     $ mgithub
 ```
-###Uninstall
+### Uninstall
 1. Use pip3 to uninstall the mgithub package.
 ```
     $ pip3 uninstall mgithub
 ```
 
-#User Guide
-##mgithub
-####Help information
+# User Guide
+## mgithub
+#### Help information
 You can find the help information by either typing mgithub or mgithub -h.
 ```
     $ mgithub
     $ mgithub -h
 ```
-####Check the version
+#### Check the version
 You can check the version of mgithub by -v option.
 ```
     $ mgithub -v
 ```
-####Check the log
+#### Check the log
 You can find the latest 10 logs by -l or --logs options.
 ```
     $ mgithub -l
