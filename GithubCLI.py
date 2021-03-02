@@ -4,8 +4,8 @@ import os
 import click
 import sys
 
-from GithubCommand import GithubCommand
-from GithubSystem import GithubSystem
+from GithubSystemCmd import GithubCommand
+from GithubHelperFunc import GithubSystem
 from GithubWork import GithubWork
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])

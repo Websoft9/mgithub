@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
 from GithubException import CustomException
-from GithubSystem import GithubSystem
+from GithubHelperFunc import GithubSystem
 
 
 class GithubProduct:

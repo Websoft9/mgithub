@@ -4,9 +4,9 @@ import os
 import signal
 import sys
 
-from GithubProduct import GithubProduct
+from GithubProductCmd import GithubProduct
 from GithubException import CustomException
-from GithubSystem import GithubSystem
+from GithubHelperFunc import GithubSystem
 
 
 class GithubWork():

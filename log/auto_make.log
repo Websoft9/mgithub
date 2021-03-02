@@ -3,3 +3,8 @@
 20210301 14:15:34 http://github.com/mgithubTestOrg->projCCC [OK]: mgithub copy copysrc/test /
 20210301 14:16:13 http://github.com/mgithubTestOrg->projAAA [OK]: mgithub --skip-broken -f copy copysrc/test /
 20210301 14:16:14 http://github.com/mgithubTestOrg->projBBB [ABORT]: mgithub --skip-broken -f copy copysrc/test /
+20210302 17:12:25 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub copy copysrc/test /
+20210302 17:12:27 https://github.com/mgithubTestOrg->projBBB [ABORT]: mgithub copy copysrc/test /
+20210302 17:12:57 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub --skip-get-repositories copy copysrc/test /
+20210302 17:13:00 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub --skip-get-repositories copy copysrc/test /
+20210302 17:13:04 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-get-repositories copy copysrc/test /

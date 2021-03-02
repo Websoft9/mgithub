@@ -158,3 +158,7 @@ mgithub githubcli 'gh secret remove SECRET_1'
 This mgithub script will delete every secret called SECRET_1 of every repositories under the checklist.<br>
 If not found, mgithub will throw a exception and stop the command. User can use --skip-broken option to skip the 
 abnormal repository.
+
+# Extension
+We have refactor our coding structure to make functionality extension work much easier than before.<br>
+**step1**

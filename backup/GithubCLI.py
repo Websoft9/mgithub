@@ -2,8 +2,8 @@
 # coding=utf-8
 import click
 import os
-from GithubCommand import GithubCommand
-from GithubSystem import GithubSystem
+from GithubSystemCmd import GithubCommand
+from GithubHelperFunc import GithubSystem
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
