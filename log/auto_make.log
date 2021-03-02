@@ -8,3 +8,6 @@
 20210302 17:12:57 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub --skip-get-repositories copy copysrc/test /
 20210302 17:13:00 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub --skip-get-repositories copy copysrc/test /
 20210302 17:13:04 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-get-repositories copy copysrc/test /
+20210302 17:36:46 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub copy copysrc/test /
+20210302 17:36:50 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub copy copysrc/test /
+20210302 17:36:52 https://github.com/mgithubTestOrg->projCCC [ABORT]: mgithub copy copysrc/test /
