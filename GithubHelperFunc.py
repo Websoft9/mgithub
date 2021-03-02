@@ -7,9 +7,9 @@ import time
 from GithubException import CustomException
 
 
-class GithubSystem:
+class GithubHelperFunc:
 
-###################################### config helper func ######################################
+    ###################################### config helper func ######################################
 
     # 从config文件获取指定的属性
     def get_prop(self, key):
@@ -29,7 +29,7 @@ class GithubSystem:
         with open("meta/mgithub.config", "w") as fw:
             config.write(fw)
 
-###################################### System command helper func ######################################
+    ###################################### System command helper func ######################################
 
     # command: 无反馈的命令
     # 如果有反馈，则命令执行过程中出现错误，并打印错误信息
@@ -128,7 +128,7 @@ class GithubSystem:
             print('\n此次任务执行失败，请根据下面错误原因排查：')
             print(out_str)
 
-###################################### Log helper func ######################################
+    ###################################### Log helper func ######################################
 
     # 输出日志
     def show_logs(self, num):
@@ -160,9 +160,9 @@ class GithubSystem:
 
         logline += ctx.obj["command"]
 
-        GithubSystem.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)
+        self.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)
 
-###################################### Repo operation helper func ######################################
+    ###################################### Repo operation helper func ######################################
 
     # 根据项目列表，将每个项目的远程仓库clone到本地
     def clone_repo_list(self, project_list, skip_get_repo, skip_broken, organization, url):
@@ -182,7 +182,7 @@ class GithubSystem:
                     print("git clone from " + proj + "....")
                     cmd = "git clone  " + url + "/" + proj + ".git data/" + organization + "/" + proj
                     try:
-                        GithubSystem.execute_GitCommand(cmd)
+                        self.execute_GitCommand(cmd)
                     except CustomException as e:
                         # 仓库clone未成功，结束本次任务
                         if str(skip_broken) == "True":
@@ -190,7 +190,6 @@ class GithubSystem:
                         else:
                             print("仓库clone未成功，结束本次任务")
                             raise e
-
 
     # 更新已经存在的本地仓库 或 获取未存在的本地仓库
     def update_repo(self, organization, url, project):
@@ -203,7 +202,7 @@ class GithubSystem:
             # 存在：使用git pull对本地仓库进行更新
             cmd = "cd " + FILE_PATH + "; git pull"
             try:
-                GithubSystem.execute_GitCommand(cmd)
+                self.execute_GitCommand(cmd)
             except CustomException as e:
                 raise e
         else:
@@ -212,11 +211,10 @@ class GithubSystem:
             cmd = "git clone  " + url + "/" + project + ".git data/" + organization + "/" + project
             try:
                 # GithubTools.execute_CommandIgnoreReturn(cmd)
-                GithubSystem.execute_GitCommand(cmd)
+                self.execute_GitCommand(cmd)
             except CustomException as e:
                 raise e
         print(project + ": 本地仓库更新完成")
-
 
     # 将本地工程提交到github（push to remote）
     def push_repo(self, project, organization, product_kind):
@@ -224,12 +222,11 @@ class GithubSystem:
         cmd = 'cd data/%s/%s;\ngit add -A;\ngit commit -m "%s";\ngit push' % (
             organization, project, product_kind)
         try:
-            GithubSystem.execute_GitCommand(cmd)
+            self.execute_GitCommand(cmd)
         except CustomException as e:
             raise e
 
-
-###################################### Work helper func ######################################
+    ###################################### Work helper func ######################################
 
     # 对项目进行回滚
     def rollback_proj(self, project, organization):
@@ -237,14 +234,13 @@ class GithubSystem:
         cmd = "cd data/" + organization + "/" + project + ";git fetch --all;git reset --hard origin/master;git clean -f -d . ;"
         try:
             # GithubTools.execute_CommandIgnoreReturn(cmd)
-            GithubSystem.execute_GitCommand(cmd)
+            self.execute_GitCommand(cmd)
         except CustomException as e:
             # 项目回滚中出现异常，回滚失败
             print(e.msg)
             print(project + ": 项目回滚失败, 请检查您的网络连接状况和组织名称")
         else:
             print(project + ": 项目已回滚")
-
 
     # 主体构建工作完成后的处理
     def complete_work(self, flag, project, ctx):
@@ -255,7 +251,7 @@ class GithubSystem:
             # 删除列表中对应的项目
             cmd = "sed -i '/^$/d;/" + project + "/d' " + ctx.obj['repo_str']
             # GithubTools.execute_CommandIgnoreReturn(cmd)
-            GithubSystem.execute_GitCommand(cmd)
+            self.execute_GitCommand(cmd)
             # 生成log
             self.log_maker(project, flag, ctx)
             print("============================ [[" + project + "]]: 本项目任务成功\n")
@@ -265,7 +261,6 @@ class GithubSystem:
             # 生成log
             self.log_maker(project, flag, ctx)
             print("============================ [[" + project + "]]: 本项目任务失败\n")
-
 
     # 选择继续操作
     # 格式：选择是否在上次任务上继续：  \n\t 0. 继续 \n\t 1. 终止退出  \n\n\t选择:

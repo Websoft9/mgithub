@@ -161,4 +161,7 @@ abnormal repository.
 
 # Extension
 We have refactor our coding structure to make functionality extension work much easier than before.<br>
-**step1**
+1. Register function in GithubCLI.py, you need to add some decoraters that following click package standard to your function.
+The ctx function parameter is a python type which encapsulate all of the system command option (-f, --skip-broken) or product command option (SOURCE_PATH).
+You can check the functions which have been already implemented for detail.
+2. Write your own function in GithubProduct

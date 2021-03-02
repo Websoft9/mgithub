@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # coding=utf-8
 from GithubException import CustomException
-from GithubHelperFunc import GithubSystem
+from GithubHelperFunc import GithubHelperFunc
 
 
-class GithubProduct:
+class GithubProductCmd:
 
     def __init__(self, ctx):
         self.ctx = ctx
@@ -21,7 +21,7 @@ class GithubProduct:
                   self.ctx.obj['des_path']
         # 执行相应的COPY命令
         try:
-            GithubSystem.execute_CmdCommand(cmd)
+            GithubHelperFunc.execute_CmdCommand(cmd)
         except CustomException as e:
             raise e
 
@@ -38,17 +38,17 @@ class GithubProduct:
                 if self.ctx.obj['force']:
                     # 覆盖
                     print("\n正在执行强制覆盖的New Secret设置")
-                    GithubSystem.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])
+                    GithubHelperFunc.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])
                 else:
                     # 不覆盖
                     print("\n正在执行不强制覆盖的New Secret设置")
                     # 判断当前项目中是否存在相同key的secret
                     cmd = "gh secret list -R " + self.ctx.obj['organization'] + "/" + project \
                           + "| grep -c ^" + secret_key
-                    rcontent = GithubSystem.execute_GitCommand(cmd)[1]
+                    rcontent = GithubHelperFunc.execute_GitCommand(cmd)[1]
                     # 不存在则正常创建一个新的secret
                     if rcontent == "0":
-                        GithubSystem.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])
+                        GithubHelperFunc.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])
 
             # clistring: gh secret remove ...
             elif self.ctx.obj['clistring'].split(" ")[1] == "secret" and self.ctx.obj['clistring'].split(" ")[
@@ -56,7 +56,7 @@ class GithubProduct:
                 # 转移到本地的相对应仓库目录下
                 cd_cmd = "cd data/" + self.ctx.obj['organization'] + "/" + project + ";"
                 print("\n正在执行批量删除Secret设置")
-                GithubSystem.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])
+                GithubHelperFunc.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])
             else:
                 print("\nmgithub githubcli目前不支持此命令")
 
