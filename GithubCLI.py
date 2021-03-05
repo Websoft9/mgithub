@@ -109,7 +109,10 @@ def move(ctx, source_path, destination_path):
 def delete(ctx, path):
     print("[[delete]] function is running")
     print("path is: %s" % path)
-    # TODO
+    ctx.obj['path'] = path
+    ctx.obj['product_kind'] = 'delete'
+    mauto = GithubWork(ctx)
+    mauto.auto_make()
 
 
 @mgithub.command(short_help="Rename the file or folder.")

@@ -32,3 +32,29 @@
 20210305 09:48:35 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub replace /test.txt replace
 20210305 09:48:39 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub replace /test.txt replace
 20210305 09:48:42 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub replace /test.txt replace
+20210305 10:03:37 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub delete /test/a.txt
+20210305 10:04:02 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub --skip-broken delete /test/a.txt
+20210305 10:04:12 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub --skip-broken delete /test/a.txt
+20210305 10:04:12 https://github.com/mgithubTestOrg->projCCC [ABORT]: mgithub --skip-broken delete /test/a.txt
+20210305 10:05:00 https://github.com/mgithubTestOrg->projAAA [ABORT]: mgithub --skip-broken delete /test/a.txt
+20210305 10:11:29 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub --skip-broken delete /test/a.txt
+20210305 10:11:35 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub --skip-broken delete /test/a.txt
+20210305 10:11:39 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-broken delete /test/a.txt
+20210305 10:11:56 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub --skip-broken delete /test/a.txt
+20210305 10:11:58 https://github.com/mgithubTestOrg->projBBB [FAILED]: mgithub --skip-broken delete /test/a.txt
+20210305 10:12:06 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-broken delete /test/a.txt
+20210305 10:12:22 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub --skip-broken delete /test/a.txt
+20210305 10:12:24 https://github.com/mgithubTestOrg->projBBB [FAILED]: mgithub --skip-broken delete /test/a.txt
+20210305 10:12:35 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-broken delete /test/a.txt
+20210305 10:12:50 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub --skip-broken delete /test/a.txt
+20210305 10:12:52 https://github.com/mgithubTestOrg->projBBB [FAILED]: mgithub --skip-broken delete /test/a.txt
+20210305 10:13:03 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-broken delete /test/a.txt
+20210305 10:13:21 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub --skip-broken delete /test
+20210305 10:13:24 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub --skip-broken delete /test
+20210305 10:13:28 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-broken delete /test
+20210305 10:15:12 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub --skip-broken -f delete /test/a.txt
+20210305 10:15:14 https://github.com/mgithubTestOrg->projBBB [FAILED]: mgithub --skip-broken -f delete /test/a.txt
+20210305 10:15:19 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-broken -f delete /test/a.txt
+20210305 10:20:29 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub --skip-broken -f delete /test
+20210305 10:20:33 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub --skip-broken -f delete /test
+20210305 10:20:37 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-broken -f delete /test

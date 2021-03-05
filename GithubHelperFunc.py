@@ -43,6 +43,12 @@ class GithubHelperFunc:
             print('\n此次任务执行失败，请根据错误原因排查\n')
             print(out_str)
 
+    @staticmethod
+    def execute_InteractiveCommand(cmd_str):
+        print("")
+        subprocess.run(cmd_str, shell=True)
+
+
     # command: 执行git操作的命令，e.g. git push
     # 如返回值为(128, xxxxxx), 则命令执行失败，并将错误信息以异常的方式向上抛出
     # return: void
