@@ -58,3 +58,8 @@
 20210305 10:20:29 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub --skip-broken -f delete /test
 20210305 10:20:33 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub --skip-broken -f delete /test
 20210305 10:20:37 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub --skip-broken -f delete /test
+20210305 17:09:12 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub copy copysrc/test /
+20210305 17:09:12 https://github.com/mgithubTestOrg->projBBB [ABORT]: mgithub copy copysrc/test /
+20210305 17:09:29 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub replace /test.txt replace
+20210305 17:09:32 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub replace /test.txt replace
+20210305 17:09:34 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub replace /test.txt replace

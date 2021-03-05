@@ -3,6 +3,7 @@
 import os
 import signal
 import sys
+from operator import methodcaller
 
 from GithubProductCmd import GithubProductCmd
 from GithubException import CustomException
@@ -112,21 +113,8 @@ class GithubWork():
         product = GithubProductCmd(self.ctx)
 
         try:
-            if self.product_kind == "copy":
-                product.copy(project)
-            elif self.product_kind == "githubcli":
-                product.githubcli(project)
-            elif self.product_kind == "delete":
-                product.delete(project)
-            elif self.product_kind == "replace":
-                product.replace(project)
-            elif self.product_kind == "format":
-                product.format(project)
-            elif self.product_kind == "branch":
-                product.branch(project)
-            elif self.product_kind == "backup":
-                product.backup(project)
-
+            # 利用operator.methodcaller从字符串反射出函数名来执行函数，简化extension步骤
+            methodcaller(self.product_kind, project)(product)
             # 将本地改动PUSH到远程仓库
             print("\n正在将本地改动push到远程仓库...")
             GithubHelperFunc().push_repo(project, self.organization, self.product_kind)
