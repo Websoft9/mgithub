@@ -129,15 +129,12 @@ class GithubCommand:
         print("new_content is: %s" % new_content)
         if (new_content == None):
             print("Since not new_content is provided, old_content will be deleted from file_path")
-        # GithubCommand.debug(ctx)
-        # mauto = GithubFlow(ctx.obj['url'], ctx.obj['skip_get_repositories'], ctx.obj['skip_broken'], ctx.obj['force'],
-        #                "replace", file_path, old_content, new_content)
-        # mauto.auto_make()
-        # TODO:
-        # git_clone()
-        # ...
-        # push_repo()
-        # print_log()
+        ctx.obj['file_path'] = file_path
+        ctx.obj['old_content'] = old_content
+        ctx.obj['new_content'] = new_content
+        ctx.obj['product_kind'] = 'replace'
+        mauto = GithubWork(ctx)
+        mauto.auto_make()
 
     # 功能：更具指定的命令行，向指定文件的指定位置下方插入新的字段（支持多行）
     def lineinsert(self, ctx, file_path, line, content):

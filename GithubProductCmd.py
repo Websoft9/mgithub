@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
+import os
+
 from GithubException import CustomException
 from GithubHelperFunc import GithubHelperFunc
 
@@ -64,7 +66,17 @@ class GithubProductCmd:
         pass
 
     def replace(self, project):
-        pass
+        localfile_path = "data/" + self.ctx.obj['organization'] + "/" + project + self.ctx.obj['file_path']
+        if not os.path.isfile(localfile_path):
+            raise CustomException(
+                "\nThe target file doesn't exist or is not a writable file.\nmgithub commend will abort, you can use "
+                "--skip-broken to jump over this abort.")
+        cmd = "sed -i '' 's/" + self.ctx.obj['old_content'] + "/" + self.ctx.obj['new_content'] + "/g' " + localfile_path
+        try:
+            GithubHelperFunc.execute_CmdCommand(cmd)
+        except CustomException as e:
+            raise e
+        print("替换操作已完成")
 
     def format(self, project):
         pass

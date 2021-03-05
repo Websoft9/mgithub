@@ -134,9 +134,17 @@ def replace(ctx, file_path, old_content, new_content):
     print("file_path is: %s" % file_path)
     print("old_content is: %s" % old_content)
     print("new_content is: %s" % new_content)
-    if new_content == None:
+    ctx.obj['file_path'] = file_path
+    ctx.obj['old_content'] = old_content
+    if new_content is None:
         print("Since not new_content is provided, old_content will be deleted from file_path")
-    # TODO
+        ctx.obj['new_content'] = ""
+    else:
+        ctx.obj['new_content'] = new_content
+    ctx.obj['product_kind'] = 'replace'
+    mauto = GithubWork(ctx)
+    mauto.auto_make()
+
 
 
 @mgithub.command(

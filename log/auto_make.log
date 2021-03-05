@@ -11,3 +11,24 @@
 20210302 17:36:46 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub copy copysrc/test /
 20210302 17:36:50 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub copy copysrc/test /
 20210302 17:36:52 https://github.com/mgithubTestOrg->projCCC [ABORT]: mgithub copy copysrc/test /
+20210305 09:16:36 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub replace /path asd sdf
+20210305 09:16:38 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub replace /path asd sdf
+20210305 09:16:40 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub replace /path asd sdf
+20210305 09:22:54 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub replace /path asd sdf
+20210305 09:24:22 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub replace /path asd sdf
+20210305 09:24:42 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub --skip-broken replace /path asd sdf
+20210305 09:24:44 https://github.com/mgithubTestOrg->projBBB [FAILED]: mgithub --skip-broken replace /path asd sdf
+20210305 09:24:45 https://github.com/mgithubTestOrg->projCCC [FAILED]: mgithub --skip-broken replace /path asd sdf
+20210305 09:36:42 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub replace /test cover replace
+20210305 09:38:23 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub replace /test.txt cover replace
+20210305 09:42:08 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub replace /test.txt cover replace
+20210305 09:43:07 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub replace /test.txt cover replace
+20210305 09:43:28 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub replace /test.txt cover replace
+20210305 09:43:33 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub replace /test.txt cover replace
+20210305 09:43:37 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub replace /test.txt cover replace
+20210305 09:46:54 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub replace /test.txt abc replace
+20210305 09:46:57 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub replace /test.txt abc replace
+20210305 09:46:59 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub replace /test.txt abc replace
+20210305 09:48:35 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub replace /test.txt replace
+20210305 09:48:39 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub replace /test.txt replace
+20210305 09:48:42 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub replace /test.txt replace
