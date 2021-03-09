@@ -5,8 +5,9 @@ import click
 import sys
 
 from GithubSystemCmd import GithubSystemCmd
-from GithubHelperFunc import GithubHelperFunc
+from GithubUtil import GithubHelperFunc
 from GithubWork import GithubWork
+from GithubException import CustomException
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -32,6 +33,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
     ctx.obj['organization'] = ctx.obj['url'].split("/")[len(ctx.obj['url'].split("/")) - 1]
     # 通过sys.argv记录用户输入的命令
     ctx.obj['command'] = "mgithub"
+
     i = 1
     while i < len(sys.argv):
         ctx.obj['command'] += " " + sys.argv[i]
@@ -85,10 +87,17 @@ def copy(ctx, source_path, destination_path):
 
 
 @mgithub.command(short_help="List all user/organization's projects into ORGNAME/USERNAME_repositories.txt")
+@click.option('-v', '--version', help='Show the release version in project list.', is_flag=True)
+@click.option('-c', '--client', help='Use clentID to fetch the repo info.', is_flag=True)
 @click.pass_context
-def repocache(ctx):
+def repocache(ctx, version, client):
+    ctx.obj['release'] = version
+    ctx.obj['client'] = client
     command = GithubSystemCmd(ctx)
-    command.repocache()
+    try:
+        command.repocache()
+    except CustomException as e:
+        print(e.msg)
 
 
 @mgithub.command(short_help="Move files or folder from source path to destination path, \

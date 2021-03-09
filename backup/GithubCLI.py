@@ -3,7 +3,7 @@
 import click
 import os
 from GithubSystemCmd import GithubCommand
-from GithubHelperFunc import GithubSystem
+from GithubUtil import GithubSystem
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 

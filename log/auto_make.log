@@ -63,3 +63,4 @@
 20210305 17:09:29 https://github.com/mgithubTestOrg->projAAA [OK]: mgithub replace /test.txt replace
 20210305 17:09:32 https://github.com/mgithubTestOrg->projBBB [OK]: mgithub replace /test.txt replace
 20210305 17:09:34 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub replace /test.txt replace
+20210308 08:59:08 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub delete /test \2.txt

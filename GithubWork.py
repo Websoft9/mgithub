@@ -7,7 +7,7 @@ from operator import methodcaller
 
 from GithubProductCmd import GithubProductCmd
 from GithubException import CustomException
-from GithubHelperFunc import GithubHelperFunc
+from GithubUtil import GithubHelperFunc
 
 
 class GithubWork():
@@ -62,7 +62,11 @@ class GithubWork():
                 if GithubHelperFunc().continue_select() == "0":
 
                     # 获取项目列表内容
-                    project_list = open(self.repo_str).read().splitlines()
+                    # project_list = open(self.repo_str).read().splitlines()
+                    project_list = []
+                    for line in open(self.repo_str).read().splitlines():
+                        info = line.split(" ")
+                        project_list.append(info[0])
 
                     # 根据项目列表，将每个项目的远程仓库clone到本地
                     try:

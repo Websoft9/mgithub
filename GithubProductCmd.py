@@ -3,7 +3,7 @@
 import os
 
 from GithubException import CustomException
-from GithubHelperFunc import GithubHelperFunc
+from GithubUtil import GithubHelperFunc
 
 
 class GithubProductCmd:
