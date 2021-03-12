@@ -31,69 +31,78 @@ class GithubHelperFunc:
 
     ###################################### System command helper func ######################################
 
-    # command: 无反馈的命令
-    # 如果有反馈，则命令执行过程中出现错误，并打印错误信息
-    # return: void
-    @staticmethod
-    def execute_Command(cmd_str):
-        out_str = subprocess.getstatusoutput(cmd_str)
-        if out_str[0] == 0:
-            pass
-        else:
-            print('\n此次任务执行失败，请根据错误原因排查\n')
-            print(out_str)
-
     @staticmethod
     def execute_InteractiveCommand(cmd_str):
         print("")
         subprocess.run(cmd_str, shell=True)
 
+    # # command: 执行command的命令，e.g. mgithub copy
+    # # 如返回值为 cp: file not existed... 则命令执行失败，并将错误信息以异常的方式向上抛出
+    # # return: 1-success, 0-fail
+    # @staticmethod
+    # def execute_CmdCommand(cmd_str):
+    #
+    #     out_str = subprocess.getstatusoutput(cmd_str)
+    #
+    #     # max_run = 3
+    #     # run = 0
+    #     # while run < max_run:
+    #     #     try:
+    #     #         out_str = subprocess.call(cmd_str, timeout = 5)
+    #     #     except subprocess.TimeoutExpired:
+    #     #         continue
+    #     #     else:
+    #     #         break
+    #     #     finally:
+    #     #         run += 1
+    #
+    #     if out_str[0] == 0 or out_str[1] == '':
+    #         if str(out_str[1]).split(":")[0] == "cp":
+    #             raise CustomException(out_str[1])
+    #         if out_str[0] == 128 or out_str[0] == 129:
+    #             raise CustomException(out_str[1])
+    #         temp_str = out_str[1]
+    #         temp_str = temp_str.strip('\n')
+    #         temp_str = temp_str.strip('"')
+    #         if temp_str != "":
+    #             print(temp_str)
+    #         return 1
+    #     else:
+    #         print('\n此次任务执行失败，请根据下面错误原因排查：')
+    #         raise CustomException(out_str[1])
 
-    # command: 执行git操作的命令，e.g. git push
-    # 如返回值为(128, xxxxxx), 则命令执行失败，并将错误信息以异常的方式向上抛出
-    # return: void
-    @staticmethod
-    def execute_GitCommand(cmd_str):
-        # print(cmd_str)
-        out_str = subprocess.getstatusoutput(cmd_str)
-        if out_str[0] == 128 or out_str[0] == 129:
-            raise CustomException(out_str[1])
-        # print(out_str)
-        return out_str
-
-    # command: 执行command的命令，e.g. mgithub copy
-    # 如返回值为 cp: file not existed... 则命令执行失败，并将错误信息以异常的方式向上抛出
-    # return: 1-success, 0-fail
     @staticmethod
     def execute_CmdCommand(cmd_str):
-        # print(cmd_str)
-        out_str = subprocess.getstatusoutput(cmd_str)
-        # print(out_str)
-        if out_str[0] == 0 or out_str[1] == '':
-            if str(out_str[1]).split(":")[0] == "cp":
-                raise CustomException(out_str[1])
-            temp_str = out_str[1]
-            temp_str = temp_str.strip('\n')
-            temp_str = temp_str.strip('"')
-            print(temp_str)
-            return 1
-        else:
-            print('\n此次任务执行失败，请根据下面错误原因排查：')
-            raise CustomException(out_str[1])
-            return 0
+        max_run = 3
+        run = 0
+        result = None
+        while run < max_run:
+            try:
+                result = subprocess.run(cmd_str, shell=True, capture_output=True, timeout=100)
+            except subprocess.TimeoutExpired:
+                continue
+            else:
+                break
+            finally:
+                run += 1
 
-    # command: 执行系统script命令
-    # 如返回值不为(0, null), 则命令执行失败，打印错误信息，但不抛出异常
-    # return: 1-success, 0-fail
-    @staticmethod
-    def execute_CommandReturn(cmd_str):
-        out_str = subprocess.getstatusoutput(cmd_str)
-        if out_str[0] == 0:
-            return 1
-        else:
+        if result is None:
+            raise CustomException("Timeout !!!")
+        err_msg = result.stderr.decode('utf-8')
+        out_msg = result.stdout.decode('utf-8')
+
+        if result.returncode != 0 and err_msg != "":
+            # err_msg = str(result.stderr).split("'")[1]
+            err_msg = result.stderr.decode('utf-8')
             print('\n此次任务执行失败，请根据下面错误原因排查：')
-            print(out_str)
-            return 0
+            # print(result)
+            raise CustomException(err_msg)
+        else:
+            # out_msg = str(result.stdout).split("'")[1]
+            out_msg = result.stdout.decode('utf-8')
+            if out_msg != "":
+                print(out_msg, end='')
+
 
     # command: 执行需要写入文件的命令
     # 如果返回值不为(0, null), 则命令执行失败，打印错误信息，不抛出异常
@@ -170,33 +179,6 @@ class GithubHelperFunc:
 
     ###################################### Repo operation helper func ######################################
 
-    # 根据项目列表，将每个项目的远程仓库clone到本地
-    def clone_repo_list(self, project_list, skip_get_repo, skip_broken, organization, url):
-        # 如果用户执行时使用 mgithub --skip-get-repositories
-        if str(skip_get_repo) == "True":
-            print("\n已跳过clone仓库步骤, 本地已有的仓库将会在执行过程中更新")
-        else:
-            print("\n正在将本组织下的仓库clone到本地...")
-            for proj in project_list:
-                FILE_PATH = "data/" + organization + "/" + proj
-                # 判断仓库是否已经保存在本地
-                if os.path.isdir(FILE_PATH):
-                    # 存在
-                    print(FILE_PATH + "已存在, 可以使用option: --skip-get-repositories 跳过本步骤")
-                else:
-                    # 不存在，从远程仓库clone
-                    print("git clone from " + proj + "....")
-                    cmd = "git clone  " + url + "/" + proj + ".git data/" + organization + "/" + proj
-                    try:
-                        self.execute_GitCommand(cmd)
-                    except CustomException as e:
-                        # 仓库clone未成功，结束本次任务
-                        if str(skip_broken) == "True":
-                            print(proj + ": 本仓库clone失败")
-                        else:
-                            print("仓库clone未成功，结束本次任务")
-                            raise e
-
     # 更新已经存在的本地仓库 或 获取未存在的本地仓库
     def update_repo(self, organization, url, project):
         # 对本地仓库进行更新
@@ -208,7 +190,7 @@ class GithubHelperFunc:
             # 存在：使用git pull对本地仓库进行更新
             cmd = "cd " + FILE_PATH + "; git pull"
             try:
-                self.execute_GitCommand(cmd)
+                self.execute_CmdCommand(cmd)
             except CustomException as e:
                 raise e
         else:
@@ -217,7 +199,7 @@ class GithubHelperFunc:
             cmd = "git clone  " + url + "/" + project + ".git data/" + organization + "/" + project
             try:
                 # GithubTools.execute_CommandIgnoreReturn(cmd)
-                self.execute_GitCommand(cmd)
+                self.execute_CmdCommand(cmd)
             except CustomException as e:
                 raise e
         print(project + ": 本地仓库更新完成")
@@ -228,7 +210,7 @@ class GithubHelperFunc:
         cmd = 'cd data/%s/%s;\ngit add -A;\ngit commit -m "%s";\ngit push' % (
             organization, project, product_kind)
         try:
-            self.execute_GitCommand(cmd)
+            self.execute_CmdCommand(cmd)
         except CustomException as e:
             raise e
 
@@ -240,7 +222,7 @@ class GithubHelperFunc:
         cmd = "cd data/" + organization + "/" + project + ";git fetch --all;git reset --hard origin/master;git clean -f -d . ;"
         try:
             # GithubTools.execute_CommandIgnoreReturn(cmd)
-            self.execute_GitCommand(cmd)
+            self.execute_CmdCommand(cmd)
         except CustomException as e:
             # 项目回滚中出现异常，回滚失败
             print(e.msg)
@@ -255,9 +237,9 @@ class GithubHelperFunc:
             # 操作成功
             print("\n" + project + ": 自动化任务完成,从cache列表删除该工程,并追加日志")
             # 删除列表中对应的项目
-            cmd = "sed -i '/^$/d;/" + project + "/d' " + ctx.obj['repo_str']
-            # GithubTools.execute_CommandIgnoreReturn(cmd)
-            self.execute_GitCommand(cmd)
+            # cmd = "sed -i '/^$/d;/" + project + "/d' " + ctx.obj['repo_str']
+            cmd = "sed -i '' '/^$/d;/" + project + "/d' " + ctx.obj['repo_str']
+            self.execute_CmdCommand(cmd)
             # 生成log
             self.log_maker(project, flag, ctx)
             print("============================ [[" + project + "]]: 本项目任务成功\n")

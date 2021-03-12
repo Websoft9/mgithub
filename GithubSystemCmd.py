@@ -3,7 +3,7 @@
 import json
 import os
 
-from GithubUtil import GithubHelperFunc
+from GithubUtils import GithubHelperFunc
 from GithubException import CustomException
 
 class GithubSystemCmd():
@@ -26,12 +26,12 @@ class GithubSystemCmd():
             if self.ctx.obj['client']:
                 client_id = GithubHelperFunc().get_prop("client_id")
                 client_secrets = GithubHelperFunc().get_prop("client_secrets")
-                GithubHelperFunc.execute_Command(
+                GithubHelperFunc.execute_CmdCommand(
                     'curl -u ' + client_id + ':' + client_secrets + ' https://api.github.com/users/' + organization + "/repos\?per_page\=100\&page\=" + str(
                         page) + "  > data/repoapi.json"
                 )
             else:
-                GithubHelperFunc.execute_Command(
+                GithubHelperFunc.execute_CmdCommand(
                     'curl -s  https://api.github.com/users/' + organization + "/repos\?per_page\=100\&page\=" + str(
                         page) + "  > data/repoapi.json"
                 )
@@ -41,6 +41,9 @@ class GithubSystemCmd():
             with open('data/repoapi.json', 'r') as f:
                 dict = json.load(f)
 
+            if 'message' in dict:
+                break
+
             # 对json中的每一个仓库信息进行遍历，找到仓库名并写入项目列表
             for repo in dict:
 
@@ -49,12 +52,12 @@ class GithubSystemCmd():
                     if self.ctx.obj['client']:
                         client_id = GithubHelperFunc().get_prop("client_id")
                         client_secrets = GithubHelperFunc().get_prop("client_secrets")
-                        GithubHelperFunc.execute_Command(
+                        GithubHelperFunc.execute_CmdCommand(
                             'curl -u ' + client_id + ':' + client_secrets + ' https://api.github.com/repos/' + organization + "/" +
                             repo['name'] + "/tags > data/repotag.json"
                         )
                     else:
-                        GithubHelperFunc.execute_Command(
+                        GithubHelperFunc.execute_CmdCommand(
                             'curl -s https://api.github.com/repos/' + organization + "/" +
                             repo['name'] + "/tags > data/repotag.json"
                         )
@@ -62,9 +65,6 @@ class GithubSystemCmd():
                     with open('data/repotag.json', 'r') as f1:
                         dict_tag = json.load(f1)
                     if len(dict_tag) != 0:
-
-                        # if len(dict_tag['message']) > 0:
-                        #     raise CustomException("API rate limit exceeded for 175.13.97.100.")
                         version = dict_tag[0]['name']
                         record = repo['name'] + " " + version
                     else:
@@ -72,16 +72,55 @@ class GithubSystemCmd():
                 else:
                     record = repo['name']
 
-                GithubHelperFunc.execute_Command(
-                    "echo " + record + " >> data/" + organization + "_repositories.txt"
+                GithubHelperFunc.execute_CmdCommand(
+                    "echo " + record + " >> data/" + organization + "_repositories.txt;" +
+                    "cat data/" + organization + "_repositories.txt | awk 'END {print}'"
                 )
-                print(record)
 
             page += 1
 
         # 如果仓库列表为空
         if not os.path.getsize("data/" + organization + "_repositories.txt"):
             print("仓库列表为空，请检查您的组织/用户名或网络设置")
-            GithubHelperFunc.execute_CommandReturn("rm data/" + organization + "_repositories.txt")
+            # GithubHelperFunc.execute_CommandReturn("rm data/" + organization + "_repositories.txt")
+            GithubHelperFunc.execute_CmdCommand("rm data/" + organization + "_repositories.txt")
+        else:
+            print()
 
-        print()
+    def clone(self):
+
+        self.ctx.obj['repo_str'] = "data/" + self.ctx.obj['organization'] + "_repositories.txt"
+        if os.path.isfile(self.ctx.obj['repo_str']):
+            if len(open(self.ctx.obj['repo_str']).read().splitlines()) == 0:
+                # 空的项目列表
+                raise CustomException("项目列表为空，请执行mgithub [option] repocache来获取本组织/用户的项目列表")
+
+        project_list = []
+        for line in open(self.ctx.obj['repo_str']).read().splitlines():
+            info = line.split(" ")
+            project_list.append(info[0])
+
+        print("正在将本组织下的仓库clone到本地...\n")
+        for proj in project_list:
+            FILE_PATH = "data/" + self.ctx.obj['organization'] + "/" + proj
+            if os.path.isdir(FILE_PATH):
+                print("本地仓库" + proj + "已存在：正在更新")
+                # 存在：使用git pull对本地仓库进行更新
+                cmd = "cd " + FILE_PATH + "; git pull"
+                try:
+                    GithubHelperFunc.execute_CmdCommand(cmd)
+                except CustomException as e:
+                    raise e
+            else:
+                print("git clone from " + proj + "....")
+                cmd = "git clone  " + self.ctx.obj['url'] + "/" + proj + ".git data/" + self.ctx.obj['organization'] + "/" + proj
+                try:
+                    GithubHelperFunc.execute_CmdCommand(cmd)
+                except CustomException as e:
+                    # 仓库clone未成功，结束本次任务
+                    if str(self.ctx.obj['skip_broken']) == "True":
+                        print(proj + ": 本仓库clone失败")
+                    else:
+                        print("仓库clone未成功，结束本次任务")
+                        raise e
+            print()

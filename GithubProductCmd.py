@@ -3,7 +3,7 @@
 import os
 
 from GithubException import CustomException
-from GithubUtil import GithubHelperFunc
+from GithubUtils import GithubHelperFunc
 
 
 class GithubProductCmd:
@@ -47,7 +47,7 @@ class GithubProductCmd:
                     # 判断当前项目中是否存在相同key的secret
                     cmd = "gh secret list -R " + self.ctx.obj['organization'] + "/" + project \
                           + "| grep -c ^" + secret_key
-                    rcontent = GithubHelperFunc.execute_GitCommand(cmd)[1]
+                    rcontent = GithubHelperFunc.execute_CmdCommand(cmd)[1]
                     # 不存在则正常创建一个新的secret
                     if rcontent == "0":
                         GithubHelperFunc.execute_CmdCommand(cd_cmd + self.ctx.obj['clistring'])

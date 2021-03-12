@@ -7,7 +7,7 @@ from operator import methodcaller
 
 from GithubProductCmd import GithubProductCmd
 from GithubException import CustomException
-from GithubUtil import GithubHelperFunc
+from GithubUtils import GithubHelperFunc
 
 
 class GithubWork():
@@ -68,14 +68,14 @@ class GithubWork():
                         info = line.split(" ")
                         project_list.append(info[0])
 
-                    # 根据项目列表，将每个项目的远程仓库clone到本地
-                    try:
-                        GithubHelperFunc().clone_repo_list(project_list, self.skip_get_repo,
-                                                       self.skip_broken, self.organization, self.url)
-                    except CustomException as e:
-                        print(e.msg)
-                        if str(self.skip_broken) != "True":
-                            return
+                    # # 根据项目列表，将每个项目的远程仓库clone到本地
+                    # try:
+                    #     GithubHelperFunc().clone_repo_list(project_list, self.skip_get_repo,
+                    #                                    self.skip_broken, self.organization, self.url)
+                    # except CustomException as e:
+                    #     print(e.msg)
+                    #     if str(self.skip_broken) != "True":
+                    #         return
 
                     # 根据项目列表，对每个项目进行循环command操作
                     self.loop_proj_work(project_list)

@@ -3,7 +3,7 @@
 import json
 import os
 
-from GithubUtil import GithubSystem
+from GithubUtils import GithubSystem
 from GithubWork import GithubWork
 
 class GithubCommand:

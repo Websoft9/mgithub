@@ -5,7 +5,7 @@ import click
 import sys
 
 from GithubSystemCmd import GithubSystemCmd
-from GithubUtil import GithubHelperFunc
+from GithubUtils import GithubHelperFunc
 from GithubWork import GithubWork
 from GithubException import CustomException
 
@@ -197,3 +197,12 @@ def githubcli(ctx, clistring):
     ctx.obj['clistring'] = clistring
     mauto = GithubWork(ctx)
     mauto.auto_make()
+
+@mgithub.command(short_help="Clone all github repositories in local project_list.")
+@click.pass_context
+def clone(ctx):
+    command = GithubSystemCmd(ctx)
+    try:
+        command.clone()
+    except CustomException as e:
+        print(e.msg)

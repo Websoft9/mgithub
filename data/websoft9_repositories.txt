@@ -62,7 +62,7 @@ ansible-superset v1.0.0
 ansible-template
 ansible-tensorflow v2.4.1-1
 ansible-wordpress v5.6-1
-ansible-zabbix
+ansible-zabbix v5.2-1
 ansible-zentao
 aws-platform
 azure-platform
@@ -118,3 +118,9 @@ websoft9.github.io
 win-ansible-dotnet
 win-ansible-phpstudy
 win-ansible-template
+win-ansible-wampserver
+win-ansible-xampp
+windows
+win_ansible-sqlserver
+win_ansible_phpstudy
+win_ansible_wamp
