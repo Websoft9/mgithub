@@ -122,3 +122,4 @@
 20210312 10:31:37 https://github.com/mgithubTestOrg->projCCC [OK]: mgithub delete /test
 20210312 10:32:13 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub copy copysrc/qwe.txt /
 20210312 10:32:25 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub copy copysrc/qwe.txt /
+20210316 10:57:02 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub copy copysrc/qwe.txt /

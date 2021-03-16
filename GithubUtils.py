@@ -12,11 +12,19 @@ class GithubHelperFunc:
     ###################################### config helper func ######################################
 
     # 从config文件获取指定的属性
-    def get_prop(self, key):
+    # def get_prop(self, key):
+    #     config = configparser.ConfigParser()
+    #     config.read("meta/mgithub.config", encoding="utf-8")
+    #     mgithub_item = config.items("mgithub")
+    #     for content in mgithub_item:
+    #         if content[0] == key:
+    #             return content[1]
+    #     return False
+    def get_prop(self, item, path, key):
         config = configparser.ConfigParser()
-        config.read("meta/mgithub.config", encoding="utf-8")
-        mgithub_item = config.items("mgithub")
-        for content in mgithub_item:
+        config.read(path, encoding="utf-8")
+        items = config.items(item)
+        for content in items:
             if content[0] == key:
                 return content[1]
         return False

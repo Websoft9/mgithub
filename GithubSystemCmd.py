@@ -6,6 +6,7 @@ import os
 from GithubUtils import GithubHelperFunc
 from GithubException import CustomException
 
+
 class GithubSystemCmd():
 
     def __init__(self, ctx):
@@ -24,8 +25,10 @@ class GithubSystemCmd():
         while len(dict) != 0 or page == 1:
             # 从github official api获取用户/个人的所用项目信息并存为json
             if self.ctx.obj['client']:
-                client_id = GithubHelperFunc().get_prop("client_id")
-                client_secrets = GithubHelperFunc().get_prop("client_secrets")
+                client_id = GithubHelperFunc().get_prop(self.ctx.obj["config_item"], self.ctx.obj["config_path"],
+                                                        "client_id")
+                client_secrets = GithubHelperFunc().get_prop(self.ctx.obj["config_item"], self.ctx.obj["config_path"],
+                                                             "client_secrets")
                 GithubHelperFunc.execute_CmdCommand(
                     'curl -u ' + client_id + ':' + client_secrets + ' https://api.github.com/users/' + organization + "/repos\?per_page\=100\&page\=" + str(
                         page) + "  > data/repoapi.json"
@@ -35,7 +38,6 @@ class GithubSystemCmd():
                     'curl -s  https://api.github.com/users/' + organization + "/repos\?per_page\=100\&page\=" + str(
                         page) + "  > data/repoapi.json"
                 )
-
 
             # json -> python data
             with open('data/repoapi.json', 'r') as f:
@@ -50,8 +52,10 @@ class GithubSystemCmd():
                 if self.ctx.obj['release']:
 
                     if self.ctx.obj['client']:
-                        client_id = GithubHelperFunc().get_prop("client_id")
-                        client_secrets = GithubHelperFunc().get_prop("client_secrets")
+                        client_id = GithubHelperFunc().get_prop(self.ctx.obj["config_item"],
+                                                                self.ctx.obj["config_path"], "client_id")
+                        client_secrets = GithubHelperFunc().get_prop(self.ctx.obj["config_item"],
+                                                                     self.ctx.obj["config_path"], "client_secrets")
                         GithubHelperFunc.execute_CmdCommand(
                             'curl -u ' + client_id + ':' + client_secrets + ' https://api.github.com/repos/' + organization + "/" +
                             repo['name'] + "/tags > data/repotag.json"
@@ -113,7 +117,8 @@ class GithubSystemCmd():
                     raise e
             else:
                 print("git clone from " + proj + "....")
-                cmd = "git clone  " + self.ctx.obj['url'] + "/" + proj + ".git data/" + self.ctx.obj['organization'] + "/" + proj
+                cmd = "git clone  " + self.ctx.obj['url'] + "/" + proj + ".git data/" + self.ctx.obj[
+                    'organization'] + "/" + proj
                 try:
                     GithubHelperFunc.execute_CmdCommand(cmd)
                 except CustomException as e:

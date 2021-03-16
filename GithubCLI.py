@@ -29,10 +29,13 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
     ctx.obj['skip_get_repositories'] = skip_get_repositories
     ctx.obj['skip_broken'] = skip_broken
     ctx.obj['force'] = force
-    ctx.obj['url'] = GithubHelperFunc().get_prop("url")
+    ctx.obj['url'] = GithubHelperFunc().get_prop("mgithub","meta/mgithub.config","url")
     ctx.obj['organization'] = ctx.obj['url'].split("/")[len(ctx.obj['url'].split("/")) - 1]
     # 通过sys.argv记录用户输入的命令
     ctx.obj['command'] = "mgithub"
+    # config parameter
+    ctx.obj['config_item'] = "mgithub"
+    ctx.obj['config_path'] = "meta/mgithub.config"
 
     i = 1
     while i < len(sys.argv):
