@@ -56,7 +56,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
               help="Set your git URL, the default value is https://github.com/websoft9.")
 def configure(ctx, url):
     ctx.obj['url'] = url
-    GithubHelperFunc().set_prop("url", url)
+    GithubHelperFunc().set_prop(ctx.obj['config_item'],ctx.obj['config_path'],"url", url)
     print("Set new URL successfully")
 
 

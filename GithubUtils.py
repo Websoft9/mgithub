@@ -30,11 +30,17 @@ class GithubHelperFunc:
         return False
 
     # 设置指定的config属性
-    def set_prop(self, key, value):
+    # def set_prop(self, key, value):
+    #     config = configparser.ConfigParser()
+    #     config.read("meta/mgithub.config")
+    #     config.set("mgithub", key, value)
+    #     with open("meta/mgithub.config", "w") as fw:
+    #         config.write(fw)
+    def set_prop(self, item, path, key, value):
         config = configparser.ConfigParser()
-        config.read("meta/mgithub.config")
-        config.set("mgithub", key, value)
-        with open("meta/mgithub.config", "w") as fw:
+        config.read(path)
+        config.set(item, key, value)
+        with open(path, "w") as fw:
             config.write(fw)
 
     ###################################### System command helper func ######################################
