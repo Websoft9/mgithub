@@ -50,41 +50,6 @@ class GithubHelperFunc:
         print("")
         subprocess.run(cmd_str, shell=True)
 
-    # # command: 执行command的命令，e.g. mgithub copy
-    # # 如返回值为 cp: file not existed... 则命令执行失败，并将错误信息以异常的方式向上抛出
-    # # return: 1-success, 0-fail
-    # @staticmethod
-    # def execute_CmdCommand(cmd_str):
-    #
-    #     out_str = subprocess.getstatusoutput(cmd_str)
-    #
-    #     # max_run = 3
-    #     # run = 0
-    #     # while run < max_run:
-    #     #     try:
-    #     #         out_str = subprocess.call(cmd_str, timeout = 5)
-    #     #     except subprocess.TimeoutExpired:
-    #     #         continue
-    #     #     else:
-    #     #         break
-    #     #     finally:
-    #     #         run += 1
-    #
-    #     if out_str[0] == 0 or out_str[1] == '':
-    #         if str(out_str[1]).split(":")[0] == "cp":
-    #             raise CustomException(out_str[1])
-    #         if out_str[0] == 128 or out_str[0] == 129:
-    #             raise CustomException(out_str[1])
-    #         temp_str = out_str[1]
-    #         temp_str = temp_str.strip('\n')
-    #         temp_str = temp_str.strip('"')
-    #         if temp_str != "":
-    #             print(temp_str)
-    #         return 1
-    #     else:
-    #         print('\n此次任务执行失败，请根据下面错误原因排查：')
-    #         raise CustomException(out_str[1])
-
     @staticmethod
     def execute_CmdCommand(cmd_str):
         max_run = 3
@@ -113,7 +78,7 @@ class GithubHelperFunc:
             raise CustomException(err_msg)
         else:
             # out_msg = str(result.stdout).split("'")[1]
-            out_msg = result.stdout.decode('utf-8')
+            # out_msg = result.stdout.decode('utf-8')
             if out_msg != "":
                 print(out_msg, end='')
 
@@ -173,23 +138,34 @@ class GithubHelperFunc:
             print("#" + str(i + 1) + " " + log_list[i])
             i += 1
 
-    def log_maker(self, project, flag, ctx):
-        FILE_PATH = "log/auto_make.log"
+    # def log_maker(self, project, flag, ctx):
+    #     FILE_PATH = "log/auto_make.log"
+    #     nowtime = time.strftime("%Y%m%d %H:%M:%S")
+    #     logline = nowtime
+    #     logline += " " + ctx.obj["url"] + "->" + project
+    #
+    #     # 对任务结束类型进行判断
+    #     if flag == 1:
+    #         logline += " [OK]: "
+    #     elif flag == 0:
+    #         logline += " [FAILED]: "
+    #     elif flag == 2:
+    #         logline += " [ABORT]: "
+    #
+    #     logline += ctx.obj["command"]
+    #
+    #     self.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)
+
+    def log_maker(self, title, state, log, path):
         nowtime = time.strftime("%Y%m%d %H:%M:%S")
         logline = nowtime
-        logline += " " + ctx.obj["url"] + "->" + project
+        logline += " " + title
 
-        # 对任务结束类型进行判断
-        if flag == 1:
-            logline += " [OK]: "
-        elif flag == 0:
-            logline += " [FAILED]: "
-        elif flag == 2:
-            logline += " [ABORT]: "
+        logline += " [" + state + "]: "
 
-        logline += ctx.obj["command"]
+        logline += log
 
-        self.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)
+        self.execute_CmdCommand("echo '" + logline + "' >>" + path)
 
     ###################################### Repo operation helper func ######################################
 
@@ -245,9 +221,12 @@ class GithubHelperFunc:
             print(project + ": 项目已回滚")
 
     # 主体构建工作完成后的处理
-    def complete_work(self, flag, project, ctx):
+    def complete_work(self, state, project, ctx):
+        log_title = ctx.obj['url'] + "->" + project
+        log = ctx.obj['command']
+        path = "log/auto_make.log"
         # 由flag参数判断本次操作是否成功
-        if flag == 1:
+        if state == "OK":
             # 操作成功
             print("\n" + project + ": 自动化任务完成,从cache列表删除该工程,并追加日志")
             # 删除列表中对应的项目
@@ -255,13 +234,15 @@ class GithubHelperFunc:
             cmd = "sed -i '' '/^$/d;/" + project + "/d' " + ctx.obj['repo_str']
             self.execute_CmdCommand(cmd)
             # 生成log
-            self.log_maker(project, flag, ctx)
+            # self.log_maker(project, flag, ctx)
+            self.log_maker(log_title, state, log, path)
             print("============================ [[" + project + "]]: 本项目任务成功\n")
         else:
             # 操作失败
             print("\n" + project + ": 自动化任务未完成,在缓存列表保留此工程,并追加日志")
             # 生成log
-            self.log_maker(project, flag, ctx)
+            # self.log_maker(project, flag, ctx)
+            self.log_maker(log_title, state, log, path)
             print("============================ [[" + project + "]]: 本项目任务失败\n")
 
     # 选择继续操作

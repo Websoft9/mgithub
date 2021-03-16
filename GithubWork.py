@@ -27,10 +27,10 @@ class GithubWork():
         if os.path.isfile(self.repo_str):
             if self.current_proj is None:
                 # 如果当前还没有开始执行项目，则任务项目列表中的第一个项目执行失败
-                GithubHelperFunc().complete_work(2, open(self.repo_str).read().splitlines()[0], self.ctx)
+                GithubHelperFunc().complete_work("ABORT", open(self.repo_str).read().splitlines()[0], self.ctx)
             else:
                 # 如果已经开始执行项目，则当前项目执行失败
-                GithubHelperFunc().complete_work(2, self.current_proj, self.ctx)
+                GithubHelperFunc().complete_work("ABORT", self.current_proj, self.ctx)
                 GithubHelperFunc().rollback_proj(self.current_proj, self.organization)
         print("用户主动中断任务")
         sys.exit(0)
@@ -97,7 +97,7 @@ class GithubWork():
                 # 捕捉执行过程中出现异常
                 print(e.msg)
                 # 已 FAILED 记录本次任务
-                GithubHelperFunc().complete_work(0, proj, self.ctx)
+                GithubHelperFunc().complete_work("FAILED", proj, self.ctx)
                 # 对项目进行回滚
                 GithubHelperFunc().rollback_proj(proj, self.organization)
                 # 如果用户使用 mgithub --skip-broken
@@ -126,4 +126,4 @@ class GithubWork():
             raise e
 
         # 本次任务完成
-        GithubHelperFunc().complete_work(1, project, self.ctx)
+        GithubHelperFunc().complete_work("OK", project, self.ctx)
