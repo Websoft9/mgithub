@@ -7,7 +7,7 @@ from operator import methodcaller
 
 from GithubProductCmd import GithubProductCmd
 from GithubException import CustomException
-from GithubUtils import GithubHelperFunc
+from GithubUtils import GithubUtils
 
 
 class GithubWork():
@@ -27,11 +27,11 @@ class GithubWork():
         if os.path.isfile(self.repo_str):
             if self.current_proj is None:
                 # 如果当前还没有开始执行项目，则任务项目列表中的第一个项目执行失败
-                GithubHelperFunc().complete_work("ABORT", open(self.repo_str).read().splitlines()[0], self.ctx)
+                GithubUtils().complete_work("ABORT", open(self.repo_str).read().splitlines()[0], self.ctx)
             else:
                 # 如果已经开始执行项目，则当前项目执行失败
-                GithubHelperFunc().complete_work("ABORT", self.current_proj, self.ctx)
-                GithubHelperFunc().rollback_proj(self.current_proj, self.organization)
+                GithubUtils().complete_work("ABORT", self.current_proj, self.ctx)
+                GithubUtils().rollback_proj(self.current_proj, self.organization)
         print("用户主动中断任务")
         sys.exit(0)
 
@@ -56,10 +56,10 @@ class GithubWork():
                 # 非空项目列表
                 # 向用户展示当前项目列表
                 print("当前项目列表内容：")
-                GithubHelperFunc.execute_CmdCommand("cat " + self.repo_str)
+                GithubUtils.execute_CmdCommand("cat " + self.repo_str)
 
                 # 等待用户确认列表待办事项
-                if GithubHelperFunc().continue_select() == "0":
+                if GithubUtils().continue_select() == "0":
 
                     # 获取项目列表内容
                     # project_list = open(self.repo_str).read().splitlines()
@@ -97,9 +97,9 @@ class GithubWork():
                 # 捕捉执行过程中出现异常
                 print(e.msg)
                 # 已 FAILED 记录本次任务
-                GithubHelperFunc().complete_work("FAILED", proj, self.ctx)
+                GithubUtils().complete_work("FAILED", proj, self.ctx)
                 # 对项目进行回滚
-                GithubHelperFunc().rollback_proj(proj, self.organization)
+                GithubUtils().rollback_proj(proj, self.organization)
                 # 如果用户使用 mgithub --skip-broken
                 if str(self.skip_broken) == "True":
                     continue
@@ -111,7 +111,7 @@ class GithubWork():
         print("\n============================ [[" + project + "]]: 开始执行自动化构建")
 
         # 对本地仓库进行更新
-        GithubHelperFunc().update_repo(self.organization, self.url, project)
+        GithubUtils().update_repo(self.organization, self.url, project)
 
         # 创建GithubProduct对象并传入对应项目与ctx参数
         product = GithubProductCmd(self.ctx)
@@ -121,9 +121,9 @@ class GithubWork():
             methodcaller(self.product_kind, project)(product)
             # 将本地改动PUSH到远程仓库
             print("\n正在将本地改动push到远程仓库...")
-            GithubHelperFunc().push_repo(project, self.organization, self.product_kind)
+            GithubUtils().push_repo(project, self.organization, self.product_kind)
         except CustomException as e:
             raise e
 
         # 本次任务完成
-        GithubHelperFunc().complete_work("OK", project, self.ctx)
+        GithubUtils().complete_work("OK", project, self.ctx)

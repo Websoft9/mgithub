@@ -7,19 +7,11 @@ import time
 from GithubException import CustomException
 
 
-class GithubHelperFunc:
+class GithubUtils:
 
     ###################################### config helper func ######################################
 
     # 从config文件获取指定的属性
-    # def get_prop(self, key):
-    #     config = configparser.ConfigParser()
-    #     config.read("meta/mgithub.config", encoding="utf-8")
-    #     mgithub_item = config.items("mgithub")
-    #     for content in mgithub_item:
-    #         if content[0] == key:
-    #             return content[1]
-    #     return False
     def get_prop(self, item, path, key):
         config = configparser.ConfigParser()
         config.read(path, encoding="utf-8")
@@ -30,12 +22,6 @@ class GithubHelperFunc:
         return False
 
     # 设置指定的config属性
-    # def set_prop(self, key, value):
-    #     config = configparser.ConfigParser()
-    #     config.read("meta/mgithub.config")
-    #     config.set("mgithub", key, value)
-    #     with open("meta/mgithub.config", "w") as fw:
-    #         config.write(fw)
     def set_prop(self, item, path, key, value):
         config = configparser.ConfigParser()
         config.read(path)
@@ -137,24 +123,6 @@ class GithubHelperFunc:
         while i < len(log_list):
             print("#" + str(i + 1) + " " + log_list[i])
             i += 1
-
-    # def log_maker(self, project, flag, ctx):
-    #     FILE_PATH = "log/auto_make.log"
-    #     nowtime = time.strftime("%Y%m%d %H:%M:%S")
-    #     logline = nowtime
-    #     logline += " " + ctx.obj["url"] + "->" + project
-    #
-    #     # 对任务结束类型进行判断
-    #     if flag == 1:
-    #         logline += " [OK]: "
-    #     elif flag == 0:
-    #         logline += " [FAILED]: "
-    #     elif flag == 2:
-    #         logline += " [ABORT]: "
-    #
-    #     logline += ctx.obj["command"]
-    #
-    #     self.execute_CmdCommand("echo '" + logline + "' >>" + FILE_PATH)
 
     def log_maker(self, title, state, log, path):
         nowtime = time.strftime("%Y%m%d %H:%M:%S")

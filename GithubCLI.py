@@ -5,7 +5,7 @@ import click
 import sys
 
 from GithubSystemCmd import GithubSystemCmd
-from GithubUtils import GithubHelperFunc
+from GithubUtils import GithubUtils
 from GithubWork import GithubWork
 from GithubException import CustomException
 
@@ -29,7 +29,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
     ctx.obj['skip_get_repositories'] = skip_get_repositories
     ctx.obj['skip_broken'] = skip_broken
     ctx.obj['force'] = force
-    ctx.obj['url'] = GithubHelperFunc().get_prop("mgithub","meta/mgithub.config","url")
+    ctx.obj['url'] = GithubUtils().get_prop("mgithub","meta/mgithub.config","url")
     ctx.obj['organization'] = ctx.obj['url'].split("/")[len(ctx.obj['url'].split("/")) - 1]
     # 通过sys.argv记录用户输入的命令
     ctx.obj['command'] = "mgithub"
@@ -47,7 +47,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
 
     if logs:
         # click.echo("Showing logs ....")
-        GithubHelperFunc().show_logs(10)
+        GithubUtils().show_logs(10)
 
 
 @mgithub.command(short_help="Input organization URL for initiation.")
@@ -56,7 +56,7 @@ def mgithub(ctx, version, logs, skip_get_repositories, skip_broken, force):
               help="Set your git URL, the default value is https://github.com/websoft9.")
 def configure(ctx, url):
     ctx.obj['url'] = url
-    GithubHelperFunc().set_prop(ctx.obj['config_item'],ctx.obj['config_path'],"url", url)
+    GithubUtils().set_prop(ctx.obj['config_item'],ctx.obj['config_path'],"url", url)
     print("Set new URL successfully")
 
 
