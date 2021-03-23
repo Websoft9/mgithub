@@ -6,6 +6,11 @@ import os
 from GithubUtils import GithubUtils
 from GithubException import CustomException
 
+#########################################
+#          GithubSystemCmd             #
+# mgithub system setting command       #
+# Created by: Haozhe Chen              #
+#########################################
 
 class GithubSystemCmd():
 

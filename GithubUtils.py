@@ -6,6 +6,11 @@ import time
 
 from GithubException import CustomException
 
+#########################################
+#          GithubUtils                  #
+# Helper util function class            #
+# Created by: Haozhe Chen               #
+#########################################
 
 class GithubUtils:
 

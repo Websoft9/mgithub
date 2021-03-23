@@ -9,6 +9,11 @@ from GithubProductCmd import GithubProductCmd
 from GithubException import CustomException
 from GithubUtils import GithubUtils
 
+#########################################
+#          GithubWorks                  #
+# mgithub loop framework class          #
+# Created by: Haozhe Chen               #
+#########################################
 
 class GithubWork():
 

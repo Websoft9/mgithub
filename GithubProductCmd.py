@@ -5,6 +5,11 @@ import os
 from GithubException import CustomException
 from GithubUtils import GithubUtils
 
+#########################################
+#          GithubProductCmd             #
+# mgithub core operation product        #
+# Created by: Haozhe Chen               #
+#########################################
 
 class GithubProductCmd:
 
