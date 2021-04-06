@@ -103,6 +103,17 @@ class GithubProductCmd:
             raise e
         print("替换操作已完成")
 
+    def modify(self, project):
+        # localfile_path = "data/" + self.ctx.obj['organization'] + "/" + project + self.ctx.obj['file_path']
+        # command = "cd " + localfile_path + ";"
+        command = self.ctx.obj['command']
+
+        try:
+            GithubUtils.execute_CmdCommand(command)
+        except CustomException as e:
+            raise(e)
+        print("Command executed finish.")
+
     def format(self, project):
         pass
 

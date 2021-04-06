@@ -211,3 +211,12 @@ def clone(ctx):
         command.clone()
     except CustomException as e:
         print(e.msg)
+
+@mgithub.command(short_help="Process the shell command under repositories.")
+@click.pass_context
+@click.argument('command', nargs=1, required=True)
+def modify(ctx, command):
+    ctx.obj['command'] = command
+    ctx.obj['product_kind'] = 'modify'
+    mauto = GithubWork(ctx)
+    mauto.auto_make()

@@ -12,3 +12,15 @@
 20210406 09:52:02 https://github.com/mgithubTestOrg->role_rabbitmq [OK]: mgithub replace -role /tests/test.yml role_template
 20210406 09:52:06 https://github.com/mgithubTestOrg->role_tomcat [OK]: mgithub replace -role /tests/test.yml role_template
 20210406 09:52:08 https://github.com/mgithubTestOrg->role_varnish [OK]: mgithub replace -role /tests/test.yml role_template
+20210406 13:45:14 https://github.com/mgithubTestOrg->giteeMirror [OK]: ls -l
+20210406 13:45:17 https://github.com/mgithubTestOrg->projAAA [OK]: ls -l
+20210406 13:45:19 https://github.com/mgithubTestOrg->projBBB [OK]: ls -l
+20210406 13:45:21 https://github.com/mgithubTestOrg->projCCC [OK]: ls -l
+20210406 13:45:24 https://github.com/mgithubTestOrg->role_docker [OK]: ls -l
+20210406 13:45:26 https://github.com/mgithubTestOrg->role_postgresql [OK]: ls -l
+20210406 13:45:28 https://github.com/mgithubTestOrg->role_rabbitmq [OK]: ls -l
+20210406 13:45:31 https://github.com/mgithubTestOrg->role_tomcat [OK]: ls -l
+20210406 13:45:33 https://github.com/mgithubTestOrg->role_varnish [OK]: ls -l
+20210406 13:45:55 https://github.com/mgithubTestOrg->giteeMirror [OK]: ls -l|grep data
+20210406 13:45:57 https://github.com/mgithubTestOrg->projAAA [OK]: ls -l|grep data
+20210406 13:45:59 https://github.com/mgithubTestOrg->projBBB [ABORT]: ls -l|grep data
