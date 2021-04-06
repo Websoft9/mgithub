@@ -49,6 +49,7 @@ class GithubUtils:
         while run < max_run:
             try:
                 result = subprocess.run(cmd_str, shell=True, capture_output=True, timeout=100)
+                # result = subprocess.run(cmd_str, shell=True, timeout=100)
             except subprocess.TimeoutExpired:
                 continue
             else:
