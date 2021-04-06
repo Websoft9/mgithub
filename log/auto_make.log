@@ -1,3 +1,9 @@
 20210316 13:44:16 https://github.com/mgithubTestOrg->projAAA [FAILED]: mgithub --skip-broken copy copysrc/qwe.txt /
 20210316 13:44:17 https://github.com/mgithubTestOrg->projBBB [FAILED]: mgithub --skip-broken copy copysrc/qwe.txt /
 20210316 13:44:20 https://github.com/mgithubTestOrg->projCCC [ABORT]: mgithub --skip-broken copy copysrc/qwe.txt /
+20210406 09:01:06 https://github.com/Websoft9->role_9panel [FAILED]: mgithub copy copysrc/tests /
+20210406 09:33:42 https://github.com/mgithubTestOrg->role_docker [OK]: mgithub copy copysrc/tests /
+20210406 09:33:46 https://github.com/mgithubTestOrg->role_postgresql [OK]: mgithub copy copysrc/tests /
+20210406 09:33:48 https://github.com/mgithubTestOrg->role_rabbitmq [OK]: mgithub copy copysrc/tests /
+20210406 09:34:00 https://github.com/mgithubTestOrg->role_tomcat [OK]: mgithub copy copysrc/tests /
+20210406 09:34:02 https://github.com/mgithubTestOrg->role_varnish [OK]: mgithub copy copysrc/tests /

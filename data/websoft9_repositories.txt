@@ -1,77 +1,3 @@
-9panel
-alibabacloud-platform
-ansible-activemq
-ansible-alfresco
-ansible-ansible
-ansible-awx 17.0.1-3
-ansible-bt
-ansible-canvas
-ansible-codeserver
-ansible-couchbase
-ansible-couchdb
-ansible-discuz
-ansible-docker
-ansible-drupal v9.1.2-1
-ansible-erpnext 12.17.0-1
-ansible-ghost 3.41.3
-ansible-gitlab v13.8.3-1
-ansible-grafana v7.3.7
-ansible-graylog
-ansible-haproxy v2.3-1
-ansible-java
-ansible-jenkins v2.263.2
-ansible-joomla
-ansible-kafka v2.7.0-1
-ansible-knowage
-ansible-lamp
-ansible-lcmp
-ansible-linux
-ansible-lnmp
-ansible-magento v2.4.2-1
-ansible-mariadb v10.5
-ansible-mattermost v5.31.0-1
-ansible-mediawiki v.1.35.1
-ansible-memcached
-ansible-metabase v0.37.3-1
-ansible-mingdao
-ansible-mongodb v4.4.3-1
-ansible-moodle v3.10.1-1
-ansible-mysql
-ansible-neo4j v4.2.3-1
-ansible-nextcloud v20.0.5-1
-ansible-nodejs
-ansible-odoo v14-1
-ansible-onlyoffice
-ansible-opencart
-ansible-opencv
-ansible-oracledatabase
-ansible-owncloud
-ansible-phpapps laravel-v8.23.1
-ansible-postgresql v13.1-1
-ansible-prestashop v.1.7.7.1-1
-ansible-python
-ansible-rabbitmq
-ansible-redis v6.0.9-2
-ansible-redmine V4.1.1
-ansible-rethinkdb v2.4.1-1
-ansible-rocketchat
-ansible-rocketmq v4.8.0-1
-ansible-scratch
-ansible-seafile
-ansible-superset v1.0.0
-ansible-template
-ansible-tensorflow v2.4.1-1
-ansible-wordpress v5.6-1
-ansible-zabbix v5.2-1
-ansible-zentao
-aws-platform
-azure-platform
-doc-faq
-doc-legal
-huaweicloud-platform
-installer
-mgithub
-mpackage
 role_9panel
 role_apache 2.4.6-01
 role_caddy v1.0.4-alpha
@@ -85,6 +11,7 @@ role_haproxy
 role_init
 role_inotify_watch
 role_jdk
+role_jetty
 role_kafka
 role_lamp
 role_lnmp
@@ -110,17 +37,7 @@ role_runtime
 role_template
 role_tomcat
 role_tomcat-nginx
+role_tools
 role_uwsgi
 role_varnish
 role_wkhtmltopdf
-tencentcloud-platform
-websoft9.github.io
-win-ansible-dotnet
-win-ansible-phpstudy
-win-ansible-template
-win-ansible-wampserver
-win-ansible-xampp
-windows
-win_ansible-sqlserver
-win_ansible_phpstudy
-win_ansible_wamp
