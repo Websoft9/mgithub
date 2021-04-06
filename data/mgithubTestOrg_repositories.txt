@@ -1,0 +1,9 @@
+giteeMirror
+projAAA
+projBBB
+projCCC
+role_docker
+role_postgresql
+role_rabbitmq
+role_tomcat
+role_varnish

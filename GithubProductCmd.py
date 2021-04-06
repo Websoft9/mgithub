@@ -89,8 +89,11 @@ class GithubProductCmd:
             raise CustomException(
                 "\nThe target file doesn't exist or is not a writable file.\nmgithub commend will abort, you can use "
                 "--skip-broken to jump over this abort.")
-        cmd = "sed -i '' 's/" + self.ctx.obj['old_content'] + "/" + self.ctx.obj[
-            'new_content'] + "/g' " + localfile_path
+        if self.ctx.obj['role']:
+            cmd = "sed -i '' 's/" + self.ctx.obj['old_content'] + "/" + project + "/g' " + localfile_path
+        else:
+            cmd = "sed -i '' 's/" + self.ctx.obj['old_content'] + "/" + self.ctx.obj[
+                'new_content'] + "/g' " + localfile_path
         try:
             GithubUtils.execute_CmdCommand(cmd)
         except CustomException as e:

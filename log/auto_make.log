@@ -7,3 +7,8 @@
 20210406 09:33:48 https://github.com/mgithubTestOrg->role_rabbitmq [OK]: mgithub copy copysrc/tests /
 20210406 09:34:00 https://github.com/mgithubTestOrg->role_tomcat [OK]: mgithub copy copysrc/tests /
 20210406 09:34:02 https://github.com/mgithubTestOrg->role_varnish [OK]: mgithub copy copysrc/tests /
+20210406 09:51:55 https://github.com/mgithubTestOrg->role_docker [OK]: mgithub replace -role /tests/test.yml role_template
+20210406 09:51:59 https://github.com/mgithubTestOrg->role_postgresql [OK]: mgithub replace -role /tests/test.yml role_template
+20210406 09:52:02 https://github.com/mgithubTestOrg->role_rabbitmq [OK]: mgithub replace -role /tests/test.yml role_template
+20210406 09:52:06 https://github.com/mgithubTestOrg->role_tomcat [OK]: mgithub replace -role /tests/test.yml role_template
+20210406 09:52:08 https://github.com/mgithubTestOrg->role_varnish [OK]: mgithub replace -role /tests/test.yml role_template

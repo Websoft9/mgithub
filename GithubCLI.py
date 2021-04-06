@@ -144,7 +144,8 @@ def rename(ctx, path, new_name):
 @click.argument('file_path', nargs=1, required=True)
 @click.argument('old_content', nargs=1, required=True)
 @click.argument('new_content', nargs=1, required=False)
-def replace(ctx, file_path, old_content, new_content):
+@click.option('-role', help='replace role_template in role_XXX/tests/test.yml', is_flag=True)
+def replace(ctx, file_path, old_content, new_content, role):
     print("[[replace]] function is running")
     print("file_path is: %s" % file_path)
     print("old_content is: %s" % old_content)
@@ -157,6 +158,7 @@ def replace(ctx, file_path, old_content, new_content):
     else:
         ctx.obj['new_content'] = new_content
     ctx.obj['product_kind'] = 'replace'
+    ctx.obj['role'] = role
     mauto = GithubWork(ctx)
     mauto.auto_make()
 
