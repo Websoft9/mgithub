@@ -42,8 +42,8 @@ class GithubUtils:
         subprocess.run(cmd_str, shell=True)
 
     @staticmethod
-    def execute_CmdCommand(cmd_str, max_run):
-        # max_run = 3
+    def execute_CmdCommand(cmd_str):
+        max_run = 3
         run = 0
         result = None
         while run < max_run:
@@ -139,7 +139,7 @@ class GithubUtils:
 
         logline += log
 
-        self.execute_CmdCommand("echo '" + logline + "' >>" + path, 3)
+        self.execute_CmdCommand("echo '" + logline + "' >>" + path)
 
     ###################################### Repo operation helper func ######################################
 
@@ -154,7 +154,7 @@ class GithubUtils:
             # 存在：使用git pull对本地仓库进行更新
             cmd = "cd " + FILE_PATH + "; git pull"
             try:
-                self.execute_CmdCommand(cmd, 3)
+                self.execute_CmdCommand(cmd)
             except CustomException as e:
                 raise e
         else:
@@ -163,7 +163,7 @@ class GithubUtils:
             cmd = "git clone  " + url + "/" + project + ".git data/" + organization + "/" + project
             try:
                 # GithubTools.execute_CommandIgnoreReturn(cmd)
-                self.execute_CmdCommand(cmd, 3)
+                self.execute_CmdCommand(cmd)
             except CustomException as e:
                 raise e
         print(project + ": 本地仓库更新完成")
@@ -174,7 +174,7 @@ class GithubUtils:
         cmd = 'cd data/%s/%s;\ngit add -A;\ngit commit -m "%s";\ngit push origin main' % (
             organization, project, product_kind)
         try:
-            self.execute_CmdCommand(cmd, 3)
+            self.execute_CmdCommand(cmd)
         except CustomException as e:
             raise e
 
@@ -186,7 +186,7 @@ class GithubUtils:
         cmd = "cd data/" + organization + "/" + project + ";git fetch --all;git reset --hard origin/master;git clean -f -d . ;"
         try:
             # GithubTools.execute_CommandIgnoreReturn(cmd)
-            self.execute_CmdCommand(cmd, 3)
+            self.execute_CmdCommand(cmd)
         except CustomException as e:
             # 项目回滚中出现异常，回滚失败
             print(e.msg)
@@ -206,7 +206,7 @@ class GithubUtils:
             # 删除列表中对应的项目
             cmd = "sed -i '/^$/d;/" + project + "/d' " + ctx.obj['repo_str']
             # cmd = "sed -i '' '/^$/d;/" + project + "/d' " + ctx.obj['repo_str']
-            self.execute_CmdCommand(cmd, 3)
+            self.execute_CmdCommand(cmd)
             # 生成log
             # self.log_maker(project, flag, ctx)
             self.log_maker(log_title, state, log, path)

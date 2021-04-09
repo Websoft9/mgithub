@@ -23,7 +23,7 @@ class GithubSystemCmd():
         print('开始更新%s Github仓库列表...' % organization)
 
         # 清除本地已存在的项目列表
-        GithubUtils.execute_CmdCommand(": > data/" + organization + "_repositories.txt", 3)
+        GithubUtils.execute_CmdCommand(": > data/" + organization + "_repositories.txt")
 
         page = 1
         dict = []
@@ -36,12 +36,12 @@ class GithubSystemCmd():
                                                              "client_secrets")
                 GithubUtils.execute_CmdCommand(
                     'curl -u ' + client_id + ':' + client_secrets + ' https://api.github.com/users/' + organization + "/repos\?per_page\=100\&page\=" + str(
-                        page) + "  > data/repoapi.json", 3
+                        page) + "  > data/repoapi.json"
                 )
             else:
                 GithubUtils.execute_CmdCommand(
                     'curl -s  https://api.github.com/users/' + organization + "/repos\?per_page\=100\&page\=" + str(
-                        page) + "  > data/repoapi.json", 3
+                        page) + "  > data/repoapi.json"
                 )
 
             # json -> python data
@@ -63,12 +63,12 @@ class GithubSystemCmd():
                                                                      self.ctx.obj["config_path"], "client_secrets")
                         GithubUtils.execute_CmdCommand(
                             'curl -u ' + client_id + ':' + client_secrets + ' https://api.github.com/repos/' + organization + "/" +
-                            repo['name'] + "/tags > data/repotag.json", 3
+                            repo['name'] + "/tags > data/repotag.json"
                         )
                     else:
                         GithubUtils.execute_CmdCommand(
                             'curl -s https://api.github.com/repos/' + organization + "/" +
-                            repo['name'] + "/tags > data/repotag.json", 3
+                            repo['name'] + "/tags > data/repotag.json"
                         )
 
                     with open('data/repotag.json', 'r') as f1:
@@ -83,7 +83,7 @@ class GithubSystemCmd():
 
                 GithubUtils.execute_CmdCommand(
                     "echo " + record + " >> data/" + organization + "_repositories.txt;" +
-                    "cat data/" + organization + "_repositories.txt | awk 'END {print}'", 3
+                    "cat data/" + organization + "_repositories.txt | awk 'END {print}'"
                 )
 
             page += 1
@@ -92,7 +92,7 @@ class GithubSystemCmd():
         if not os.path.getsize("data/" + organization + "_repositories.txt"):
             print("仓库列表为空，请检查您的组织/用户名或网络设置")
             # GithubHelperFunc.execute_CommandReturn("rm data/" + organization + "_repositories.txt")
-            GithubUtils.execute_CmdCommand("rm data/" + organization + "_repositories.txt", 3)
+            GithubUtils.execute_CmdCommand("rm data/" + organization + "_repositories.txt")
         else:
             print()
 
@@ -117,7 +117,7 @@ class GithubSystemCmd():
                 # 存在：使用git pull对本地仓库进行更新
                 cmd = "cd " + FILE_PATH + "; git pull"
                 try:
-                    GithubUtils.execute_CmdCommand(cmd, 1)
+                    GithubUtils.execute_CmdCommand(cmd)
                 except CustomException as e:
                     raise e
             else:
@@ -125,7 +125,7 @@ class GithubSystemCmd():
                 cmd = "git clone  " + self.ctx.obj['url'] + "/" + proj + ".git data/" + self.ctx.obj[
                     'organization'] + "/" + proj
                 try:
-                    GithubUtils.execute_CmdCommand(cmd, 1)
+                    GithubUtils.execute_CmdCommand(cmd)
                 except CustomException as e:
                     # 仓库clone未成功，结束本次任务
                     if str(self.ctx.obj['skip_broken']) == "True":

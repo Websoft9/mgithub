@@ -61,7 +61,7 @@ class GithubWork():
                 # 非空项目列表
                 # 向用户展示当前项目列表
                 print("当前项目列表内容：")
-                GithubUtils.execute_CmdCommand("cat " + self.repo_str, 3)
+                GithubUtils.execute_CmdCommand("cat " + self.repo_str)
 
                 # 等待用户确认列表待办事项
                 if GithubUtils().continue_select() == "0":
