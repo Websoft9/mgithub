@@ -1,3 +1,5 @@
+giteeMirror
+projAAA
 projBBB
 projCCC
 role_docker
