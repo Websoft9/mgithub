@@ -107,6 +107,12 @@ class GithubProductCmd:
         # localfile_path = "data/" + self.ctx.obj['organization'] + "/" + project + self.ctx.obj['file_path']
         # command = "cd " + localfile_path + ";"
         command = self.ctx.obj['command']
+        if self.ctx.obj['script']:
+            print("/script/" + command)
+            if not os.path.exists("./script/" + command):
+                raise CustomException("The script does not exist. mgithub command is abort.")
+            cmd = "cd script;chmod 755 " + command + ";./" + command
+            command = cmd
 
         try:
             GithubUtils.execute_CmdCommand(command)

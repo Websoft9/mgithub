@@ -24,3 +24,7 @@
 20210406 13:45:55 https://github.com/mgithubTestOrg->giteeMirror [OK]: ls -l|grep data
 20210406 13:45:57 https://github.com/mgithubTestOrg->projAAA [OK]: ls -l|grep data
 20210406 13:45:59 https://github.com/mgithubTestOrg->projBBB [ABORT]: ls -l|grep data
+20210409 09:20:06 https://github.com/mgithubTestOrg->projBBB [FAILED]: asd
+20210409 09:20:27 https://github.com/mgithubTestOrg->projBBB [FAILED]: test.sh
+20210409 09:21:05 https://github.com/mgithubTestOrg->projBBB [FAILED]: test.sh
+20210409 09:21:29 https://github.com/mgithubTestOrg->projBBB [FAILED]: test.sh

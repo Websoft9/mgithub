@@ -215,8 +215,10 @@ def clone(ctx):
 @mgithub.command(short_help="Process the shell command under repositories.")
 @click.pass_context
 @click.argument('command', nargs=1, required=True)
-def modify(ctx, command):
+@click.option('-s', '--script', help='Execute the shell script under /script folder', is_flag=True)
+def modify(ctx, command, script):
     ctx.obj['command'] = command
     ctx.obj['product_kind'] = 'modify'
+    ctx.obj['script'] = script
     mauto = GithubWork(ctx)
     mauto.auto_make()
