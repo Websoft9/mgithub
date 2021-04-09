@@ -84,7 +84,7 @@ class GithubUtils:
         while run < max_run:
             try:
                 if os.path.isdir(path):
-                    GithubUtils.execute_CmdCommand("rm -rf" + path)
+                    GithubUtils.execute_CmdCommand("rm -rf " + path)
                 # print(cmd_str)
                 result = subprocess.run(cmd_str, shell=True, capture_output=True, timeout=100)
                 # result = subprocess.run(cmd_str, shell=True, timeout=100)
