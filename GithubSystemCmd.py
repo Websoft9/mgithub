@@ -122,10 +122,10 @@ class GithubSystemCmd():
                     raise e
             else:
                 print("git clone from " + proj + "....")
-                cmd = "git clone  " + self.ctx.obj['url'] + "/" + proj + ".git data/" + self.ctx.obj[
+                cmd = "git clone " + self.ctx.obj['url'] + "/" + proj + ".git data/" + self.ctx.obj[
                     'organization'] + "/" + proj
                 try:
-                    GithubUtils.execute_CmdCommand(cmd)
+                    GithubUtils.execute_GitCloneCommand(cmd)
                 except CustomException as e:
                     # 仓库clone未成功，结束本次任务
                     if str(self.ctx.obj['skip_broken']) == "True":

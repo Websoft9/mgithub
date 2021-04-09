@@ -75,6 +75,44 @@ class GithubUtils:
                 print(out_msg, end='')
 
 
+    @staticmethod
+    def execute_GitCloneCommand(cmd_str):
+        max_run = 3
+        run = 0
+        result = None
+        path = cmd_str.split(" ")[3]
+        while run < max_run:
+            try:
+                if os.path.isdir(path):
+                    GithubUtils.execute_CmdCommand("rm " + path)
+                # print(cmd_str)
+                result = subprocess.run(cmd_str, shell=True, capture_output=True, timeout=100)
+                # result = subprocess.run(cmd_str, shell=True, timeout=100)
+            except subprocess.TimeoutExpired:
+                continue
+            else:
+                break
+            finally:
+                run += 1
+
+        if result is None:
+            raise CustomException("Timeout !!!")
+        err_msg = result.stderr.decode('utf-8')
+        out_msg = result.stdout.decode('utf-8')
+
+        if result.returncode != 0 and err_msg != "":
+            # err_msg = str(result.stderr).split("'")[1]
+            err_msg = result.stderr.decode('utf-8')
+            print('\n此次任务执行失败，请根据下面错误原因排查：')
+            # print(result)
+            raise CustomException(err_msg)
+        else:
+            # out_msg = str(result.stdout).split("'")[1]
+            # out_msg = result.stdout.decode('utf-8')
+            if out_msg != "":
+                print(out_msg, end='')
+
+
     # command: 执行需要写入文件的命令
     # 如果返回值不为(0, null), 则命令执行失败，打印错误信息，不抛出异常
     # 如果命令执行成功，打印返回信息
