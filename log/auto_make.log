@@ -28,3 +28,8 @@
 20210409 09:20:27 https://github.com/mgithubTestOrg->projBBB [FAILED]: test.sh
 20210409 09:21:05 https://github.com/mgithubTestOrg->projBBB [FAILED]: test.sh
 20210409 09:21:29 https://github.com/mgithubTestOrg->projBBB [FAILED]: test.sh
+20210409 17:47:52 https://github.com/mgithubTestOrg->giteeMirror [FAILED]: cp copysrc/good.txt /
+
+20210409 17:48:33 https://github.com/mgithubTestOrg->giteeMirror [FAILED]: cp copysrc/good.txt /
+
+20210409 17:49:31 https://github.com/mgithubTestOrg->giteeMirror [FAILED]: cp copysrc/good.txt .
