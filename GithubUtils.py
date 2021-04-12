@@ -209,7 +209,7 @@ class GithubUtils:
     # 将本地工程提交到github（push to remote）
     def push_repo(self, project, organization, product_kind):
         print(project + ": 将本地工程提交到github")
-        cmd = 'cd data/%s/%s;\ngit add -A;\ngit commit -m "%s";\ngit push origin main' % (
+        cmd = 'cd data/%s/%s;\ngit add -A;\ngit commit -m "%s";\ngit push origin HEAD:main' % (
             organization, project, product_kind)
         try:
             self.execute_CmdCommand(cmd)
