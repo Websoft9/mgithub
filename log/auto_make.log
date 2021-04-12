@@ -33,3 +33,18 @@
 20210409 17:48:33 https://github.com/mgithubTestOrg->giteeMirror [FAILED]: cp copysrc/good.txt /
 
 20210409 17:49:31 https://github.com/mgithubTestOrg->giteeMirror [FAILED]: cp copysrc/good.txt .
+20210412 11:33:17 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production.yml /
+20210412 11:33:41 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp /copysrc/docker-compose-production.yml /
+20210412 11:33:50 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production.yml /
+20210412 11:34:39 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production.yml /
+20210412 11:35:21 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production.yml .
+20210412 11:51:16 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production.yml .
+20210412 11:52:11 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production .
+20210412 11:52:21 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production.yml .
+20210412 11:53:32 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production.yml .
+20210412 11:54:24 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp copysrc/docker-compose-production.yml .
+20210412 11:56:22 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp ../../copysrc/docker-compose-production.yml .
+20210412 11:56:52 https://github.com/mgithubTestOrg->docker-mysql [FAILED]: cp /Users/Chz/Desktop/Websoft9/mgithub/copysrc/docker-compose-production.yml .
+20210412 11:57:52 https://github.com/mgithubTestOrg->docker-mysql [OK]: cp /Users/Chz/Desktop/Websoft9/mgithub/copysrc/docker-compose-production.yml .
+20210412 12:00:58 https://github.com/mgithubTestOrg->docker-mysql [OK]: test.sh
+20210412 12:02:02 https://github.com/mgithubTestOrg->docker-mysql [OK]: test.sh

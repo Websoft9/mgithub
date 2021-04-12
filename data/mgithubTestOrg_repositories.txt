@@ -1,4 +1,0 @@
-giteeMirror
-projAAA
-projBBB
-projCCC
