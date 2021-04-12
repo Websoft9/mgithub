@@ -1,3 +1,0 @@
-ansible-awx
-ansible-lcmp
-testproject

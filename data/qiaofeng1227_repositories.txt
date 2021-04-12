@@ -1,6 +1,0 @@
-cello
-copr-python37
-gridsome-test-site
-my_rpm
-pkg
-spec
