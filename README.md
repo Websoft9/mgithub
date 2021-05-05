@@ -85,6 +85,12 @@ You need to have python3 (Python3.7 and later version) and pip3 installed on you
    $ pip3.6 list
      All of your application list (without mgithub)
    ```
+2. How to start mgithub with python3.8 installed by SCL.
+    ```
+    $ cd /opt/rh/rh-python38/
+    $ source enable
+    ```
+    After this step, your default version of python3 will become the 3.8 or above (the version you have installed). Then you will be able to run mgithub as normal.
 
 # User Guide
 
@@ -262,6 +268,29 @@ mgithub githubcli 'gh secret remove SECRET_1'
 This mgithub script will delete every secret called SECRET_1 of every repositories under the checklist.<br>
 If not found, mgithub will throw a exception and stop the command. User can use --skip-broken option to skip the
 abnormal repository.
+
+#### modify
+
+Process the shell command under repositories. <br>
+
+1. Command usage: mgithub modify [OPTIONS] COMMAND
+2. OPTIONS: -s, --script, execute the shell script under /script folder  
+
+The basic idea for this command is to execute the shell commend under the corresponding repository folder. <font color=red>*So every repository in this shell command need to be the comparative path to __mgithub/data/{$organization_name}/{$repository_name}__* or the abstract path of file</font>  
+Multiple shell command can be separated by semicolon ";".
+
+**e.g. copy desktop/a.txt to every repositories' root path**<br>
+```
+mgithub modify "cp ~/desktop/a.txt ."
+```
+
+You can also execute the designated shell command under mgithub/script/ path  
+
+**e.g. execute script/a.sh file under every repositories**<br>
+```
+chmod 755 mgithub/script/a.sh
+mgithub modify -s "a.sh"
+```
 
 # Extension
 
