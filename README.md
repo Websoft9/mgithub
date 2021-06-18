@@ -40,7 +40,7 @@ You need to have python3 (Python3.7 and later version) and pip3 installed on you
     ```
 4. Use mgithub config to set your Github's url
     ```buildoutcfg
-    $ mgithub configre
+    $ mgithub configure
     input URL: https://github.com/XXXX
     Set new URL successfully
     ```
