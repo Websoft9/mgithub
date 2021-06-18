@@ -32,6 +32,7 @@ You need to have python3 (Python3.7 and later version) and pip3 installed on you
 1. Fork/Download the repository from [Mgithub](https://github.com/Websoft9/mgithub).
 2. Install mgithub command through pip3.
     ```
+    cd mgithub
     $ pip3 install --editable .
     ```
 3. Run mgithub command then you should find the help information in your terminal window.
