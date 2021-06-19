@@ -303,3 +303,8 @@ We have refactored our coding structure to make functionality extension work muc
    implemented for detail.
 2. Write your own function in GithubProductCmd, you can find any option or parameter input from cli by using
    self.ctx['XXX'] as we mention above in step 1.
+   
+3. github user and passowr is not need to input
+```
+git config --global credential.helper store
+```
