@@ -25,8 +25,16 @@ and send a pull request.
 
 ### Pre-request
 
-You need to have python3 (Python3.7 and later version) and pip3 installed on your own device.
-
+1. You need to have python3 (Python3.7 and later version) and pip3 installed on your own device.
+sugguest: If your python version is lower than 3.7, you can install by role_python 
+3. set github accout
+    ```
+    git config --global credential.helper store
+    git config --global user.name xxx
+    git config --global user.email xxx@qq.com
+    git config --global user.password xxpass
+    ```
+    
 ### Install
 
 1. Fork/Download the repository from [Mgithub](https://github.com/Websoft9/mgithub).
