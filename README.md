@@ -307,4 +307,7 @@ We have refactored our coding structure to make functionality extension work muc
 3. github user and passowr is not need to input
 ```
 git config --global credential.helper store
+git config --global user.name xxx
+git config --global user.email xxx@qq.com
+git config --global user.password xxpass
 ```
