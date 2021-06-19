@@ -53,17 +53,17 @@ You need to have python3 (Python3.7 and later version) and pip3 installed on you
    XXXXX
    ```
 6. Manipulate the checklist to decide the repositories you are going to make operation on it.
-    ```buildoutcfg
+    ```
     $ vim data/XXXX_repositories.txt
     Custom the list of repositories by manipulating this checklist file
     ```
 7. Use mgithub clone to clone the repositories in checklist to your local machine from github.
-   ```buildoutcfg
+   ```
    mgithub clone
    ```
 8. Use command to make operation on your repositories
-    ```buildoutcfg
-    $ mgithub copy copysrc/text.txt /test/
+    ```
+    $ mgithub -f copy copysrc/doc.yml /.github/workflows/
     ```
 
 ### Uninstall
@@ -160,7 +160,7 @@ User should use this command to configure the user/organization's Github url bef
 time.
 
 ```buildoutcfg
-$ mgithub configre
+$ mgithub configure
 input URL: https://github.com/XXXX
 Set new URL successfully
 ```
